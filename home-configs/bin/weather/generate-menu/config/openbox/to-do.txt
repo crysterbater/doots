@@ -1,0 +1,15 @@
+## TO DO ##
+
+create variables for each file used (menu.xml,menu-static.xml,schema.pl)
+
+create variables for directories used
+
+*check for existing menu and immediately back it up before doing anything
+
+check for strings in menu to insert new menu entry
+
+check for strings in schema to insert new menu entry
+
+*default to the bottom of the menu if none
+
+reconfigure openbox

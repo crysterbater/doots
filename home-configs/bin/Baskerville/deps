@@ -1,0 +1,33 @@
+#! /bin/dash
+
+_deps() {
+    printf "%s\n" "$1"
+    local names="$(sed -n 's/^#include *"\([^"]\+\)".*/\1/p' "$1")"
+    for nm in $names ; do
+        _deps "$nm"
+    done
+}
+
+suffix=.o
+
+while getopts 'hs:' opt ; do
+    case $opt in
+        s)
+            suffix=$OPTARG
+            ;;
+        h)
+            printf "%s [-h|-s SUFFIX] CSOURCE ...\n" "${0##*/}"
+            ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+while [ $# -gt 0 ] ; do
+    printf "%s:" "${1%.*}$suffix"
+    for nm in $(_deps "$1" | sort -t . -k 2 | uniq) ; do
+        printf " %s" "$nm"
+    done
+    printf "\n"
+    shift
+done

@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "all_frames": true,
+      "css": [ "scrollbars.css" ],
+      "matches": [ "\u003Call_urls>" ]
+   } ],
+   "description": "phlat-scrollbars",
+   "icons": {
+      "48": "48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyUfMvwcC/E5283/PodtUZAXXUNYlP8QShHf0sqi1YvkOKEavKNj3ctA1rke/S1JqoG1345SxtVN6AXRgyKdDNkFhLIMkoJT9KwSfdzOF9lj1m2RbATFMcrEac5OsuKDL5VhJg514qswlYwiIj5W23b4HSR+kC+Lj7ubhDkueFcPSockY2j1ziDupIt7F5zUaVGGZQTJa86xK5gUPukkV8K+0L1YjNXHV84wkdEiMZEy2u34Kfp5J6G0VhiRTw4DBnlgLFpcIr38Wn0Wr4i9MM5c7OxlNpYSpqI8PX1/d7r4f812zgnvcZX/SYNFtUrBWYrv/rOVkJagO7PfSkZIO+QIDAQAB",
+   "manifest_version": 2,
+   "name": "phlat-scrollbars",
+   "version": "1.0"
+}

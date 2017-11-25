@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Nero
+Comment=A dark and flat GTK+ theme for Linux operating systems.
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Nero
+MetacityTheme=Nero
+IconTheme=gnome
+CursorTheme=DMZ-Black
+ButtonLayout=menu:minimize,maximize,close

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+export __GL_SYNC_TO_VBLANK=
+export __GL_SYNC_DISPLAY_DEVICE=
+export __VDPAU_NVIDIA_SYNC_DISPLAY_DEVICE=
+"$BROWSER_EXEC" "$@" & disown

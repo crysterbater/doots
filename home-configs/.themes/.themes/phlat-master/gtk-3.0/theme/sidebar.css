@@ -1,0 +1,39 @@
+placessidebar,
+placessidebar:backdrop,
+placessidebar.frame,
+placessidebar.frame:backdrop,
+placessidebar list,
+placessidebar list:backdrop{
+border-color:transparent;
+background:@bg_color;}
+.sidebar,
+.sidebar:backdrop{
+background:@bg_color;
+color:@fg_color;}
+assistant .sidebar>label{
+font-weight:bold;
+padding:3px;
+margin:3px 10px;}
+assistant .sidebar>label.highlight{
+border-radius:2px;
+border-bottom:1px solid @selected_bg_color;}
+.sidebar viewport.frame,
+.sidebar viewport.frame:backdrop {
+border:none;}
+placessidebar,
+placessidebar:backdrop{
+margin:1px;}
+
+stacksidebar.sidebar:not(.frame)>scrolledwindow:not(.frame)>viewport.frame,
+stacksidebar.sidebar:not(.frame)>scrolledwindow:not(.frame)>viewport.frame:backdrop {
+border:1px solid @border_color;
+font-weight:bold}
+stacksidebar.sidebar:not(.frame)>scrolledwindow:not(.frame)>viewport>list separator,
+stacksidebar.sidebar:not(.frame)>scrolledwindow:not(.frame)>viewport>list separator:backdrop {
+background:@base_color;
+color:transparent;
+border-bottom:1px solid transparent;}
+stacksidebar.sidebar:not(.frame)>scrolledwindow:not(.frame)>viewport>list row:selected,
+stacksidebar.sidebar:not(.frame)>scrolledwindow:not(.frame)>viewport>list row:selected:backdrop {
+background:inherit;
+border-bottom:1px solid @selected_bg_color;}

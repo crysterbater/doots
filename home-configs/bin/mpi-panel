@@ -1,0 +1,303 @@
+#!/bin/bash
+
+usage() {
+echo "
+    Usage: $me [options]
+    
+    -l int   Output will be split into this many lines. Default: $lines
+             Must be between 1 and 1000.
+             
+    -x       Return the exact number of lines requested, even if it means
+             outputting empty lines, and even if nothing at all would be output
+             otherwise.
+
+    -w int   Width = maximum length of the complete string before it gets split
+             into lines. Default: $maxlen - Must be between 10 and 1000.
+
+    -t       Indicates that elapsed/remaining time shall be appended.
+    
+    -c int   Will run the script in a continuous loop with int seconds delay
+             between updates. E.g. the tint2 panel supports this. Disabled by
+             default. Must be between 1 and 1000.
+             
+    -p str   Media player to query. Currently only mocp is supported.
+             Default: $player
+             
+    -i dir   Path to a directory containing icons to display, with these exact
+             names: play.*, pause.*, stop.*, unknown.*, uptime.*. 
+             Specifying this option makes the script output one additional line
+             with the path to the icon representing the current state.
+             This is made to work with the tint2 Exec plugin, but can be 
+             utilized in other contexts, too.
+             If an icon does not exist, the text \"unknown icon\" is returned.
+             Formats: $extensions
+             Not specifying this option disables icon display.
+             
+    -u       Output uptime when media player is not running.
+             Otherwise, don't output anything.
+    
+    -1       Will make (fairly) sure only one script instance is running.
+    
+    -h       Display this message
+    
+             more information: github.com/ohnonot/media-player-info"
+exit 1
+}
+
+tmp_dir="/tmp"
+lines=1 # it is best if maxlen%lines is 0
+maxlen=60 # maximum length of string before dividing into lines
+showtime=0 # display current/total time or not
+continuous=0 
+onlyone=0
+exact=0
+uptime=0
+me="$(basename "$0")"
+player="mocp" # currently the only player supported
+
+# icons
+icondir='' # will look for 3 icons in dir: play.* pause.* stop.* unknown.*
+uptimeicon='' # an icon to display when no media player is running
+extensions="png svg gif PNG jpg jpeg GIF JPG JPEG" # these extensions seem to be supported by tint2
+
+while getopts "l:xw:tc:p:i:u1h" opt; do
+  case $opt in
+    l) # lines
+      lines="$OPTARG"
+      if [ "$lines" -le 0 ] || [ "$lines" -gt 1000 ] ; then usage ; fi
+      ;;
+    x) # be exact about the number of lines
+        exact=1
+      ;;
+    w) # width = maxlen per line
+      maxlen="$OPTARG"
+      if [ "$maxlen" -lt 10 ] || [ "$maxlen" -gt 1000 ] ; then usage ; fi
+      ;;
+    t) # show time elapsed/remaining?
+      showtime=1
+      ;;
+    c) # run script continuously? if >1, which interval in s?
+      continuous="$OPTARG"
+      if [ "$continuous" -le 0 ] || [ "$continuous" -gt 1000 ] ; then usage ; fi
+      ;;
+    p) # which media player?
+      player="$OPTARG"
+      if [[ "$player" != "mocp" ]] ; then
+          echo "Sorry, currently only mocp (Music On Console) is supported."
+          usage
+      fi
+      ;;
+    i) # icon or not? which directory?
+      icondir="$OPTARG"
+      if [ ! -d "$icondir" ] ; then
+        echo -e "\n    The directory $icondir does not exist."
+        usage
+      fi
+      ;;
+    u) # show uptime when no media player is running
+        uptime=1
+      ;;
+    1) # make sure only one instance is running
+        onlyone=1
+      ;;
+    ?|h)
+      usage
+      ;;
+  esac
+done
+
+function only_me_or_exit {
+    # argument: pidfile
+    # make sure only 1 instance is running
+    touch "$1"
+    read lastPID < "$1"
+    # if lastPID is not null and a process with that pid exists , exit
+    [ ! -z "$lastPID" -a -d /proc/$lastPID ] && { echo "An instance of $me is already running with pid $lastPID." ; exit 1 ; }
+    # else - save my pid in the lock file, and continue
+    echo $$ > "$1"
+}
+function exit_only_me {
+    # argument1: pidfile
+    # argument2: message (opt.)
+    [[ "x$2" != "x" ]] && echo "$2"
+    rm "$1"
+    exit 0
+}
+
+############# PLAYER: MOC ###################################################
+function mocp_time_func {
+    # get song length and remaining time and such and format it nicely
+    if [[ "x${info[TotalTime]}" == "x" ]]; then
+        echo "${info[CurrentTime]#0}"
+    else
+        echo "${info[CurrentTime]#0}/${info[TotalTime]#0}"
+    fi
+}
+function mocp_state_convert {
+    # argument: string of current mocp state
+    case "$1" in
+    PLAY)
+        echo play
+    ;;
+    PAUSE)
+        echo pause
+    ;;
+    STOP)
+        echo stop
+    ;;
+    *)
+        echo unknown
+    ;;
+    esac
+}
+function mocp_get_info_func {
+    # the fields of the associative array are named after the information contained
+    # in them (as provided by "mocp -i")
+    timeout=0
+    # the timeout is necessary due to some quirk with mocp.
+    # it is currently hardcoded to 1s (( 10 * 0.1 ))
+
+    declare -A info
+    info=()
+
+    while [ "${#info[*]}" -lt 1 ] && [ $timeout -lt 10 ]
+    do
+        while read -r line
+        do
+            info[${line%%\: *}]="${line##*\: }"
+        done < <(mocp -i)
+    [ "${#info[*]}" -lt 1 ] && sleep 0.1
+    timeout=$((timeout + 1))
+    done
+
+    # info is collected. picking the good bits now:
+    if [[ "${info[Title]}" == "" ]]
+    then
+        returnstring="$(basename "${info[File]}")"
+        returnstring="${returnstring%\.*}"
+        if [[ "$returnstring" == "" ]] ; then
+        if [[ "${info[State]}" == "STOP" ]]; then returnstring="Stopped"; else returnstring="unknown state"; fi
+        fi
+    else
+        returnstring="${info[Title]}"
+    fi
+    state="$(mocp_state_convert ${info[State]})"
+    echo "$state|$returnstring $(mocp_time_func)"
+}
+##############################################################################
+
+############# PLAYER: MPD ####################################################
+#~ function mpd_get_info_func {
+    #~ # TODO
+#~ }
+##############################################################################
+
+############# PLAYER: MPLAYER ################################################
+#~ function mplayer_get_info_func {
+    #~ # TODO
+#~ }
+##############################################################################
+
+function join_maxlen_func {
+    # 2 strings - $1 and $2 - not more than $maxlen chars altogether.
+    # but the first string is to be shortened, not the 2nd.
+    dots="…"
+    if [[ "$2" != "" ]] ; then
+        [ ${#1} -lt $((maxlen - ${#2} - ${#dots})) ] && dots=""
+        echo "${1:0:((maxlen - ${#dots} - ${#2}))}$dots $2"
+    else
+        [ ${#1} -le $(( maxlen )) ] && dots=""
+        echo "${1:0:((maxlen - ${#dots}))}$dots"
+    fi
+}
+function lines_func {
+    # cuts the input string into approx. equally long lines up to $lines.
+    # this is not exact, however the exact number of lines _must_ be returned
+    # otherwise tint2's exec function cannot work in continuous mode
+    string="$1"
+    returnarray=() # each array pos. will contain 1 line
+    local linecount=$lines
+    for (( arraypos=0 ; linecount > 1 ; linecount-- ))
+    do
+        length=${#string}
+        for (( fwd=$((length/linecount)) , bwd=$((length/linecount)) ; bwd >= 0 ; fwd++ , bwd-- ))
+        do
+            if [[ "${string:$fwd:1}" = " " ]]
+            then
+                returnarray[arraypos]="${string:0:$fwd}"
+                arraypos=$((arraypos + 1))
+                string="${string:$((fwd + 1))}"
+                break
+            fi
+            if [[ "${string:$bwd:1}" = " " ]]
+            then
+                returnarray[arraypos]="${string:0:$bwd}"
+                arraypos=$((arraypos + 1))
+                string="${string:$((bwd + 1))}"
+                break
+            fi
+        done
+    done
+    returnarray[arraypos]="$string"
+    arraypos=$((arraypos + 1))
+
+    if [[ "$exact" == "1" ]]; then max=$lines ; else max=$arraypos ; fi
+
+    for (( c=0 ; c < max ; c++ )); do
+        echo "${returnarray[c]}"
+    done
+}
+function uptime_func {
+    [[ "x$icondir" != "x" ]] && echo "$uptimeicon"
+    lines_func "$(uptime -p)"
+}
+
+#############################################################################
+# make sure only 1 instance is running
+if [[ "$onlyone" = 1 ]] ; then
+    pidfile="$tmp_dir/${me}_pid"
+    only_me_or_exit "$pidfile"
+fi
+
+while true ; do
+    case "$player" in
+        mocp) # this will later become sth like: mocp|mpd|mplayer) ....
+            if pidof "$player" >/dev/null
+            then
+                infostring="$(${player}_get_info_func)"
+                state="${infostring%%|*}"
+                infostring="${infostring#*|}"
+                if [[ "$showtime" == 1 ]]; then timestring="${infostring##* }"; else timestring=""; fi
+                infostring="${infostring% *}"
+                if [[ "x$icondir" != "x" ]]
+                then
+                    for ext in $extensions
+                    do
+                    [[ -f "$icondir/$state.$ext" ]] && echo "$icondir/$state.$ext" && state=0 && break
+                    done
+                    [[ "$state" != "0" ]] && echo "no icon found"
+                fi
+                lines_func "$(join_maxlen_func "$infostring" "$timestring")"
+            else
+                if [[ "$uptime" = 1 ]]; then 
+                    uptime_func
+                else
+                    if [[ "$exact" = 1 ]]; then
+                        [[ "x$icondir" != "x" ]] && max=$((lines +1)) || max=$lines
+                        for (( c=0 ; c < max ; c++ )); do echo; done
+                    fi
+                fi
+            fi
+        ;;
+        *)
+        echo "Sorry, $player is not supported yet."
+        ;;
+    esac
+    if (( continuous <= 0 )); then
+        [[ "$onlyone" = 1 ]] && exit_only_me "$pidfile"
+        exit 0
+    fi
+    sleep "$continuous"
+done
+
+exit 0

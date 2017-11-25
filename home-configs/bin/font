@@ -1,0 +1,13 @@
+#!/bin/bash
+# Font installer
+export HOME=/home/hrfee
+[ $# -ge 1 -a -f "$1" ] && input="$1" || input="-"
+if find $input 2>/dev/null | grep -q .ttf &>/dev/null; then
+    echo "Moving Font..."
+    mv $input $HOME/.fonts/
+    echo "Reloading cache..."
+	fc-cache -f $HOME/.fonts
+    echo "Done!"
+else
+    echo "File not found! Aborting..."
+	fi

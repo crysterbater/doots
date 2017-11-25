@@ -1,0 +1,108 @@
+# twm theme by crimeboy
+# very beta ultra version
+
+padding.width: 1
+border.width: 1
+window.client.padding.width: 0
+window.client.padding.height: 0
+window.handle.width: 2
+
+#Menu geometry
+menu.border.width: 1
+menu.overlap: 5
+
+# Border colors
+window.active.border.color: #0d8778
+window.inactive.border.color: #b52f62
+menu.border.color: #b52f62
+window.active.client.color: #0d8778
+window.inactive.client.color: #b52f62
+
+# Window title justification
+window.label.text.justify: left
+
+# Active window
+window.active.title.bg: Flat Solid
+window.active.title.bg.color: #0D8778
+window.active.label.bg: Parentrelative
+window.active.label.text.color: #f2efde
+
+window.active.button.unpressed.bg: Flat Solid
+window.active.button.unpressed.bg.color: #0D8778
+window.active.button.unpressed.image.color: #f2efde
+
+window.active.button.pressed.bg: Flat Solid
+window.active.button.pressed.bg.color: #0D8778
+window.active.button.pressed.image.color: #0D8778
+
+window.active.button.disabled.bg: Flat Solid
+window.active.button.disabled.bg.color: #0D8778
+window.active.button.disabled.image.color: #0D8778
+
+window.active.button.toggled.bg: Flat Solid
+window.active.button.toggled.bg.color: #0d8778
+window.active.button.toggled.image.color: #f2efde
+
+window.active.button.hover.bg: Flat Solid
+window.active.button.hover.bg.color: #0D8778
+window.active.button.hover.image.color: #ffffff
+
+# Inactive windows
+window.inactive.title.bg: Flat Solid
+window.inactive.title.bg.color: #b52f62
+window.inactive.label.bg: Parentrelative
+window.inactive.label.text.color: #ccc
+
+window.inactive.handle.bg: Flat Solid
+window.inactive.handle.bg.color: #b52f62
+
+window.active.handle.bg: Flat Solid
+window.active.handle.bg.color: #0d8778
+
+window.active.grip.bg: Parentrelative
+window.inactive.grip.bg: Parentrelative
+
+window.inactive.button.unpressed.bg: Flat Solid
+window.inactive.button.unpressed.bg.color: #b52f62
+window.inactive.button.unpressed.image.color: #ccc
+
+window.inactive.button.pressed.bg: Flat Solid
+window.inactive.button.pressed.bg.color: #b52f62
+window.inactive.button.pressed.image.color: #b52f62
+
+window.inactive.button.disabled.bg: Flat Solid
+window.inactive.button.disabled.bg.color: #b52f62
+window.inactive.button.disabled.image.color: #b52f62
+
+window.inactive.button.toggled.bg: Flat Solid
+window.inactive.button.toggled.bg.color: #b52f62
+window.inactive.button.toggled.image.color: #f2efde
+
+window.inactive.button.hover.bg: Flat Solid
+window.inactive.button.hover.bg.color: #b52f62
+window.inactive.button.hover.image.color: #b52f62
+
+# Menus
+menu.title.bg: Flat Solid
+menu.title.bg.color: #0D8778
+menu.title.text.color: #0D8778
+menu.title.text.justify: Left
+
+menu.items.bg: Flat Solid
+menu.items.bg.color: #b52f62
+menu.items.text.color: #f2efde
+menu.items.disabled.text.color: #999
+
+menu.items.active.bg: Flat Solid
+menu.items.active.bg.color: #f2efde
+menu.items.active.text.color: #0d8778
+menu.items.active.disabled.text.color: #999
+
+#osd
+osd.border.width: 1
+osd.border.color: #f2efde
+osd.bg: flat border vertical
+osd.bg.color: #0d8778
+osd.bg.border.color: #0D8778
+osd.label.bg: parentrelative
+osd.label.text.color: #f2efde

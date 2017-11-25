@@ -1,0 +1,78 @@
+[options]
+scroll_on_output = false
+scroll_on_keystroke = true
+audible_bell = false
+mouse_autohide = false
+allow_bold = true
+dynamic_title = true
+urgent_on_bell = true
+clickable_url = true
+font = UbuntuMono Nerd Font 11
+scrollback_lines = 10000
+search_wrap = true
+icon_name = utilities-terminal
+geometry = 750x550
+scrollback_lines = 15000
+clickable_url = true
+
+# "system", "on" or "off"
+cursor_blink = system
+
+# "block", "underline" or "ibeam"
+cursor_shape = ibeam
+
+# $BROWSER is used by default if set, with xdg-open as a fallback
+browser = xdg-open
+
+# set size hints for the window
+#size_hints = false
+
+# Hide links that are no longer valid in url select overlay mode
+filter_unmatched_urls = true
+
+# emit escape sequences for extra modified keys
+#modify_other_keys = false
+
+[colors]
+foreground      = #F1F1F1
+foreground_bold = #F7F6F2
+cursor          = #F7F6F2
+background = rgba (33,33,33,0.90)
+
+# Black, Gray, Silver, White
+color0  = #494949
+color8  = #969896
+color7  = #c5c8c6
+color15 = #F1F1F1
+
+# Red
+color1  = #D64937
+color9  = #D64937
+
+# Green
+color2  = #19BC9C
+color10 = #19BC9C
+
+# Yellow
+color3  = #4ECFAF
+color11 = #4ECFAF
+
+# Blue
+color4  = #4E88CF
+color12 = #4E88CF
+
+# Purple
+color5  = #AF86C8
+color13 = #AF86C8
+
+# Teal
+color6  = #5DD5FF
+color14 = #5DD5FF
+
+# Extra colors
+color16 = #D64937
+color17 = #2378DF
+color18 = #282a2e
+color19 = #373b41
+color20 = #b4b7b4
+color21 = #e0e0e0

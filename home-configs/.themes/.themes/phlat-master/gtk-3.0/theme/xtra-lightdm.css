@@ -1,0 +1,23 @@
+.lightdm-gtk-greeter frame{
+border-color:transparent;}
+
+.lightdm-gtk-greeter #shutdown_dialog,
+.lightdm-gtk-greeter #restart_dialog,
+.lightdm-gtk-greeter #login_window{
+border-radius:2px;
+border:1px solid @border_color;
+background:@bg_color;}
+
+.lightdm-gtk-greeter #panel_window {
+font-weight:bold;
+border-bottom:1px solid @border_color;
+background:shade(@base_color,0.6);}
+
+.lightdm-gtk-greeter #panel_window menubar,
+.lightdm-gtk-greeter #panel_window menubar separator,
+.lightdm-gtk-greeter #panel_window menubar > menuitem{
+background:transparent;}
+
+.lightdm-gtk-greeter #user_image {
+opacity:0.8;
+margin:5px;}

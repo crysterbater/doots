@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+size_border=1
+size_gap=5
+
+padding_top=0
+padding_bottom=0
+padding_left=0
+padding_right=0
+
+color_focused_border="#181818"
+color_normal_border="#e8e8e8"
+color_active_border="#e8e8e8"
+color_presel_feedback="#555555"
+
+setting_borderless_monocle='false'
+
+polybar_config="$CURRENT_THEME/polybar"
+polybar_bars=(top)
+
+if xrandr | grep -q "HDMI-1 connected"; then
+  polybar_bars+=(external_bottom)
+fi
+
+theme::post_bspwmrc()
+{
+  :
+  # xdrawrect eDP-1 top 100% 1 0 29 '#ff777777' effectline-top "$(polybar top -c "$polybar_config" --print-wmname)" &
+  #
+  # if xrandr | grep -q "HDMI-1 connected"; then
+  #   xdrawrect HDMI-1 bottom 100% 3 0 27 '#ff000000' effectline-bottom "$(polybar external_bottom -c "$polybar_config" --print-wmname)" &
+  # fi
+}

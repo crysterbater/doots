@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# requires slop, ffmpeg, gifsicle, imagemagick
+
+set -e
+set -o pipefail
+
+usage() {
+	cat 1>&2 <<- EOF
+	Usage: xrec [option ...] [file.gif | -- ffmpeg options]
+	  -W pix    width (default: 1920)
+	  -H pix    height (default: 1080)
+	  -X pix    horizonal offset (default: 0)
+	  -Y pix    vertial offset (default: 0)
+	  -c        crop
+	  -r fps    frames per second (for gif) (default: 25, supported: 50, 33, 25, 20, 10, 5)
+	  -s time   countdown in seconds (default: 0)
+	  -t time   length (default: 5)
+	  -h        show help
+	EOF
+}
+
+# shellcheck disable=SC2059
+die() { f="$1"; shift; printf "xrec: $f\n" "$@" 1>&2; exit 1; }
+
+crop=0
+gif=
+time=5
+fps=25
+sleep=0
+X='' Y='' W='' H=''
+
+while (($#)); do
+	case "$1" in
+	-X) X="$2"; shift 2 ;;
+	-Y) Y="$2"; shift 2 ;;
+	-W) W="$2"; shift 2 ;;
+	-H) H="$2"; shift 2 ;;
+	-c) crop=1; shift ;;
+	-r)
+		case "$2" in
+		50|33|25|20|10|5) ;; # supported fps
+		'') die "option requires an argument: -f" ;;
+		*) die 'unsupported frame rate: %s' "$2" ;;
+		esac
+		shift 2
+		;;
+	-s) sleep="$2"; shift 2 ;;
+	-t) time="$2"; shift 2 ;;
+	-h) usage; exit ;;
+	--)
+		if [[ -n "$gif" ]]; then
+			die 'gif does not support extra ffmpeg options'
+		fi
+		shift
+		break
+		;;
+	-*) die "unknown option: %s" "$1" ;;
+	*) gif="$1"; shift ;;
+	esac
+done
+
+if [[ -n "$gif" && -e "$gif" ]]; then
+	die 'file already exists: %s' "$gif"
+fi
+
+if ((crop)); then
+	s="$(slop -b 1 -c 0.894,0.443,0.671,1 -f '%x %y %w %h')"
+	echo "$s"
+	IFS=' ' read -r X Y W H <<< "$s"
+fi
+
+if ((sleep)); then
+	while ((sleep)); do
+		printf '%s... ' "$sleep" 1>&2
+		sleep 1
+		((sleep--))
+	done
+	printf 'go!' 1>&2
+fi
+
+opts=(
+	-video_size "${W}x${H}"
+	-framerate "$fps"
+	-t "$time"
+	-f x11grab
+	-i ":0.0+${X},${Y}"
+)
+
+if [[ -z "$gif" ]]; then
+	ffmpeg "${opts[@]}" "$@"
+	exit
+fi
+
+tmpdir=
+trap '[[ -e "$tmpdir" ]] && rm -rf "$tmpdir"' EXIT
+tmpdir="$(mktemp -d)"
+( cd "$tmpdir"; ffmpeg "${opts[@]}" -f image2 'out%04d.png' || true )
+find "$tmpdir" -type f -print0 | xargs -0 -P 9 -n 5 mogrify -format gif
+gifsicle --colors=256 --delay=$((100/fps)) --loopcount=forever \
+	--method=blend-diversity --optimize=3 "$tmpdir"/out*.gif > "$gif"

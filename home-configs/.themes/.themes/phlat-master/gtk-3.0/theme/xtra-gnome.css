@@ -1,0 +1,10 @@
+.nautilus-window notebook scrolledwindow,
+.nautilus-window notebook scrolledwindow:backdrop{
+margin:0px 3px 3px 0px;
+border:1px solid @border_color;
+background-color:@base_color;}
+
+nautilus-desktop-window.nautilus-window notebook box grid scrolledwindow,
+nautilus-desktop-window.nautilus-window notebook box grid scrolledwindow:backdrop{
+border:none;
+background-color:transparent;}

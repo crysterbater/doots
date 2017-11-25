@@ -1,0 +1,5 @@
+#! /bin/dash
+
+[ $# -eq 0 ] && exit 1
+
+awk '/'$@'/ {printf("%-23s %s\n",$1,$2)}' "$XDG_DATA_HOME"/languages.txt

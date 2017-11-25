@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#rofi -modi "run,ssh" -show run -auto-select
+
+# ampersands at the end of the line will fork the application laucnhed so it
+# shows init as its owner instead of this script.
+j4-dmenu-desktop --dmenu="/usr/bin/rofi -m -2 -dmenu -i -p '' -modi "run,ssh" -show run" &
+
+
+rofi  -modi drun,run,colorscheme:rofi-colorscheme-switch,keys,ssh,combi -show drun -show-icons true -me-select-entry '' -me-accept-entry 'Mouse1' -sidebar-mode </command>
+
+ rofi -m -2  -i -p -modi drun,run,colorscheme:rofi-colorscheme-switch,keys,ssh,combi -show run -show-icons true -me-select-entry '' -me-accept-entry 'Mouse1'
+

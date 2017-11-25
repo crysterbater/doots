@@ -1,0 +1,8 @@
+#! /bin/bash
+
+case "$TERM" in 
+    rxvt*|xterm*)
+        tit=${@//$HOME/\~}
+        printf '\e]2;%s\a' "$tit"
+        ;;
+esac

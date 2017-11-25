@@ -1,0 +1,3 @@
+#!/bin/bash
+export WINEDEBUG=-all
+nice -n 19 wine "/home/hrfee/.wine/drive_c/Program\ Files/Steam/Steam.exe" -no-dwrite

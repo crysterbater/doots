@@ -1,0 +1,11 @@
+configs:
+    {{range .}}
+    {{.Name}}:
+        background: "{{.Data.terminal_background}}"
+        foreground: "{{.Data.terminal_foreground}}"
+        transparent: "{{.Data.terminal_transparent}}"
+        trim: "{{.Data.terminal_trim}}"
+        colors:{{range .Data.terminal_colors}}
+            - "{{.}}"{{end}}
+
+    {{end}}

@@ -1,0 +1,84 @@
+cabal: Entering directory '/tmp/cabal-tmp-20595/unix-compat-0.4.3.1'
+Configuring unix-compat-0.4.3.1...
+Building unix-compat-0.4.3.1...
+Preprocessing library unix-compat-0.4.3.1...
+[1 of 8] Compiling System.PosixCompat.User ( dist/dist-sandbox-94c3599e/build/System/PosixCompat/User.hs, dist/dist-sandbox-94c3599e/build/System/PosixCompat/User.o )
+[2 of 8] Compiling System.PosixCompat.Unistd ( src/System/PosixCompat/Unistd.hs, dist/dist-sandbox-94c3599e/build/System/PosixCompat/Unistd.o )
+[3 of 8] Compiling System.PosixCompat.Types ( src/System/PosixCompat/Types.hs, dist/dist-sandbox-94c3599e/build/System/PosixCompat/Types.o )
+[4 of 8] Compiling System.PosixCompat.Extensions ( dist/dist-sandbox-94c3599e/build/System/PosixCompat/Extensions.hs, dist/dist-sandbox-94c3599e/build/System/PosixCompat/Extensions.o )
+[5 of 8] Compiling System.PosixCompat.Time ( src/System/PosixCompat/Time.hs, dist/dist-sandbox-94c3599e/build/System/PosixCompat/Time.o )
+[6 of 8] Compiling System.PosixCompat.Temp ( src/System/PosixCompat/Temp.hs, dist/dist-sandbox-94c3599e/build/System/PosixCompat/Temp.o )
+[7 of 8] Compiling System.PosixCompat.Files ( dist/dist-sandbox-94c3599e/build/System/PosixCompat/Files.hs, dist/dist-sandbox-94c3599e/build/System/PosixCompat/Files.o )
+[8 of 8] Compiling System.PosixCompat ( src/System/PosixCompat.hs, dist/dist-sandbox-94c3599e/build/System/PosixCompat.o )
+cbits/HsUnixCompat.c: In function ‘unix_major’:
+
+cbits/HsUnixCompat.c:9:13: error:
+     warning: In the GNU C Library, "major" is defined
+     by <sys/sysmacros.h>. For historical compatibility, it is
+     currently defined by <sys/types.h> as well, but we plan to
+     remove this soon. To use "major", include <sys/sysmacros.h>
+     directly. If you did not intend to use a system-defined macro
+     "major", you should undefine it after including <sys/types.h>.
+         return major(dev);
+                 ^~~~~~~~~~                                                                                                                                                                                                                                                                                                                                                              
+cbits/HsUnixCompat.c: In function ‘unix_minor’:
+
+cbits/HsUnixCompat.c:14:13: error:
+     warning: In the GNU C Library, "minor" is defined
+     by <sys/sysmacros.h>. For historical compatibility, it is
+     currently defined by <sys/types.h> as well, but we plan to
+     remove this soon. To use "minor", include <sys/sysmacros.h>
+     directly. If you did not intend to use a system-defined macro
+     "minor", you should undefine it after including <sys/types.h>.
+         return minor(dev);
+                 ^~~~~~~~~~                                                                                                                                                                                                                                                                                                                                                              
+cbits/HsUnixCompat.c: In function ‘unix_makedev’:
+
+cbits/HsUnixCompat.c:19:13: error:
+     warning: In the GNU C Library, "makedev" is defined
+     by <sys/sysmacros.h>. For historical compatibility, it is
+     currently defined by <sys/types.h> as well, but we plan to
+     remove this soon. To use "makedev", include <sys/sysmacros.h>
+     directly. If you did not intend to use a system-defined macro
+     "makedev", you should undefine it after including <sys/types.h>.
+         return makedev(maj, min);
+                 ^~~~~~~~~~~~~~~~~                                                                                                                                                                                                                                                                                                                                                             
+cbits/HsUnixCompat.c: In function ‘unix_major’:
+
+cbits/HsUnixCompat.c:9:13: error:
+     warning: In the GNU C Library, "major" is defined
+     by <sys/sysmacros.h>. For historical compatibility, it is
+     currently defined by <sys/types.h> as well, but we plan to
+     remove this soon. To use "major", include <sys/sysmacros.h>
+     directly. If you did not intend to use a system-defined macro
+     "major", you should undefine it after including <sys/types.h>.
+         return major(dev);
+                 ^~~~~~~~~~                                                                                                                                                                                                                                                                                                                                                              
+cbits/HsUnixCompat.c: In function ‘unix_minor’:
+
+cbits/HsUnixCompat.c:14:13: error:
+     warning: In the GNU C Library, "minor" is defined
+     by <sys/sysmacros.h>. For historical compatibility, it is
+     currently defined by <sys/types.h> as well, but we plan to
+     remove this soon. To use "minor", include <sys/sysmacros.h>
+     directly. If you did not intend to use a system-defined macro
+     "minor", you should undefine it after including <sys/types.h>.
+         return minor(dev);
+                 ^~~~~~~~~~                                                                                                                                                                                                                                                                                                                                                              
+cbits/HsUnixCompat.c: In function ‘unix_makedev’:
+
+cbits/HsUnixCompat.c:19:13: error:
+     warning: In the GNU C Library, "makedev" is defined
+     by <sys/sysmacros.h>. For historical compatibility, it is
+     currently defined by <sys/types.h> as well, but we plan to
+     remove this soon. To use "makedev", include <sys/sysmacros.h>
+     directly. If you did not intend to use a system-defined macro
+     "makedev", you should undefine it after including <sys/types.h>.
+         return makedev(maj, min);
+                 ^~~~~~~~~~~~~~~~~                                                                                                                                                                                                                                                                                                                                                             
+Creating package registration file:
+/tmp/pkgConf-unix-compat-0.4.32145174067468703135.1
+Installing library in
+/home/metamist/dev/haskell/workspacer/.cabal-sandbox/lib/x86_64-linux-ghc-8.0.1/unix-compat-0.4.3.1-mzEumk8zZ6LpxhrHjc52F
+Registering unix-compat-0.4.3.1...
+cabal: Leaving directory '/tmp/cabal-tmp-20595/unix-compat-0.4.3.1'

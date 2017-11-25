@@ -1,0 +1,19 @@
+#!/bin/bash
+
+CURR_WIN_ID=$(xprop -root _NET_ACTIVE_WINDOW | sed -e 's/.*# //')
+
+XPID=""
+XSUBPID=""
+XCWD=""
+
+test -n "${CURR_WIN_ID}" && XPID=$(xprop -notype -id "$CURR_WIN_ID" _NET_WM_PID | sed -e 's/^.* = //')
+
+test -n "${XPID}" && XSUBPID=$(pgrep -P "${XPID}" | head -1)
+
+test -e "/proc/${XSUBPID}/" && XCWD=$(readlink /proc/${XSUBPID}/cwd)
+
+test -z "${XCWD}" -a -e "/proc/${XPID}/" && XCWD=$(readlink /proc/${XPID}/cwd)
+
+test -z "${XCWD}" && XCWD="$HOME"
+
+exec /usr/bin/termite -d "$XCWD" "$@"

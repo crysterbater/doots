@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -e
+
+url='https://0x0.st'
+
+usage() {
+	cat 1>&2 <<-EOF
+	usage: 0x0 [option ...] [file ...]
+	  -u url  upload from url
+	  -s url  shorten url
+	  -h      show help
+	if no arguments are passed, 0x0 uploads the contents of stdin
+	EOF
+}
+
+if [ "$#" = 0 ]; then
+	set -- - # stdin
+fi
+
+while :; do
+	case "$1" in
+	'') break ;;
+	-h) usage; exit ;;
+	-u) a="$2"; shift 2; curl -F "url=$a" "$url" ;;
+	-s) a="$2"; shift 2; curl -F "shorten=$a" "$url" ;;
+	-?*) printf '0x0: invalid option: %s\n' "$1" 1>&2; exit 1 ;;
+	*) curl --progress-bar -F "file=@$1" "$url"; shift ;;
+	esac
+done

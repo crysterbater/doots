@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+
+## Declaring some variables
+storage="$HOME/.config/openbox/menu-switcher"
+menu_cur="$HOME/.config/openbox/menu.xml"
+menubase="$HOME/.config/openbox/menu-switcher/menu-static.xml"
+backup="$HOME/.config/openbox/menu-switcher/menu-static.xml.bak"
+
+## create backup path
+mkdir -p "$storage"
+
+if [[ $1 == *dynamic ]] || [[ $1 == *d ]]; then
+  ## backup current menu
+  if [ -e "$menu_cur" ]; then
+    cp $HOME/.config/openbox/menu.xml $HOME/.config/openbox/menu-switcher/menu-static.xml
+  else
+    notify-send 'Ooops!' 'Unable to find ~/.config/openbox/menu.xml.. Make sure it exists and try again.'
+    exit 1
+  fi
+
+  if [ -e "$menubase" ]; then
+    cp $HOME/.config/openbox/menu-switcher/menu-static.xml $HOME/.config/openbox/menu-switcher/menu-static.xml.bak
+    obmenu-generator -p
+  else
+    notify-send 'Ooops!' 'A backup was never made & is required.. Check if your menu exists.'
+  fi
+fi
+
+
+
+if [[ $1 == *static ]] || [[ $1 == *s ]]; then
+  ## switch to menubase
+  if [ -e "$menubase" ]; then
+    cp $HOME/.config/openbox/menu-switcher/menu-static.xml $HOME/.config/openbox/menu.xml
+    openbox --reconfigure
+
+  elif [ -e "$backup" ]; then
+    cp $HOME/.config/openbox/menu-switcher/menu-static.xml.bak $HOME/.config/openbox/menu.xml
+    openbox --reconfigure
+
+  else
+    notify-send 'Ooops!' 'Cannot find menu to restore. Please run [switchmenu --dynamic]'
+    exit 1
+
+  fi
+fi
+
+
+exit 0

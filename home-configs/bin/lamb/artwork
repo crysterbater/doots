@@ -1,0 +1,48 @@
+#!/usr/sbin/python
+
+from mpd import MPDClient
+import os
+import subprocess
+import sys
+
+client = MPDClient()
+client.timeout = 10
+client.idleTimeout = None
+client.connect('localhost', 6600)
+
+current = '/home/marcel/Music/{}'.format(client.currentsong()['file']) if client.currentsong() else sys.exit(1)
+base = os.path.basename(current)
+dirname = os.path.dirname(current)
+cover = '{}/folder.jpg'.format(dirname)
+
+client.close()
+client.disconnect()
+
+png = cover.replace('jpg', 'png')
+if os.path.isfile(png):
+    cover = png
+
+if not os.path.isfile(cover):
+    command = [
+        '/usr/sbin/ffmpeg',
+        '-i', current,
+        cover
+    ]
+    
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = process.communicate()
+    errcode = process.returncode
+
+    if err:
+        print(err)
+        sys.exit(1)
+
+link = '/home/marcel/.config/mpd/covers/{}{}'.format(base, os.path.splitext(cover)[1])
+if not os.path.isfile(link):
+    os.symlink(cover, link)
+
+if not (os.path.exists('/home/marcel/.config/mpd/cover') and os.path.samefile(cover, '/home/marcel/.config/mpd/cover')):
+    if os.path.exists('/home/marcel/.config/mpd/cover'): os.unlink('/home/marcel/.config/mpd/cover')
+    os.symlink(cover, '/home/marcel/.config/mpd/cover')
+
+print(link)

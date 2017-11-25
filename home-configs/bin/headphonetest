@@ -1,0 +1,6 @@
+#!/bin/bash
+bluetoothctl << EFO
+remove 44:5E:F3:AE:69:83
+EFO
+echo "pair 44:5E:F3:AE:69:83" | bluetoothctl
+sleep 10s

@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+for _file in $(cat /usr/share/themes/phlat/files) ; do
+  if [ -L $_file ]; then
+    rm -fv "$_file"
+  fi
+  if [ -f $_file ]; then
+    rm -fv "$_file"
+  fi
+done
+#dirs!
+#find /usr/share/themes/phlat -type d -empty -exec rmdir -pv --ignore-fail-on-non-empty {} \;
+rm -f /usr/share/themes/phlat/files
+#re-enable the overlay scrollbars
+sed -i '/^#phlat$/,+1 d' /etc/environment
+rm -rf /usr/share/themes/phlat

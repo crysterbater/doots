@@ -1,0 +1,25 @@
+#!/bin/bash
+# Xorg window id
+ID=$(xdpyinfo | grep focus | cut -f4 -d " ")
+# SHELL id
+PID=$(xprop -id $ID | grep -m 1 PID | cut -d " " -f 3)
+# TERM id
+TERM_ID=$(pgrep -P $PID)
+
+#echo "ID: $ID"
+#echo "PID: $PID"
+#echo "TERM_ID: $TERM_ID"
+#if [ -e "/proc/$TERM_ID/cwd" ]
+#then
+#  echo $(readlink /proc/$TERM_ID/cwd) &
+#else
+#  echo "not fouhnd"
+#fi
+#
+#exit
+if [ -e "/proc/$TERM_ID/cwd" ]
+then
+    urxvt -cd $(readlink /proc/$TERM_ID/cwd) &
+else
+    urxvt
+fi

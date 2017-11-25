@@ -1,0 +1,319 @@
+#!/bin/bash
+
+# term-recolor - change urxvt/xterm colors on the fly, without using xrdb and 
+#		 restarting the terminal(s).
+# I mostly use the solarized or zenburn color palettes, whose colors are fairly
+# well documented. The other sets are fairly arbitrary and not neccessarily
+# correct as to their names, they're mainly ones I had lying around...
+# If no parameters are supplied the script will read from standard input,
+# which is quite handy for quickly testing different color palettes.
+# The "default" ("d") scheme is taken from Debian's XTerm app-defaults.
+# It's also possible to change colors on all terminals at once by writing
+# directly to the terminal device files, e.g. in bash:
+#
+#	$ term-recolor 1 | tee /dev/pts/[0-9]* > /dev/null
+#
+# which changes all X terminals to use the solarized color palette. The
+# redirect to /dev/null is added to avoid writing to the same terminal twice,
+# though it wouldn't do any harm to do so.
+#
+# Written to work with urxvt/xterm, but should work with most vt100
+# compatable terminals. Copyright © 2017 Neil Woods <neil@netlexer.uk>
+# Licenced under the terms of the WTFPL. See http://www.wtfpl.net/
+# Version 0.1
+
+function usage ()
+{
+    echo "Usage: term-recolor {arg}"
+    echo "       where {arg} is one of"
+    echo "\"1\" or \"solarized\" : apply solarized color theme"
+    echo "\"2\" or \"zenburn\"   : apply zenburn color theme"
+    echo "\"3\" or \"cyberpunk\" : apply cyberpunk color theme"
+    echo "\"4\" or \"gotham\"    : apply gotham color theme"
+    echo "\"5\" or \"ocean\"     : apply ocean color theme"
+    echo "\"6\" or \"brownburn\" : apply brownburn color theme"
+    echo "\"7\" or \"redmoon\"   : apply redmoon color theme"
+    echo "\"8\" or \"monokai\"   : apply monokai color theme"
+    echo "\"9\" or \"material\"  : apply material color theme"
+    echo "\"a\" or \"themea\"    : apply themea color theme"
+    echo "\"d\" or \"debian\"    : reset to default debian theme"
+    echo "\"-h\" or \"-?\"       : this help."
+    echo ""
+    echo "If no argument is provided then use standard input."
+    exit
+}
+
+# this is the "guts" of the script, outputting OSC control sequences to 
+# dynamically change color set and forground/background.
+# See color_codes(4).
+function recolor ()
+{
+tr -d ' \t' | sed -n '
+s/.*background:/\x1b]11;/p
+s/.*foreground:/\x1b]10;/p
+s/.*color\([0-9][^:]*\):/\x1b]4;\1;/p
+' | tr \\n \\a
+}
+
+arg="$1"
+
+if [ -z "$arg" ]; then
+    recolor
+else
+    case $arg in
+	1|solarized)
+	    recolor <<EOF
+*.foreground:   #7d939b
+*.background:   #00232c
+*.color0:	#073642
+*.color8:	#002b36
+*.color1:	#dc322f
+*.color9:	#cb4b16
+*.color2:	#859900
+*.color10:	#586e75
+*.color3:	#b58900
+*.color11:	#657b83
+*.color4:	#268bd2
+*.color12:	#839496
+*.color5:	#d33682
+*.color13:	#6c71c4
+*.color6:	#2aa198
+*.color14:	#93a1a1
+*.color7:	#eee8d5
+*.color15:	#fdf6e3
+EOF
+	    ;;
+	2|zenburn)
+	    recolor <<EOF
+*.foreground:   #dcdccc
+*.background:   #1f1f1f
+*.color0:	#000d18
+*.color1:	#e89393
+*.color2:	#9ece9e
+*.color3:	#f0dfaf
+*.color4:	#8cd0d3
+*.color5:	#c0bed1
+*.color6:	#dfaf8f
+*.color7:	#efefef
+*.color8:	#000d18
+*.color9:	#e89393
+*.color10:	#9ece9e
+*.color11:	#f0dfaf
+*.color12:	#8cd0d3
+*.color13:	#c0bed1
+*.color14:	#dfaf8f
+*.color15:	#efefef
+EOF
+	    ;;
+	3|cyberpunk)
+	    recolor <<EOF
+*.foreground:   #bcbcbc
+*.background:   [90]#000000
+*.color0:	#181818
+*.color1:	#604938
+*.color2:	#9A6D50
+*.color3:	#AA6640
+*.color4:	#B1875F
+*.color5:	#D09339
+*.color6:	#4F9692
+*.color7:	#d8d8d8
+*.color8:	#585858
+*.color9:	#675348
+*.color10:	#282828
+*.color11:	#383838
+*.color12:	#b8b8b8
+*.color13:	#e8e8e8
+*.color14:	#DA9561
+*.color15:	#f8f8f8
+EOF
+	    ;;
+	4|gotham)
+	    recolor <<EOF
+*.foreground:	#98d1ce
+*.background:	#0a0f14
+*.color0:	#0a0f14
+*.color8:	#10151b
+*.color1:	#c33027
+*.color9:	#d26939
+*.color2:	#26a98b
+*.color10:	#081f2d
+*.color3:	#edb54b
+*.color11:	#245361
+*.color4:	#195465
+*.color12:	#093748
+*.color5:	#4e5165
+*.color13:	#888ba5
+*.color6:	#33859d
+*.color14:	#599caa
+*.color7:	#98d1ce
+*.color15:	#d3ebe9
+EOF
+	    ;;
+	5|ocean)
+	    recolor <<EOF
+*.background: rgb:10/10/10
+*.foreground: rgb:d3/d3/d3
+*.color0:     rgb:10/10/10
+*.color1:     rgb:cd/5c/5c
+*.color2:     rgb:2e/8b/57
+*.color3:     rgb:f0/e6/8c
+*.color4:     rgb:b0/c4/de
+*.color5:     rgb:ba/55/d3
+*.color6:     rgb:46/82/b4
+*.color7:     rgb:d3/d3/d3
+*.color8:     rgb:4d/4d/4d
+*.color9:     rgb:ff/6a/6a
+*.color10:    rgb:8f/bc/8f
+*.color11:    rgb:ff/fa/cd
+*.color12:    rgb:1e/90/ff
+*.color13:    rgb:db/70/93
+*.color14:    rgb:5f/9e/a0
+*.color15:    rgb:ff/ff/ff
+EOF
+	    ;;
+	6|brownburn)
+	    recolor <<EOF
+*.foreground:	#daba8b
+*.background:	#191716
+*.color0:	#0f0e0d
+*.color8:	#383332
+*.color1:	#845336
+*.color9:	#8c4f4a
+*.color2:	#57553c
+*.color10:	#898471
+*.color3:	#a17e3e
+*.color11:	#c8b491
+*.color4:	#43454f
+*.color12:	#65788f
+*.color5:	#604848
+*.color13:	#755e4a
+*.color6:	#5c6652
+*.color14:	#718062
+*.color7:	#a18b62
+*.color15:	#bc9d66
+EOF
+	    ;;
+	7|redmoon)
+	    recolor <<EOF
+*.foreground:	#ffffff
+*.background:	#000000
+*.color0:	#322a2c
+*.color8:	#46423b
+*.color1:	#79220e
+*.color9:	#aa261f
+*.color2:	#344b1b
+*.color10:	#76550f
+*.color3:	#b45b00
+*.color11:	#b57f02
+*.color4:	#434045
+*.color12:	#908862
+*.color5:	#5c1e25
+*.color13:	#624a35
+*.color6:	#394745
+*.color14:	#393e38
+*.color7:	#ae8842
+*.color15:	#a59058
+EOF
+	    ;;
+	8|monokai)
+	    recolor <<EOF
+*.foreground:	#f1ebeb
+*.background:	#272822
+*.cursorColor:	#f1ebeb
+*.color0:	#48483e
+*.color8:	#76715e
+*.color1:	#dc2566
+*.color9:	#fa2772
+*.color2:	#8fc029
+*.color10:	#a7e22e
+*.color3:	#d4c96e
+*.color11:	#e7db75
+*.color4:	#55bcce
+*.color12:	#66d9ee
+*.color5:	#9358fe
+*.color13:	#ae82ff
+*.color6:	#56b7a5
+*.color14:	#66efd5
+*.color7:	#acada1
+*.color15:	#cfd0c2
+EOF
+	    ;;
+	9|material)
+	    recolor <<EOF
+*.foreground:	#eceff1
+*.background:	#263238
+*.color0:	#263238
+*.color8:	#37474f
+*.color1:	#ff9800
+*.color9:	#ffa74d
+*.color2:	#8bc34a
+*.color10:	#9ccc65
+*.color3:	#ffc107
+*.color11:	#ffa000
+*.color4:	#03a9f4
+*.color12:	#81d4fa
+*.color5:	#e91e63
+*.color13:	#ad1457
+*.color6:	#009688
+*.color14:	#26a69a
+*.color7:	#cfd8dc
+*.color15:	#eceff1
+EOF
+	    ;;
+	a|themea)
+	    recolor <<EOF
+*.background: rgb:1d/2b/3a
+*.foreground: rgb:be/be/be
+*.color0:     rgb:00/00/00
+*.color1:     rgb:d3/62/65
+*.color2:     rgb:ae/ce/91
+*.color3:     rgb:e7/e1/8c
+*.color4:     rgb:7a/7a/b0
+*.color5:     rgb:96/3c/59
+*.color6:     rgb:41/81/79
+*.color7:     rgb:be/be/be
+*.color8:     rgb:66/66/66
+*.color9:     rgb:ef/81/71
+*.color10:    rgb:e5/f7/79
+*.color11:    rgb:ff/f7/99
+*.color12:    rgb:41/86/be
+*.color13:    rgb:ef/9e/be
+*.color14:    rgb:71/be/be
+*.color15:    rgb:ff/ff/ff
+EOF
+	    ;;
+	d|debian)
+	    recolor <<EOF
+*.foreground:	gray90
+*.background:	black
+*.color0:	black
+*.color1:	red3
+*.color2:	green3
+*.color3:	yellow3
+*.color4:	DodgerBlue1
+*.color5:	magenta3
+*.color6:	cyan3
+*.color7:	gray90
+*.color8:	gray50
+*.color9:	red
+*.color10:	green
+*.color11:	yellow
+*.color12:	SteelBlue1
+*.color13:	magenta
+*.color14:	cyan
+*.color15:	white
+EOF
+	    ;;
+	-h|-?|--help)
+	    usage
+	    ;;
+	*)
+	    echo "usage: term-recolor {number or theme name}"
+	    echo "       use -h for help"
+	    ;;
+    esac
+fi
+
+
+# 
+# term-recolor ends here

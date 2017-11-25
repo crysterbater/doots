@@ -1,0 +1,4 @@
+
+#!/bin/bash
+
+termite -c ~/.config/termite/small-font-config

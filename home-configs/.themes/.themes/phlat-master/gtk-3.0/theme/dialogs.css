@@ -1,0 +1,29 @@
+messagedialog .dialog-action-area > button,
+messagedialog .dialog-action-area > button:backdrop {
+margin:0px 8px;}
+
+printdialog.background>*,
+printdialog.background>*:backdrop{
+background:@bg_color;}
+
+
+filechooser>actionbar *,
+filechooser>actionbar *:backdrop{
+margin:1px;}
+filechooser #pathbarbox,
+filechooser #pathbarbox:backdrop{
+border-bottom: 1px solid @border_color;}
+filechooser #pathbarbox{
+border-bottom: 1px solid @border_color;}
+filechooser paned.horizontal>separator,
+filechooser paned.horizontal>separator:backdrop {
+margin-right:0px;}
+filechooser paned.horizontal>separator:dir(rtl),
+filechooser paned.horizontal>separator:dir(rtl):backdrop {
+margin-left:0px;}
+filechooser>box>paned,
+filechooser>box>paned:backdrop {
+border-bottom:1px solid @border_color;}
+filechooser>box>paned>box>box>stack>placesview>stack>frame>scrolledwindow,
+filechooser>box>paned>box>box>stack>placesview>stack>frame>scrolledwindow:backdrop{
+margin:-1px;}

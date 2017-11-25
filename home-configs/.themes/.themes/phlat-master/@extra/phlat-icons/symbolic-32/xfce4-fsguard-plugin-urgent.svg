@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32">
+    <path style="line-height:normal;-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M3.188 0A2.197 2.197 0 0 0 1 2.188v11.624C1 15.012 1.986 16 3.188 16h5.146A1.332 1.332 0 0 1 7 14.666V14H3.187C3.063 14 3 13.944 3 13.812V2.188C3 2.054 3.063 2 3.188 2h9.624c.125 0 .188.057.188.188V7h1.666c.116 0 .227.02.334.047v-4.86A2.197 2.197 0 0 0 12.812 0H3.188z" fill="#f1f2f2"/>
+    <path style="marker:none" d="M8.125 2.998A3.985 3.985 0 0 0 7.844 3c-.266.01-.545.059-.813.125a3.99 3.99 0 0 0-2.906 4.844A3.985 3.985 0 0 0 7 10.865V8.334c0-.264.095-.497.227-.703A1 1 0 1 1 9 7h2.982a4.121 4.121 0 0 0-.107-.969 3.985 3.985 0 0 0-3.75-3.033z" fill="#f1f2f2"/>
+    <path style="marker:none" class="warning" d="M8.875 8.062A.86.86 0 0 0 8 8.928v6.195a.86.86 0 0 0 .875.868h6.25a.86.86 0 0 0 .875-.868V8.929a.86.86 0 0 0-.875-.868zm2.125.99h2v3.966h-2zm0 4.957h2V15h-2z" overflow="visible" color="#f1f2f2" fill="#c00"/>
+</svg>

@@ -1,0 +1,39 @@
+/**********
+ * Switch *
+ **********/
+GtkSwitch {
+  font: 1;
+  -GtkSwitch-slider-width: 26;
+  -GtkSwitch-slider-height: 24;
+  outline-color: transparent;
+  transition: all 500ms linear; 
+  background-size: 52px 24px;
+}
+
+
+GtkSwitch.trough {
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
+    border-image: none;
+    border-style: none;
+    box-shadow: none; 
+}
+
+GtkSwitch.slider {
+    background-size: 14px 14px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
+    border-image: none;
+    border-style: none;
+    box-shadow: none; 
+}
+
+GtkSwitch.trough:dir(rtl), GtkSwitch.slider:dir(rtl) {
+      background-position: left center; 
+}

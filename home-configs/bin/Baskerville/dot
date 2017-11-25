@@ -1,0 +1,15 @@
+#! /bin/dash
+
+while [ $# -gt 0 ] ; do
+    pattern=$1
+    exact_match="$XDG_DOTFILES_DIR/$pattern"
+    if [ -e "$exact_match" ] ; then
+        editor "$exact_match"
+    else
+        dots=$(find "$XDG_DOTFILES_DIR" -path "*/.git/*" -prune -o -type f -iname "${pattern}*" -print0 | xargs -0)
+        if [ -n "$dots" ] ; then
+            editor $dots
+        fi
+    fi
+    shift
+done

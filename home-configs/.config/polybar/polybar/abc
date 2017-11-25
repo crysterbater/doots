@@ -1,0 +1,497 @@
+[colors]
+background = #0B1219
+background-alt = #03020a
+foreground = #DDDDDD
+foreground-alt = #E3A6AF
+fg-1 = #E3A6AF
+fg-2 = #ffd494
+primary = #E3C2A6
+secondary = #C4475F
+alert = #C44788
+
+[bar/top]
+monitor = eDP1
+width = 100%
+height = 30
+;offset-y=500
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = siji:pixelsize=10:antialias=false;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = MaterialIcons:size=10:antialias=false;2
+font-3 = Unifont Upper:fontformat=truetype:size1:antialias=false;0
+font-4 = artwiz cure:pixelsize=10:antialias=false;1
+font-5 = FontAwesome:pixelsize=10:antialias=false;1
+
+modules-left = workspaces
+;modules-center =
+modules-right = menu seperator date
+
+tray-position = right
+tray-padding = 2
+
+[module/ewmh]
+type = internal/xworkspaces
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+
+; Create click handler used to focus desktop
+; Default: true
+enable-click = false
+
+; Create scroll handlers used to cycle desktops
+; Default: true
+enable-scroll = false
+
+line-size = 3
+line-color = #f00
+
+[bar/notification]
+monitor = eDP1
+width = 8%
+height = 24
+offset-x = 1925
+;offset-x = 1240
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 10
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = MonteCarlo:pixelsize=12:antialias=false;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10:antialias=false;1
+font-3 = Unifont Upper:fontformat=truetype:size8:antialias=false;0
+font-4 = artwiz cure:pixelsize=10:antialias=false;1
+font-5 = FontAwesome:pixelsize=10:antialias=false;1
+
+modules-left =
+modules-center = mail
+modules-right =
+
+tray-position = right
+tray-padding = 2
+
+[module/notify]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = ">> "
+format-prefix-foreground = #bc7374
+format-underline = #c38159
+exec = ~/scripts/update
+
+[bar/bottom]
+monitor = eDP1
+width = 100%
+height = 30
+offset-x=0
+offset-y=0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 8
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = siji:pixelsize=10:antialias=false;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = MaterialIcons:size=10:antialias=false;2
+font-3 = Unifont Upper:fontformat=truetype:size1:antialias=false;0
+font-4 = artwiz cure:pixelsize=10:antialias=false;1
+font-5 = FontAwesome:pixelsize=10:antialias=false;1
+
+modules-left = workspaces
+modules-center = powermenu
+modules-right = xbacklight volume cpu memory date
+
+tray-position = right
+tray-padding = 2
+
+
+[module/lock]
+type = custom/script
+interval = 2
+format = <label>
+format-prefix = "🔒"
+format-prefix-foreground = #8F90B3
+exec = echo " "
+click-left = ~/scripts/lock_poly
+format-underline = #ffd494
+
+[module/mpd]
+type = internal/mpd
+host = 127.0.0.1
+port = 6600
+interval = 2
+format-prefix = ⏵
+format-prefix-foreground = #BF139E
+; Available tags:
+;   <label-song> (default)
+format-online = <label-song> <bar-progress>
+;format-playing = ${self.format-online}
+;format-paused = ${self.format-online}
+;format-stopped = ${self.format-online}
+
+; Available tags:
+;   <label-offline>
+;format-offline = <label-offline>
+
+; Available tokens:
+;   %artist%
+;   %album%
+;   %date%
+;   %title%
+; Default: %artist% - %title%
+label-song = %artist% - %title%
+
+; Available tokens:
+;   %elapsed%
+;   %total%
+; Default: %elapsed% / %total%
+;label-time = %elapsed% / %total%
+
+; Available tokens:
+;   None
+label-offline = 🎜 mpd is offline
+
+; Used to display the state of random/repeat/repeatone
+; Only applies if <icon-[random|repeat|repeatone]> is used
+toggle-on-foreground = #ff
+toggle-off-foreground = #55
+
+; Only applies if <bar-progress> is used
+bar-progress-width = 10
+bar-progress-indicator = ◈
+bar-progress-fill = ◆
+bar-progress-empty = ◇
+bar-progress-empty-foreground = #256f8a
+bar-progress-fill-foreground = #bc7374
+
+[module/xbacklight]
+type = internal/xbacklight
+output = eDP-1
+format = <ramp> <bar>
+
+ramp-0 = 
+ramp-0-foreground = #666
+ramp-1 = 
+ramp-1-foreground = #999
+ramp-2 = 
+ramp-2-foreground = #fff
+
+bar-width = 12
+bar-indicator = 
+bar-indicator-font = 2
+bar-indicator-foreground = #ffffff
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = #F97B75
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = #262B36
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = " "
+format-prefix-foreground = #256f8a
+format-underline = #c38159
+exec = ~/.config/polybar/weather
+
+[module/love]
+type = custom/script
+interval = 2
+format = <label>
+format-prefix = "❤"
+format-prefix-foreground = #2ae1df
+exec = echo " "
+click-left = /bin/love
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "ܭ "
+format-prefix-foreground = #D977B4
+format-underline = #EFA5B6
+label = %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "ᚎ "
+format-prefix-foreground = #24949b
+format-underline = #F4436F
+label = %percentage_used%%
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %d/%m (%a)"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format-prefix = ɸ
+format-prefix-foreground = #55b9b0
+;format-underline = #EFB3C1
+
+label = %date% %time%
+
+[module/volume]
+type = internal/volume
+
+format-volume = <label-volume> <bar-volume>
+label-volume = "🔊"
+label-volume-foreground = #90233f
+
+format-muted-foreground = #90233f
+label-muted = "🔇"
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #bc7374
+bar-volume-foreground-1 = #bc7374
+bar-volume-foreground-2 = #bc7374
+bar-volume-foreground-3 = #A32149
+bar-volume-foreground-4 = #55b9b0
+bar-volume-foreground-5 = #2ae1df
+bar-volume-foreground-6 = #2ae1df
+bar-volume-gradient = true
+bar-volume-indicator =
+bar-volume-indicator-font = 2
+bar-volume-fill = •
+bar-volume-fill-font = 2
+bar-volume-empty = ·
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = #666666
+format-underline = #EFB3C1
+
+[module/seperator]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator2]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator3]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/powermenu]
+type = custom/menu
+format-spacing = 1
+format-background = #0B1219
+label-open = "   "
+label-open-foreground = #ffffff
+label-open-background = #0B1219
+label-close = "    "
+label-close-foreground = #D977B4
+label-separator = " | "
+label-separator-foreground = #EFB3C1
+format-underline = #EF838B
+# Top level
+menu-0-0 = "  Favorites "
+menu-0-0-exec = menu-open-1
+menu-0-1 = "  Utility"
+menu-0-1-exec = menu-open-2
+menu-0-2 = "  System "
+menu-0-2-exec = menu-open-3
+# 1
+menu-1-0 = "  "
+menu-1-0-exec = vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch FileManager
+menu-1-3 = "  "
+menu-1-3-exec = gcolor2 &
+# 2
+menu-2-0 = "  "
+menu-2-0-exec = audacious &
+menu-2-1 = "  "
+menu-2-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-2-2 = "  "
+menu-2-2-exec = lxappearance &
+menu-2-3 = "  "
+menu-2-3-exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+# 3
+menu-3-0 = "   "
+menu-3-0-exec = slimlock
+menu-3-1 = "   "
+menu-3-1-exec = openbox --exit
+menu-3-2 = "  "
+menu-3-2-exec = systemctl reboot
+menu-3-3 = "  "
+menu-3-3-exec = systemctl poweroff
+
+[module/pipe]
+type = custom/text
+content = "|"
+content-background = #0A0D15
+content-foreground = #0A0D15
+content-padding = 1
+
+[module/mail]
+type = custom/script
+interval = 10
+format = <label>
+label = 
+click-left = xdg-open https://mail.google.com
+exec = /home/pringle/bin/notify
+
+
+
+[module/menu]
+type = custom/menu
+
+format-spacing = 1
+label-open = "  "
+label-open-foreground = #ffffff
+label-closed-background = #0B1219
+label-close = "  "
+label-close-foreground = #F71649
+label-separator = "│"
+label-separator-foreground = #16A9F7
+menu-0-0 = Most Used
+menu-0-0-exec = menu-open-1
+menu-0-1 = Ricing
+menu-0-1-exec = menu-open-2
+menu-0-2 = Media
+menu-0-2-exec = menu-open-3
+menu-0-3 = 
+menu-0-3-exec = menu-open-4
+
+menu-1-0 = "  "
+menu-1-0-exec = exo-open --launch vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch thunar
+menu-1-3 = "  "
+menu-1-3-exec = atom
+
+menu-2-0 = "  "
+menu-2-0-exec = gcolor2
+menu-2-1 = "  "
+menu-2-1-exec = spotify --force-device-scale-factor=1.5
+menu-2-2 = "  "
+menu-2-2-exec = wpg
+menu-2-3 = "  "
+menu-2-3-exec = yakyak
+menu-2-4 = "  "
+menu-2-4-exec = lxappearance
+menu-2-5 = "  "
+menu-2-5-exec = scrot %F-%S_$wx$h_scrot.png -e 'mv $f ~/images'
+
+menu-3-0 = "  "
+menu-3-0-exec = audacious &
+menu-3-1 = "  "
+menu-3-1-exec = playerctl stop
+menu-3-2 = "  "
+menu-3-2-exec = playerctl previous
+menu-3-3 = "  "
+menu-3-3-exec = playerctl play-pause
+menu-3-4 = "  "
+menu-3-4-exec = playerctl next
+
+menu-4-0 = "  "
+menu-4-0-exec = slimlock
+menu-4-1 = "  "
+menu-4-1-exec = systemctl reboot
+menu-4-2 = "  "
+menu-4-2-exec = systemctl poweroff
+
+[module/workspaces]
+type = internal/xworkspaces
+enable-click = true
+enable-scroll = true
+format-padding = 1
+Additional formatting
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+;icon-default = 
+
+format = <label-state>
+label-monitor = %name%
+
+label-active = " %icon% "
+label-active-foreground = #16A9F7
+label-active-background = #0B1219
+label-active-underline = #ffffff
+
+label-occupied = " %icon% %name% "
+label-occupied-underline = #ffffff
+label-occupied-background = #0B1219
+label-occupied-foreground = #ffffff
+
+label-urgent = " %icon% %name% "
+label-urgent-foreground = #ffffff
+label-urgent-background = #0B1219
+label-urgent-underline = #C3437F
+
+label-empty = " %icon% "
+label-empty-foreground = ${colors.foreground}
+
+; vim:ft=dosini
+
+;
+;
+;
+;      

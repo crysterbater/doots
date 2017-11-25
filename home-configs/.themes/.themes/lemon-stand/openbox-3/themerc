@@ -1,0 +1,108 @@
+#lemonade-stand by Smoke
+#### Menu ####
+
+## Title
+menu.title.bg: raised solid
+menu.title.bg.color: #F3FE4D
+menu.title.text.color: #141414
+menu.title.text.justify: center
+
+#### Items ####
+
+# Background
+menu.items.bg: flat solid
+menu.items.bg.color: #141414
+menu.items.active.bg: raised solid
+menu.items.active.bg.color: #141414
+
+# Text
+menu.items.text.color: #B2B2B2
+menu.items.active.text.color: #F3FE4D
+menu.items.disabled.text.color: #33393B
+
+# Seperator
+menu.separator.color: #B2B2B2
+menu.separator.width: 1
+menu.separator.padding.width: 8
+menu.separator.padding.height: 8
+
+# Border
+menu.border.width: 2
+menu.border.color: #000000
+
+# Overlap
+menu.overlap.x: -6
+menu.overlap.y: 0
+
+
+#### Window ####
+
+##Active Title
+window.active.title.bg: raised solid
+window.active.title.bg.color: #141414
+window.active.label.bg: parentrelative
+window.active.label.text.color: #F3FE4D
+
+## Inactive Title
+window.inactive.title.bg: raised solid
+window.inactive.title.bg.color:  #141414
+window.inactive.label.bg: parentrelative
+window.inactive.label.text.color: #606060
+
+## Title Seperator
+window.active.title.separator.color:  #000000
+window.inactive.title.separator.color: #000000
+window.title.seperater.width: 1
+
+## Active Window Buttons
+window.active.button.unpressed.bg: parentrelative
+window.active.button.unpressed.image.color: #F3FE4D
+window.active.button.pressed.bg: raised solid
+window.active.button.pressed.bg.color: #F3FE4D
+window.active.button.pressed.image.color: #141414
+window.active.button.disabled.bg: parentrelative
+window.active.button.disabled.image.color: #141414
+window.active.button.hover.bg: raised solid
+window.active.button.hover.bg.color: #F3FE4D
+window.active.button.hover.image.color: #141414
+window.active.button.toggled.bg: parentrelative
+window.active.button.toggled.image.color: #F3FE4D
+
+## Inactive Window Buttons
+window.inactive.button.unpressed.bg: parentrelative
+window.inactive.button.unpressed.image.color: #606060
+window.inactive.button.pressed.bg: raised solid
+window.inactive.button.pressed.bg.color: #F3FE4D
+window.inactive.button.pressed.image.color: #141414
+window.inactive.button.disabled.bg: parentrelative
+window.inactive.button.disabled.image.color: #141414
+window.inactive.button.hover.bg: raised solid
+window.inactive.button.hover.bg.color: #F3FE4D
+window.inactive.button.hover.image.color: #141414
+window.inactive.button.toggled.bg: parentrelative
+window.inactive.button.toggled.image.color: #F3FE4D
+
+## Window Borders & padding
+border.color: #000000
+border.width: 1
+padding.width: 4
+padding.height: 3
+window.handle.width: 0
+window.client.padding.width: 0
+window.client.padding.height: 0
+window.label.text.justify: center
+
+####OSD (Alt+Tab etc) uses this ####
+osd.border.width: 1
+osd.border.color: #141414
+osd.bg: flat solid
+osd.bg.color: #141414
+osd.label.bg: flat solid
+osd.label.bg.color: #F3FE4D
+osd.label.text.color: #606060
+osd.hilight.bg: raised solid
+osd.hilight.bg.color:#F3FE4D
+osd.unhilight.bg: flat solid
+osd.unhilight.bg.color:#141414
+osd.button.focused.bg.color: #F3FE4D
+osd.button.focused.box.color: #F3FE4D

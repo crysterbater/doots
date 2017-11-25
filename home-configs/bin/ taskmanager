@@ -1,0 +1,198 @@
+#!/usr/bin/env bash
+#
+# Barebones bash task-manager for linux.
+#
+# Copyright (C) 2017 Arnaud VALLETTE d'OSIA
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# quit if not run interactively ( = in a terminal )
+[[ -t 0 ]] || exit
+
+# refresh screen if terminal gets resized
+trap 'display_refresh' WINCH
+
+readonly version_date='2017.08.07'
+readonly temperatures='/sys/devices/platform/coretemp.0/hwmon/hwmon0/temp*input'
+readonly user_helpstr="$(basename "$0") barebones task-manager
+version: ${version_date}
+Most keys will filter as you type. Some have bindings:
+ [Enter]         refresh.
+ [Escape]        reset filter or quit.
+ [Delete]        asks for killling selected process. (SIGTERM)
+ [Shift]+[Del.]  asks for killling selected process. (SIGKILL)
+ [Tab.]          cycle sorting modes: #PID(default), %CPU and RSS."
+
+# a command line argument? => user needs either help or version number.
+[[ $# -eq 0 ]] || { echo "${user_helpstr}"; exit; }
+
+filter_str=''
+sort_index=1
+sort_cname='PID'
+future_msg=''
+
+initialize_cpu_times () {
+    read cpu user nice system idle iowait irq softirq steal garb< /proc/stat
+    cpu_active_cur=$((user+system+nice+softirq+steal))
+    cpu_total_cur=$((cpu_active_cur+idle+iowait))
+    sleep 0.3;
+}
+initialize_cpu_times
+
+display_cpu() {
+    cpu_active_prev=${cpu_active_cur}
+    cpu_total_prev=${cpu_total_cur}
+
+    read cpu user nice system idle iowait irq softirq steal garb< /proc/stat
+    cpu_active_cur=$(( user+system+nice+softirq+steal ))
+    cpu_total_cur=$(( cpu_active_cur+idle+iowait ))
+
+    cpu_load=$(( 100*( cpu_active_cur-cpu_active_prev ) \
+               / (cpu_total_cur-cpu_total_prev) ))
+
+    printf "CPU load: %02d%% and temperatures:" "$cpu_load"
+    for var in $(cat ${temperatures}); do
+        printf " %s°c" "${var%???}"
+    done
+    printf "\n\n"
+}
+
+display_mem() {
+    # do it unlocalized so columns have predictable names for coloring
+    LC_ALL=C free
+}
+
+display_message() {
+    # http://misc.flogisoft.com/bash/tip_colors_and_formatting
+    [[ ${future_msg} ]] && printf "\e[1m%s\e[0m " "${future_msg}";
+    future_msg=''
+    printf "Filter: \e[1m%s\e[0m" "${filter_str}";
+}
+
+display_tasks() {
+    # http://tldp.org/HOWTO/Bash-Prompt-HOWTO/x361.html
+    # printf "\033[4;1H" # move the cursor to 4th line, first column:
+    # printf "\033[K" # erase to end of line : \033[K
+
+    echo "${tasks}" | head -n 1 | grep --color=always ${sort_cname}
+
+    table="$( echo "${tasks}"            \
+        | tail -n +2                     \
+        | sort -b -n -k ${sort_index} -r \
+        | head -n $(( ${lines} - 7 ))    \
+        | cut -c 1-${cols}
+    )"
+
+    color_filter=''
+    [[ -z ${filter_str} ]] || {
+        for var in ${filter_str} ; do
+            table=$( echo "${table}" | grep -i "${var}" )
+        done
+        color_filter="^|$(echo "${filter_str}" | sed 's/ /|/g')"
+    }
+    echo "${table}" | grep -i --color=always -E "$color_filter"
+
+    display_message
+}
+
+append_filter() {
+    [[ "$1" =~ ^[[:print:]]*$ ]] || return
+    [[ "$1" == "\e" ]] && return
+    filter_str+="$1"
+}
+
+delete_filter() {
+    filter_str="${filter_str/%?}"
+}
+
+cycle_sorting() {
+    [[ "${sort_index}" -eq "1" ]] && {
+        sort_index=3
+        sort_cname="%CPU"
+        return
+    }
+    [[ "${sort_index}" -eq "3" ]] && {
+        sort_index=4
+        sort_cname="RSS"
+        return
+    }
+    sort_index=1
+    sort_cname="PID"
+}
+
+esc_key_press() {
+    # reset eventual filter. Otherwise quit with new-line.
+    echo
+    [[ "${filter_str}" ]] || exit
+    filter_str=''
+}
+
+kill_selected() {
+    sig=${1:-15}
+    pid=$(echo " ${table}" | head -n 1 | awk '{print $1;}')
+    printf "\033[7;1H" # move cursor to 7th row, 1st column
+    printf "\n\033[K\n\033[K\e[1mKill pid %s with signal %s?\e[0m (y/N):\n\033[K" "$pid" "$sig"
+    read -r -n 1 var
+    read -sr -t0.0001 # consume eventual remaining scancodes
+    future_msg="no process killed"
+    [[ ${var} =~ ^[Yy]$ ]] || return
+    kill -s ${sig} ${pid} && future_msg="killed $pid"
+    filter_str=''
+}
+
+process_refresh() {
+    tasks=$(ps -eo pid,user,pcpu,rss,cmd)
+}
+
+process_refresh
+
+display_refresh() {
+    # clear screen, move cursor to 0,0 and get screen size.
+    # printf "\033[2J"
+    clear
+    lines=$(tput lines)
+    cols=$(tput cols)
+
+    display_mem
+    display_cpu
+    display_tasks
+}
+
+read_full_key() {
+    # thanks to dethrophes on http://www.linuxquestions.org for his example.
+    scancode=''
+    while IFS='' read -srN1 -t0.0001 ; do
+        scancode+="${REPLY}"
+    done
+    case ${scancode} in
+        '[3~' )    kill_selected ;;             # Del.
+        '[3;2~' )  kill_selected 9 ;;           # Shift + Del.
+        '[15~' )   display_refresh ;;           # F5
+        ''    )    esc_key_press ;;             # Esc.
+        *     )    future_msg="Unbound key ${scancode}" ;;
+    esac
+}
+
+while true; do
+    display_refresh
+    read -sn 1
+    case ${REPLY} in
+        $'\E' )            read_full_key ;;     # Full scancode
+        $'\t' )            cycle_sorting ;;     # Tab.
+        ''|$'\n' )         process_refresh ;;   # Enter
+        $'\ch'|$'\x7f' )   delete_filter ;;     # Backspace
+        * )                append_filter "${REPLY}" ;;
+    esac
+done
+

@@ -1,0 +1,12 @@
+QMenuBar{
+border-color:transparent;
+background:#424141;
+font-weight:bold;}
+QMenuBar::item,
+QMenuBar::item:selected {
+color:#f1f2f2;}
+QMenuBar::item:disabled {
+color:#656666;}
+QMenuBar::item:pressed {
+color:palette(highlight);
+background: #212020;}

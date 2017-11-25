@@ -1,0 +1,64 @@
+#!/bin/sh
+# requires imagemagick, mpc
+set -e
+
+thumbdir="$HOME/.cache/mpdthumbs"
+musicdir="/home/pringle/Music"
+
+usage() {
+	cat 1>&2 <<-EOF
+	usage: albumart [option ...]
+	  -f       print path to original cover
+	  -s geom  imagemagic -resize geometry (e.g. "100x100") (default: "x364>")
+	  -h       show help
+	EOF
+}
+
+full=0
+s="x364>"
+
+while :; do
+	case "$1" in
+	'') break ;;
+	-f) full=1; shift ;;
+	-s) s="$2"; shift 2 ;;
+	-h) usage; exit ;;
+	*) printf 'albumart: invalid argument: %s\n' "$1" 1>&2; exit 1 ;;
+	esac
+done
+
+musicfile="$(mpc current -f '%file%')"
+if [ -z "$musicfile" ]; then
+	exit 1
+fi
+
+# find a cover in the directory of the currently playing file
+cover="$(find "$musicdir/${musicfile%/*}" -iname 'cover*' -print -quit)"
+
+if [ -z "$cover" ]; then
+	printf 'albumart: no cover in %s\n' "$musicdir/${musicfile%/*}" 1>&2
+	exit 1
+fi
+
+if [ "$full" = 1 ]; then
+	printf '%s' "$cover"
+	exit
+fi
+
+# check for a fresh cached thumbnail
+coverthumb="$thumbdir/${musicfile%/*}/${s}.png"
+if [ -r "$coverthumb" ] && [ "$cover" -ot "$coverthumb" ]; then
+	printf '%s' "$coverthumb"
+	exit
+fi
+
+mkdir -p "${coverthumb%/*}"
+convert "$cover" \
+	-colorspace RGB \
+	-filter Lanczos -define filter:blur=.9891028367558475 \
+	-distort Resize "${s}" \
+	-colorspace sRGB \
+	-gravity center \
+	"$coverthumb" 1>&2
+
+printf '%s' "$coverthumb"

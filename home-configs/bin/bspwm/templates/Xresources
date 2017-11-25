@@ -1,0 +1,24 @@
+st.font: {{st_font}}
+st.borderpx: {{st_borderpx}}
+st.cursorshape: {{st_cursorshape}}
+st.cursorthickness: {{st_cursorthickness}}
+st.prompt_char: {{PROMPT_CHAR}}
+
+Emacs.internalBorder: {{st_borderpx}}
+
+! note: these aren't official, I'm referencing them in config.
+Emacs.theme: {{emacs_theme}}
+Emacs.powerlinescale: {{emacs_powerline_scale}}
+Emacs.powerline: {{emacs_powerline}}
+
+! dmenu2 can read from Xresources.
+dmenu.font: {{p_font_main}}
+dmenu.foreground: #{{p_fg_normal}}
+dmenu.background: #{{p_bg_normal}}
+dmenu.selforeground: #{{p_fg_active}}
+dmenu.selbackground: #{{p_bg_active}}
+dmenu.dimcolor: #{{p_bg_normal}}
+
+! colors (appended in ltheme script)
+*.background: #{{background}}
+*.foreground: #{{foreground}}

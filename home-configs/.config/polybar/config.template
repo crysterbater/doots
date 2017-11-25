@@ -1,0 +1,68 @@
+;=====================================================
+;     Includes
+;=====================================================
+
+[section/base]
+include-file = /home/pringle/.config/polybar/master.conf
+include-file = /home/pringle/.config/polybar/modules.conf
+
+
+;=====================================================
+;     i3 Bars
+;=====================================================
+
+[bar/bar]
+inherit = bar/master
+monitor = eDP1
+monitor-strict = false
+modules-left =  config workspaces menu
+modules-center = mpd
+modules-right = pkg keyboard volume clock
+
+
+[bar/bar1]
+inherit = bar/master
+monitor = HDMI1
+monitor-strict = false
+
+modules-left = workspaces menu
+modules-center = redshift compton
+modules-right = memory temp coreuse
+
+
+;;;;;; Tray is commented out ;;;;;;;;AllowGSYNC=On}
+;tray-position = right
+;tray-padding = 10
+;tray-background = ${colors.b-alt}
+
+
+;=====================================================
+;     Openbox Bars
+;=====================================================
+
+[bar/bar2]
+inherit = bar/master
+
+monitor = eDP1
+monitor-strict = false
+
+modules-left = xworkspaces rofi powermenu config
+modules-center = window_count
+modules-right = pkg network keyboard volume clock
+
+
+[bar/bar3]
+inherit = bar/master
+
+monitor = HDMI1
+monitor-strict = false
+
+modules-left = xworkspaces config
+modules-center = window_count
+modules-right = memory temp coreuse powermenu
+
+
+;;;;;; Tray is commented out ;;;;;;;;
+;tray-position = right
+;tray-padding = 10
+;tray-background = ${colors.b-alt}

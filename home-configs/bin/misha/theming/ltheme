@@ -1,0 +1,287 @@
+#!/usr/bin/env bash
+# Load themes for programs from current theme
+
+# relative:
+cd $(dirname $([ -L $0  ] && readlink -f $0 || echo $0))
+PATH="$PATH:."
+
+set -a
+
+eval "$(theme get)"
+
+. "./mustache.sh"
+
+# adjust pIcon to theme (rel for panel, acyl, qutebrowser.)
+if [ "$p_icon" = "unset" ]; then
+    colort -c "$p_bg_active" && intensity=40 || intensity=60
+
+    p_icon=$(colort -c "$p_fg_inactive" && \
+                 colort -l -$intensity "$p_fg_inactive" || \
+                 colort -l $intensity "$p_fg_inactive")
+
+    [ $? -ne 0 ] && p_icon=$(colort -c "$p_fg_inactive" && \
+                                 colort -l $intensity "$p_fg_inactive" || \
+                                 colort -l -$intensity "$p_fg_inactive")
+    p_icon="$(colort -t $p_icon)"
+fi
+
+# mustache args, cache.
+# usage: margs <template name> <destination>
+# <destination> is relative to $HOME
+margs() {
+    cache=false
+    template="$(eval echo \$${1}_template)"
+    target="$HOME/$2"
+    mkdir -p "${target%/*}"
+
+    if $cache; then
+        cachefile="/tmp/template/$THEME_NAME/$2"
+        if [ ! -f "$cachefile" ]; then
+            mkdir -p "${cachefile%/*}"
+            mustache < "$template" > "$cachefile"
+            cp "$cachefile" "$target"
+            return 1
+        fi
+        cp "$cachefile" "$target"
+        return 0
+    fi
+
+    mustache < "$template" > "$target"
+    return 1
+}
+
+git_ensure() {
+    gitdir="$HOME/git"
+    case "$1" in
+        acyl) gittarget="https://github.com/neeasade/acyl"
+            gitdir="$HOME/.icons/"
+            ;;
+        oomox) gittarget="https://github.com/actionless/oomox-gtk-theme/" ;;
+        css) gittarget="https://github.com/neeasade/solarized-everything-css" ;;
+    esac
+
+    [ ! -d "$gitdir" ] && mkdir -p "$gitdir"
+    gitdest="$gitdir/$(basename "$gittarget")"
+    [ ! -d "$gitdest" ] && git clone "$gittarget" "$gitdest"
+}
+
+trim_alphas() {
+    for target in active inactive normal; do
+        eval p_fg_$target=$(eval colort -t "\$p_fg_$target")
+        eval p_bg_$target=$(eval colort -t "\$p_bg_$target")
+    done
+
+    p_icon=$(colort -t "$p_icon")
+}
+
+load_tmux() {
+    margs tmux .tmux.conf
+    pgrep tmux && tmux source-file "$HOME/.tmux.conf"
+}
+
+load_weechat() {
+    # weechat opens a fifo in this location that is on/enabled by default.
+    wee_cmd() {
+        echo "*$*" > "$HOME/.weechat/weechat_fifo"
+        sleep 0.5
+    }
+
+    margs weechat .weechat/weechat.conf
+
+    # check for buffers.pl, assume we need to install plugins if it's not present.
+    [ ! -f "$HOME/.weechat/perl/buffers.pl" ] && \
+        wee_cmd '/script install autoconnect.py buffers.pl highmon.pl autosort.py notify.py'
+
+    wee_cmd '/reload'
+    sleep 2
+
+    # buffers.pl dies on reload
+    wee_cmd '/perl unload buffers'
+
+    wee_cmd '/perl load buffers.pl'
+}
+
+load_compton() {
+    pkill compton
+    margs compton .config/compton.conf
+    compton &
+}
+
+load_bg() {
+    eval "$BG_COMMAND"
+}
+
+# also loads xst, emacs
+load_xresources() {
+    trim_alphas
+
+    if ! margs Xresources .Xresources; then
+        # handle any color definitions through 255
+        for i in `seq 0 255`; do
+            eval "[ ! -z \$color$i ] && echo \*.color$i: \#\$color$i >> $HOME/.Xresources"
+        done
+        [ ! -z "$cachefile" ] && cp "$HOME/.Xresources" "$cachefile"
+    fi
+
+    xrdb $HOME/.Xresources
+
+    load_emacs
+    load_xst
+}
+
+load_emacs() {
+    emacsclient --eval "(neeasade/style)"
+}
+
+load_xst() {
+    pkill -x --signal USR1 st
+}
+
+load_bspwm() {
+    if [ "${p_launch_cmd##*/}" = "lemonade" ]; then
+        load_lemonade
+    fi
+
+    bspwmrc=".config/bspwm/bspwmrc"
+    panelt=".wm/scripts/interact/panelt"
+    icon=".wm/panel/tools/icon"
+
+    margs bspwm "$bspwmrc"
+    margs icon "$icon"
+    margs panelt "$panelt"
+    chmod +x "$HOME/$bspwmrc" "$HOME/$panelt" "$HOME/$icon"
+
+    wait
+    setsid "$HOME/$bspwmrc"
+}
+
+load_lemonade() {
+    rm $HOME/.wm/panel/juicers/*
+
+    p_format_1="$p_format"
+    juice_index=0
+    IFS=$'\n'
+    for mon in $(bspc query -M); do
+        juice_index=$((juice_index+1))
+
+        (
+            conf="$(eval echo "\${p_format_${juice_index}}")"
+            [ -z "$conf" ] && conf="$p_format"
+            p_format="$conf"
+
+            juicer_target=".wm/panel/juicers/juicer$juice_index"
+
+            # note all lemons, generate them.
+            lemons=$(echo $p_format | tr ':|' ' ');
+
+            if ! margs juicer "$juicer_target"; then
+
+                . ripen
+                IFS=' '
+                parallel -P 0 "squeeze {}" ::: $lemons >> $HOME/$juicer_target
+                IFS=
+
+                [ ! -z "$cachefile" ] && cp "$HOME/$juicer_target" "$cachefile"
+            fi
+        ) &
+    done
+}
+
+# vim reload
+load_vim() {
+    # defunct.
+    return
+
+    #VIMS=`vim --serverlist`
+    #for vim in $VIMS; do
+    #vim --servername $vim --remote-send '<Esc>:so $MYVIMRC<CR>' &
+    #done
+}
+
+# GTK (make theme if it does not exist, then reload)
+load_gtk() {
+    trim_alphas
+    git_ensure oomox
+
+    if ! margs gtkrc .gtkrc-2.0; then
+        target="$HOME/.themes/${THEME_NAME}_template"
+        mustache < $HOME/.wm/templates/oomox > $target
+        oomox-cli -o "$THEME_NAME" "$target"
+    fi
+
+    # icon color (ACYL)
+    git_ensure acyl
+    $HOME/.icons/acyl/icon.sh "#$p_icon"
+
+    # reload
+    gtkrc-reload &
+
+    # set a place to reference active theme for newly launched GTK3 programs.
+    echo "$THEME_NAME" > $HOME/.themes/ACTIVE_THEME
+}
+
+# qutebrowser
+load_qutebrowser() {
+    trim_alphas
+    git_ensure css
+
+    (
+        margs css "git/solarized-everything-css/styl/my.styl"
+        cd "$HOME/git/solarized-everything-css/"
+        stylus --include styl --import styl/my.styl -p sites/all-sites.styl > css/all.css
+    )
+
+    q_tab_bold="$(iif "echo $p_font_main | grep -q Bold")"
+    q_tab_bold="${q_tab_bold^}"  # bashism
+    q_tab_fontsize="$(echo $p_font_main | grep -Eo '[0-9]+')"
+    q_tab_font="$(echo $p_font_main | sed 's/-.*//')"
+
+    margs qutebrowser .config/qutebrowser/config.py
+
+    # calling this focuses qutebrowser
+    wid=$(bspc query -N -n)
+    qutebrowser :config-source
+    qutebrowser :reload # reload current page w/ css
+
+    bspc node -f $wid
+}
+
+# dunst
+load_dunst() {
+    trim_alphas
+
+    [ $b_border_width -gt 4 ] && b_border_width=$(( $b_border_width/2 ))
+    margs dunstrc .config/dunst/dunstrc
+
+    pkill -x dunst
+    sleep 2 # dunst needs delay(?)
+    dunst &
+}
+
+load_mpd() {
+    music_dir="$HOME/Music"
+    mpd_dir="$HOME/.config/mpd"
+
+    margs mpd .config/mpd/mpd.conf
+    margs mpdcron .config/mpd/mpdcron.conf
+}
+
+load_zathura() {
+    trim_alphas
+    margs zathura .config/zathura/zathurarc
+}
+
+targets="${*:-compton tmux xresources bspwm bg gtk dunst qutebrowser zathura}"
+
+IFS=" "
+for conf in $targets; do
+    (
+    #time="$((time load_$conf) 2>&1 1>/dev/null | tail -n 3 | head -n 1)"
+    #echo $conf : $time >> theme_perf.txt
+    load_$conf >/dev/null
+    echo $conf
+    ) &
+done
+IFS=
+
+disown

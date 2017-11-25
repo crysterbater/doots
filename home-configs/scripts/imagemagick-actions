@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+#	acciones para imagick
+#
+
+ZENITY=$(zenity --entry || exit)
+
+[ "$ZENITY" == "" ] && exit
+
+DIR=$(echo $1 | sed "s/\'//g")
+BASE=$(echo $2 | sed "s/'//g")
+D=$(echo $ZENITY | sed 's/[^a-z0-9]//g;')
+
+cd $1
+
+if [ -d "$BASE" ]; then
+	cd $2
+	mkdir $D
+	mogrify -path $D $ZENITY * | zenity --progress --pulsate --auto-close
+elif [ -f "$BASE" ]; then
+	cp $2 ${BASE%%.*}.backup.${BASE##*.}
+	convert $ZENITY $2 $2
+fi
+module MyMath
+   def self.sum_array(arr)
+     arr.reduce(0) { |acc, x| x + acc }
+   end
+ end
+ 
+puts "Sum is: #{MyMath.sum_array([1, 2, 3])}

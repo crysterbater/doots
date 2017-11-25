@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shobhit's Start Page</title>
+	<!-- Material Design fonts -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<link href="bootstrap.min.css" rel="stylesheet">
+
+	<!-- Bootstrap Material Design -->
+	<link href="bootstrap-material-design-master/dist/css/bootstrap-material-design.css" rel="stylesheet">
+	<link href="bootstrap-material-design-master/dist/css/ripples.min.css" rel="stylesheet">
+	<link href="style.css" rel="stylesheet">
+	<link href="weather-css/weather-icons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container-fluid" data-scrollreveal="enter top over 0.5s and move 500px">
+	<div class="row">
+		<div class="col-md-12" style="background-color: #121724">
+			<img src="my_2.gif" alt=" " class="img-responsive" style="display: block; margin-left: auto; margin-right: auto;">
+			<div class="col-md-12 form-group label-floating">
+				<label class="control-label" for="focusedInput1" style="color: white; text-align: center">Google Search</label>
+				<input class="form-control" id="search" type="text" style="color: white; text-align: center" autofocus>
+				<div class="col-md-12 text-center">
+					<button id="button-search" class="btn btn-raised btn-danger" data-toggle="tooltip" title="Prefix followed by a space followed by query => !d : duckduckgo search; !p : piratebay search; !k : kickass search; !y : youtube search; !w : weather search for a city">Search!</button>
+					<button id="button-clear" class="btn btn-raised btn-danger">Clear!</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+<div class="container" data-scrollreveal="enter bottom over 0.5s and move 500px">
+	<div class="well" id="weathershow" onclick="hidethis();">
+		<div class="row">
+			<div class="col-md-4" id="weather-icon">
+			</div>
+			<div class="col-md-4" id="weather-temp">
+			</div>
+			<div class="col-md-4" id="weather-vars">
+			</div>
+			<!-- <div class="col-md-3" id="weather-info">
+			</div> -->
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="well" id="col1">
+				<h2>Favourites</h2><hr>
+				<ul>
+					<li>
+						<i class="material-icons">favorite_border</i>
+						<a href="https://www.dropbox.com/h" class="btn btn-default">Dropbox</a>
+					</li>
+					<li>
+						<i class="material-icons">favorite_border</i>
+						<a href="https://www.soundcloud.com" class="btn btn-default">Soundcloud</a>
+					</li>
+					<li>
+						<i class="material-icons">favorite_border</i>
+						<a href="https://bbs.archlinux.org/viewforum.php?id=18" class="btn btn-default">archwiki</a>
+					</li>
+					<li>
+						<i class="material-icons">favorite_border</i>
+						<a href="https://pastebin.com" class="btn btn-default">PirateBay</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="well"  id="col2">
+				<h2>Social</h2><hr>
+				<ul>
+					<li>
+						<i class="material-icons">chat</i>
+						<a href="https://facebook.com" class="btn btn-default">Facebook</a>
+					</li>
+					<li>
+						<i class="material-icons">chat</i>
+						<a href="https://reddit.com" class="btn btn-default">Reddit</a>
+					</li>
+					<li>
+						<i class="material-icons">chat</i>
+						<a href="https://plus.google.com" class="btn btn-default">Google+</a>
+					</li>
+					<li>
+						<i class="material-icons">chat</i>
+						<a href="https://www.tapatalk.com/groups/archlabs/index2.php" class="btn btn-default">ArchLaBBS</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="well" id="col3">
+				<h2>Utility</h2><hr>
+				<ul>
+					<li>
+						<i class="material-icons">subject</i>
+						<a href="http://terminal.sexy" class="btn btn-default">terminal.sexy</a>
+					</li>
+					<li>
+						<i class="material-icons">subject</i>
+						<a href="http://www.color-hex.com" class="btn btn-default">HEX#</a>
+					</li>
+					<li>
+						<i class="material-icons">subject</i>
+						<a href="https://vivaldi.com" class="btn btn-default">vIVALDI</a>
+					</li>
+					<li>
+						<i class="material-icons">subject</i>
+						<a href="http://www.libgen.io/search.php?req=devil+in+the+white+city&lg_topic=libgen&open=0&view=simple&res=25&phrase=1&column=def" class="btn btn-default">ePub DL</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="well" id="col4">
+				<h2>Misc</h2><hr>
+				<ul>
+					<li>
+						<i class="material-icons">star_border</i>
+						<a href="https://www.youtube.com" class="btn btn-default">Youtube</a>
+					</li>
+					<li>
+						<i class="material-icons">star_border</i>
+						<a href="http://www.somethingawful.com" class="btn btn-default">somethingawful</a>
+					</li>
+					<li>
+						<i class="material-icons">star_border</i>
+						<a href="https://m.pornoeggs.com/watch?v=LwaBatBhWNT&autoplay&quality=720" class="btn btn-default">P-EGGS</a>
+					</li>
+					<li>
+						<i class="material-icons">star_border</i>
+						<a href="http://porneq.com" class="btn btn-default">EQ</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="well" id="col5">
+				<ul>
+					<li>
+						<i class="material-icons">bookmark_border</i>
+						<a href="https://github.com/skd1993" class="btn btn-default">Github</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="well" id="col6">
+				<ul>
+					<li>
+						<i class="material-icons">bookmark_border</i>
+						<a href="https://mail.google.com/mail/u/0/#inbox" class="btn btn-default">GMAIL</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="well" id="col7">
+				<ul>
+					<li>
+						<i class="material-icons">bookmark_border</i>
+						<a href="https://forums.bunsenlabs.org/viewforum.php?id=9" class="btn btn-default">bunsenlabs</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="well" id="col8">
+				<ul>
+					<li>
+						<i class="material-icons">bookmark_border</i>
+						<a href="https://kat.cr/full/" class="btn btn-default">PirateBay</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="page-footer" data-scrollreveal="enter bottom over 0.5s and move 500px">
+	dead | inside <a href="https://github.com/skd1993"></a>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
+<script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
+<script src="scrollreveal.js"></script>
+<script type="text/javascript">
+	$.material.init();
+	$('[data-toggle="tooltip"]').tooltip();
+
+	function hidethis() {
+		$('#weathershow').hide("slow");
+	}
+</script>
+<script src="script.js"></script>
+</body>
+</html>

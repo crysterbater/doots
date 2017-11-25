@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="44"
+   height="44"
+   viewBox="0 0 43.999998 43.999998"
+   id="svg2"
+   version="1.1">
+  <metadata
+     id="metadata9">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4" />
+  <g
+     transform="translate(2.9570609,24.988171)"
+     style="color:#000000;fill:#656666;fill-opacity:1"
+     id="g14">
+    <path
+       style="font-weight:400;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-transform:none;overflow:visible;fill:#656666;fill-opacity:1;stroke-width:2;marker:none"
+       d="m 24.615061,-18.963829 a 2,2 0 0 0 -1.562,2 v 7.9999999 a 2,2 0 0 0 2,2 h 8 a 2,2 0 1 0 0,-3.9999999 h -6 v -6 a 2,2 0 0 0 -2.438,-2 z"
+       font-weight="400"
+       overflow="visible"
+       id="path2" />
+    <path
+       style="font-weight:400;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-transform:none;overflow:visible;fill:#656666;fill-opacity:1;stroke-width:2;marker:none"
+       d="m 32.803061,-18.963829 a 2,2 0 0 0 -1.188,0.564 l -8,8 a 2.0329322,2.0329322 0 1 0 2.876,2.8739999 l 8,-7.9999999 a 2,2 0 0 0 -1.688,-3.438 z"
+       font-weight="400"
+       overflow="visible"
+       id="path4" />
+    <path
+       d="m 23.053061,-8.9638291 h 2 v 2 h -2 z"
+       style="overflow:visible;fill:#2e2e2e;fill-opacity:1;stroke-width:2;marker:none"
+       overflow="visible"
+       id="path6" />
+    <path
+       style="font-weight:400;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-transform:none;overflow:visible;fill:#656666;fill-opacity:1;stroke-width:2;marker:none"
+       d="m 4.8650608,-6.9638291 a 2,2 0 0 0 -1.812,2 V 11.036171 a 2,2 0 0 0 2,2 H 21.053061 a 2,2 0 0 0 2,-2 V -4.9638291 a 2,2 0 0 0 -2,-2 H 5.0530608 a 2,2 0 0 0 -0.188,0 z m 2.188,4 H 19.053061 v 12 H 7.0530608 Z"
+       font-weight="400"
+       overflow="visible"
+       id="path8" />
+    <path
+       style="font-weight:400;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-transform:none;overflow:visible;fill:#656666;fill-opacity:1;fill-rule:evenodd;stroke-width:2;marker:none"
+       d="m 4.8650608,-2.9638291 a 2.0022078,2.0022078 0 1 0 0.188,4 H 21.053061 a 2,2 0 1 0 0,-4 H 5.0530608 a 2,2 0 0 0 -0.188,0 z"
+       font-weight="400"
+       overflow="visible"
+       id="path10" />
+    <path
+       d="m 33.053061,-8.9638291 h 2 v 2 h -2 z m -10,-9.9999999 h 2 v 2 h -2 z m -2,30 h 2 v 2 h -2 z m -18.0000002,0 h 2 v 2 h -2 z"
+       style="overflow:visible;fill:#656666;fill-opacity:1;stroke-width:2;marker:none"
+       overflow="visible"
+       id="path12" />
+  </g>
+</svg>

@@ -1,0 +1,112 @@
+#!/usr/bin/bash
+#
+#       Author:  Mohamed Bakari
+#         Date:  Mon 28 Aug 2017 22:42:29
+#  Description:  A simple script to add tags to a directory with mp3 files
+#                without metadata such as album, artist, title and tracks set.
+#                Basically all the metadata are generated based on the current
+#                filename. 
+# Dependencies:  id3mtag: for adding tags to mp3 files
+#                notify-send: for notification
+#      Version:  1.0
+#
+
+
+# Set and Unset shell options and varuables
+shopt -s nullglob dotglob       
+unset artist                    
+unset album                                    
+unset mp3_directory          
+unset mp3_files_found           
+unset title
+tracknr=0
+
+show_help(){  # Show help options
+cat <<EOF
+Usage: ${0##*/} [OPTION]
+
+A script to add tags(artist, album, title and track number) to mp3 files.
+
+-h, --help        Show this help and exit
+-a, --artist      Specify the artist name
+-d, --directory   Specify directory with mp3 files
+-l, --album       Specify album name
+
+Examples:
+        
+        $ ${0##*/} -a Anonymous -l SoundTracks -d Musics/new_mp3
+
+EOF
+}
+
+# Check user argumbents
+if [[ $# -eq 0 ]];then       # Show help message
+        show_help
+        exit
+else
+        while :; do
+                # If there's atleast one argument do something
+                case $1 in
+                   -a|--artist)
+                         if [[ "$2" ]];then
+                                 artist=$2        # Set the artist name
+                                 shift
+                         else
+                               echo "ERROR: "$1" requires non-empty argument option"
+                                exit 1
+                         fi
+                         ;;
+                -d|--directory)
+                        if [[ "$2" ]];then
+                                mp3_directory=$2  # Set the directory name
+                                shift
+                        else
+                                echo "ERROR: "$1" requires non-empty argument option"
+                                exit 1
+                        fi
+                        ;;
+                 -h|-\?|--help)
+                         show_help                # Show help message
+                         exit
+                         ;;
+                    -l|--album)
+                         if [[ "$1" ]];then
+                                album=$2         # Set the album name
+                                shift
+                        else
+                                echo "ERROR: "$1" requires non-empty argument option"
+                                exit 1
+                        fi
+                        ;;
+                         *)
+                        break
+                   esac
+         shift
+         done
+ fi
+
+
+if [[ -d $mp3_directory ]];then  # Check if it actually a directory
+        mp3_files_found=$(find $mp3_directory -iname "*.mp3" -type f | wc -l)
+        if [[ $mp3_files_found -eq 0 ]];then
+                echo -e "[-] Error no mp3 files found\n"
+                exit 1
+        else
+                echo "[+] Found $mp3_files_found mp3 files"
+                notify-send "Generating tags for $mp3_files_found mp3 files"
+                
+                # Iterate through the files to add tags
+                for file in $mp3_directory*;do
+                        # Strip the filename to generate our tag title
+                        (( tracknr += 1 ))       # Generate track number
+                        title=$(echo "${file##*/}" | cut -d "." -f 1)
+                        id3 -t "$title" -l "$album" -a "$artist" -n "$tracknr" "$file"
+                done
+                echo "[+] Successfully generated tags"
+                notify-send "Successfully generated the tags"
+                exit 0
+        fi
+else
+        echo "ERROR: try: ${0##*/} --help"
+        exit 1
+fi

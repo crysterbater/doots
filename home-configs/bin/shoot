@@ -1,0 +1,3 @@
+#!/bin/bash
+
+scrot  -d 1 -e 'mv $f /home/pringle/Dropbox; notify-send -w700 "Saved screenshot as $f"'

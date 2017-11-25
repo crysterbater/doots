@@ -1,0 +1,14 @@
+cabal: Entering directory '/tmp/cabal-tmp-8343/ansi-terminal-0.6.3.1'
+Configuring ansi-terminal-0.6.3.1...
+Building ansi-terminal-0.6.3.1...
+Preprocessing library ansi-terminal-0.6.3.1...
+[1 of 4] Compiling System.Console.ANSI.Types ( System/Console/ANSI/Types.hs, dist/dist-sandbox-94c3599e/build/System/Console/ANSI/Types.o )
+[2 of 4] Compiling System.Console.ANSI.Codes ( System/Console/ANSI/Codes.hs, dist/dist-sandbox-94c3599e/build/System/Console/ANSI/Codes.o )
+[3 of 4] Compiling System.Console.ANSI.Unix ( System/Console/ANSI/Unix.hs, dist/dist-sandbox-94c3599e/build/System/Console/ANSI/Unix.o )
+[4 of 4] Compiling System.Console.ANSI ( System/Console/ANSI.hs, dist/dist-sandbox-94c3599e/build/System/Console/ANSI.o )
+Creating package registration file:
+/tmp/pkgConf-ansi-terminal-0.6.35965166491189641421.1
+Installing library in
+/home/metamist/dev/haskell/workspacer/.cabal-sandbox/lib/x86_64-linux-ghc-8.0.1/ansi-terminal-0.6.3.1-C5gpy392zkR1qCeRuDySE4
+Registering ansi-terminal-0.6.3.1...
+cabal: Leaving directory '/tmp/cabal-tmp-8343/ansi-terminal-0.6.3.1'

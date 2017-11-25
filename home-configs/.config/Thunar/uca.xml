@@ -1,0 +1,302 @@
+<?xml encoding="UTF-8" version="1.0"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open in Terminal</name>
+	<unique-id>1510481396020503-5</unique-id>
+	<command>gksudo &apos;xfce4-terminal --working-directory %f&apos;</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>document-open</icon>
+	<name>Open as Root</name>
+	<unique-id>1498523394840843-5</unique-id>
+	<command>gksu thunar %f</command>
+	<description></description>
+	<upper></upper>
+	<lower></lower>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>/home/pringle/Documents/I C O N S/Thunar/1509494724723.jpg</icon>
+	<name>Copy Current Path</name>
+	<unique-id>1509528296775333-7</unique-id>
+	<command>echo -n %f | xclip -selection &quot;clipboard&quot;</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Make Executible</name>
+	<unique-id>1509528272188603-6</unique-id>
+	<command>chmod +x %F</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>archive-extract</icon>
+	<name>Extract Here</name>
+	<unique-id>1500573442438340-2</unique-id>
+	<command>file-roller -h %N</command>
+	<description></description>
+	<upper></upper>
+	<lower></lower>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<other-files/>
+</action>
+<action>
+	<icon>archive-insert</icon>
+	<name>Archive</name>
+	<unique-id>1500573639456321-3</unique-id>
+	<command>file-roller -d %F</command>
+	<description>Archive selected items</description>
+	<upper></upper>
+	<lower></lower>
+	<patterns>*</patterns>
+	<directories/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Open as Root</name>
+	<unique-id>1509941291451769-6</unique-id>
+	<command>gksudo exo-open %F</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<directories/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Upload | Pastebin</name>
+	<unique-id>1509941388267591-10</unique-id>
+	<command>thunar-paste-to-pastebin.sh -f %f</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Upload | Imgur</name>
+	<unique-id>1509941406340365-11</unique-id>
+	<command>thunar-upload-to-imgur.sh -f %f</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Paste to Gist</name>
+	<unique-id>1510960624312893-4</unique-id>
+	<command>thunar-paste-to-gist.sh -f %f</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Set as Wallpaper</name>
+	<unique-id>1510481437915309-6</unique-id>
+	<command>nitrogen --set-auto %f</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Convert to MP3</name>
+	<unique-id>1509528196064920-5</unique-id>
+	<command>ffmpeg -i %f %f.mp3</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<other-files/>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Split Video Into Pieces</name>
+	<unique-id>1509941148336559-2</unique-id>
+	<command>/home/pringle/bin/splitvideoyad.sh %f</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Preview Text File</name>
+	<unique-id>1509941468456195-12</unique-id>
+	<command>head -n 300 %f | zenity --text-info --width=450 --height=400 --title=&quot;Text Preview&quot;</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Create Backup</name>
+	<unique-id>1509941278386012-5</unique-id>
+	<command>cp --backup=t %f %f.backup</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>KDE Connect</name>
+	<unique-id>1510452218092837-1</unique-id>
+	<command>kdeconnect-send %F</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Create Symlink</name>
+	<unique-id>1510481837785078-11</unique-id>
+	<command>ln -s %f $(yad --file-selection --directory)</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<directories/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Edit as Root</name>
+	<unique-id>1510481288876326-3</unique-id>
+	<command>gksu subl3 %f</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Preview</name>
+	<unique-id>1510481370932221-4</unique-id>
+	<command>mplayer %f -really-quiet -endpos 10</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<audio-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Text Info</name>
+	<unique-id>1510481583570119-8</unique-id>
+	<command>du -h -c %N | grep total | zenity --text-info</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Bookmark</name>
+	<unique-id>1510481640962918-9</unique-id>
+	<command>ln -s %f ~/Bookmarks/%n</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon></icon>
+	<name>open dir with easytag</name>
+	<unique-id>1510481675769568-10</unique-id>
+	<command>easytag %d</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon></icon>
+	<name>Media Info</name>
+	<unique-id>1510960390735676-1</unique-id>
+	<command>thunar-media-info.sh -f %f -t %n</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<audio-files/>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Video to Gif</name>
+	<unique-id>1510960570283439-3</unique-id>
+	<command>thunar-video-to-gif.sh -f %f</command>
+	<description></description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<video-files/>
+</action>
+</actions>

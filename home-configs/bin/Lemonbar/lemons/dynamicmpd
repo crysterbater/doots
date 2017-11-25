@@ -1,0 +1,21 @@
+#!/usr/bin/env dash
+# scrolling mpd text
+# limitation of this is it only works with monospace fonts.
+
+max_length=20
+
+title="$($HOME/.wm/panel/lemons/mpd)"
+max_length=$(echo "$title" | cut -c 1-$max_length | wc -m)
+if [  "$title" = "Stopped" ]; then
+    icon music
+    echo Stopped
+else
+    [ -z "$title" ] && exit
+    echo "$title" | skroll -r -n $((max_length-1)) -d 0 | head -n -1 | \
+    while IFS='\n' read -r out; do
+        icon music
+        icon $icon_target
+        echo "$out"
+        sleep 0.2
+    done
+fi

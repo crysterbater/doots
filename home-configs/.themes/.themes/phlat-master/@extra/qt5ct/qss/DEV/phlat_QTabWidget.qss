@@ -1,0 +1,30 @@
+QTabWidget::tab-bar {
+alignment: center;}
+
+QTabBar::tab {
+padding:2px;
+border:1px solid  rgba(0,0,0,0.6);
+background-color:palette(base);}
+QTabBar::tab:selected {
+border:1px solid  rgba(0,0,0,0.6);
+background-color:palette(highlight);}
+
+QTabBar::tab:top:!first,
+QTabBar::tab:bottom:!first {
+padding:4px 4px;
+margin-left: -1;}
+
+QTabBar::tab:left:!first,
+QTabBar::tab:right:!first {
+padding:4px 4px;
+margin-top: -1;}
+
+QTabBar::tear {
+background:palette(highlight);
+border:1px solid  rgba(0,0,0,0.6);}
+QTabBar QToolButton {
+padding:5px;
+border:1px solid  rgba(0,0,0,0.6);
+background:palette(base);}
+QTabBar::close-button {
+image: url(/usr/share/themes/phlat/images/close.svg);}

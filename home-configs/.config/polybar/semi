@@ -1,0 +1,459 @@
+;
+; this config is written for an unreleased version (polybar "wip-lemonbar" branch)
+; it might need some tweaking to run on the latest released version... try for yourself
+;
+
+[bar/top]
+monitor = eDP1
+width = 100%
+height = 27
+offset-x = 0
+offset-y = 0
+
+background = #88090A0A
+foreground = #ccd8d4e6
+linecolor = #79C9A4
+
+;border-size = 2
+;border-color = 2
+border-top = 1
+border-top-color = #88090A0A
+;border-left = 50
+;border-left-color = #00ff00
+border-bottom = 2
+border-bottom-color = #37304d
+;border-left = 0
+;border-left-color = #0f0
+;border-right = 0
+;border-right-color = #00f
+
+spacing = 1
+lineheight = 2
+padding-left = 2
+padding-right = 2
+module-margin-left = 1
+module-margin-right = 2
+
+;font-0 = ypn envypn:size=10;0
+;font-1 = Siji:pixelsize=10;0
+;font-2 = Termsynu:size=8;0
+
+;font-0 = Fira Mono for Powerline:size=9:weight=Bold;0
+;font-1 = Siji:pixelsize=10;-4
+
+;font-0 = creep:pixelsize=16;0
+;font-0 = kakwafont:pixelsize=12;0
+;font-0 = orp:pixelsize=12;0
+;font-0 = Sniglet:size=9;-1
+font-0 = Hack:bold:size=7;-1
+font-1 = Siji:pixelsize=10;-2
+font-2 = MaterialIcons:size=12:antialias=false;2
+font-3 = Termsynu:size=8;-2
+
+modules-left = menu
+modules-center = mpd
+modules-right = volume wifi battery backlight memory cpu date
+
+
+[bar/bottom]
+monitor = eDP1
+width = 100%
+height = 27
+
+background = #88090A0A
+foreground = #ccd8d4e6
+linecolor = #79C9A4
+
+border-bottom = 2
+border-bottom-color = #88090A0A
+border-top = 2
+border-top-color = #88090A0A
+
+spacing = 2
+lineheight = 1
+padding-right = 2
+module-margin-left = 2
+module-margin-right = 2
+bottom = true
+
+font-0 = Hack:bold:size=7;-1
+font-1 = Siji:pixelsize=10;-2
+font-2 = MaterialIcons:size=12:antialias=false;2
+; font-0 = ${bar/top.font-0}
+; font-1 = ${bar/top.font-1}
+
+modules-left = seperator2 workspaces
+modules-right = powermenu seperator
+
+[module/workspaces]
+type = internal/xworkspaces
+enable-click = true
+enable-scroll = true
+format-padding = 1
+Additional formatting
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+;icon-default = 
+
+format = <label-state>
+label-monitor = %name%
+
+label-active = " %icon% "
+label-active-foreground = #B9DECD
+label-active-background = #1E1E24
+label-active-underline = #C3437F
+
+label-occupied = " %icon% %name% "
+label-occupied-underline = #97c4d1
+label-occupied-background = #1E1E24
+label-occupied-foreground = #ccd8d4e6
+
+label-urgent = " %icon% %name% "
+label-urgent-foreground = #ccd8d4e6
+label-urgent-background = #1E1E24
+label-urgent-underline = #79C9A4
+
+label-empty = " %icon% "
+label-empty-foreground = #ccd8d4e6
+
+[module/bspwm]
+type = internal/bspwm
+format = <label-state> <label-mode>
+
+ws-icon-0 = term;
+ws-icon-1 = web;
+ws-icon-2 = code;
+ws-icon-3 = music;
+ws-icon-4 = irssi;
+ws-icon-default = 
+
+label-active = %icon%
+label-active-background = #4d4564
+label-active-padding = 2
+
+label-occupied = %icon%
+label-occupied-padding = 2
+
+label-urgent = %icon%
+label-urgent-background = #bd2c40
+label-urgent-padding = 2
+
+label-empty = %icon%
+label-empty-foreground = #66c6b8e6
+label-empty-padding = 2
+
+label-monocle = 
+label-monocle-padding = 2
+label-monocle-background = #6645415c
+label-monocle-foreground = #fba922
+
+label-floating = 
+label-floating-padding = 2
+label-floating-background = #6645415c
+label-floating-foreground = #fba922
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+label = %{F#66c6b8e6}%{F#ccd8d4e6} %percentage%%
+
+
+[module/memory]
+type = internal/memory
+interval = 2
+label = %{F#66c6b8e6}%{F#ccd8d4e6} %percentage_used%%
+
+
+[module/wifi]
+type = internal/network
+interface = net1
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+; label-connected = %essid% %{F#66}%local_ip%
+label-connected = %essid%
+label-disconnected = %{F#66c6b8e6}%{F#ccd8d4e6} not connected
+label-disconnected-foreground = #66c6b8e6
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = #66c6b8e6
+
+
+[module/wired]
+type = internal/network
+interface = net0
+interval = 3.0
+
+label-connected = %{T3}%local_ip%%{T-}
+label-disconnected = %{T3}Not connected%{T-}
+label-disconnected-foreground = #66c6b8e6
+
+
+[module/date]
+type = internal/date
+;date = %{T3}%%{F#66c6b8e6}%{F#ccd8d4e6} %Y-%m-%d  %%{F#fba922}%%{F#ccd8d4e6} %H:%M%%{T-}
+date = %%{F#66c6b8e6}%{F#ccd8d4e6} %Y-%m-%d  %%{F#fba922}%%{F#ccd8d4e6} %H:%M
+interval = 5
+format-underline = #79C9A4
+
+
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+format = <ramp> <label>
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = #66c6b8e6
+
+
+[module/volume]
+type = internal/volume
+speaker-mixer = Speaker
+headphone-mixer = Headphone
+headphone-id = 9
+
+format-volume = <ramp-volume> <label-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${BAR.foreground}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-foreground = #66c6b8e6
+
+label-muted = %{F#66c6b8e6}%{F#ccd8d4e6} sound muted
+label-muted-foreground = #99
+
+
+[module/battery]
+type = internal/battery
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = %{F#66c6b8e6}%{F#ccd8d4e6}  <label-full>
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = #66c6b8e6
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-foreground = #66c6b8e6
+animation-charging-framerate = 750
+
+[module/mpd]
+type = internal/mpd
+
+format-online = <label-song>  <label-time>  <bar-progress>  <icon-prev> <icon-seekb> <icon-stop> <toggle> <icon-seekf> <icon-next>  <icon-repeat> <icon-random>
+format-offline = <label-offline>
+format-offline-foreground = #66
+label-offline = mpd is off
+
+label-song-maxlen = 40
+
+icon-prev = 
+icon-seekb = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+icon-seekf = 
+
+icon-random = 
+icon-repeat = 
+
+toggle-on-foreground = #fba922
+toggle-off-foreground = #66c6b8e6
+
+bar-progress-width = 15
+bar-progress-indicator = 
+bar-progress-indicator-foreground = #bb
+bar-progress-fill = ─
+bar-progress-fill-foreground = #bb
+bar-progress-fill-font = 3
+bar-progress-empty = ─
+bar-progress-empty-foreground = #66c6b8e6
+bar-progress-empty-font = 3
+
+label-time-foreground = #66c6b8e6
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = "  "
+format-prefix-foreground = #7A7A7A
+label-foreground = #ffffff
+exec = ~/.config/polybar/weather
+
+
+[module/seperator]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator2]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator3]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/gmail]
+type = custom/script
+exec = ~/.config/polybar/gmail/launch.py
+tail = true
+click-left = xdg-open https://mail.google.com
+format-prefix = 📧
+format-prefix-foreground = #ffffff
+
+[module/pipe]
+type = custom/text
+content = "|"
+content-background = #0A0D15
+content-foreground = #0A0D15
+content-padding = 1
+
+[module/mail]
+type = custom/script
+interval = 10
+format = <label>
+label = 
+click-left = xdg-open https://mail.google.com
+exec = /home/pringle/bin/notify
+
+
+
+[module/menu]
+type = custom/menu
+
+format-spacing = 1
+label-open = "  "
+label-open-foreground = #ffffff
+label-closed-background = #FAFDFF
+label-close = "  "
+label-close-foreground = #BA386F
+label-separator = "│"
+label-separator-foreground = #F9987D
+menu-0-0 = Most Used
+menu-0-0-exec = menu-open-1
+menu-0-1 = Ricing
+menu-0-1-exec = menu-open-2
+menu-0-2 = Media
+menu-0-2-exec = menu-open-3
+menu-0-3 = 
+menu-0-3-exec = menu-open-4
+
+menu-1-0 = "  "
+menu-1-0-exec = exo-open --launch vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch thunar
+menu-1-3 = "  "
+menu-1-3-exec = atom
+
+menu-2-0 = "  "
+menu-2-0-exec = gcolor2
+menu-2-1 = "  "
+menu-2-1-exec = spotify --force-device-scale-factor=1.5
+menu-2-2 = "  "
+menu-2-2-exec = wpg
+menu-2-3 = "  "
+menu-2-3-exec = yakyak
+menu-2-4 = "  "
+menu-2-4-exec = lxappearance
+menu-2-5 = "  "
+menu-2-5-exec = scrot %F-%S_$wx$h_scrot.png -e 'mv $f ~/images'
+
+menu-3-0 = "  "
+menu-3-0-exec = audacious &
+menu-3-1 = "  "
+menu-3-1-exec = playerctl stop
+menu-3-2 = "  "
+menu-3-2-exec = playerctl previous
+menu-3-3 = "  "
+menu-3-3-exec = playerctl play-pause
+menu-3-4 = "  "
+menu-3-4-exec = playerctl next
+
+menu-4-0 = "  "
+menu-4-0-exec = slimlock
+menu-4-1 = "  "
+menu-4-1-exec = systemctl reboot
+menu-4-2 = "  "
+menu-4-2-exec = systemctl poweroff
+
+[module/powermenu]
+type = custom/menu
+format-spacing = 1
+format-background = #1E1E24
+label-open = "   "
+label-open-foreground = #ccd8d4e6
+label-open-background = #1E1E24
+label-close = "    "
+label-close-foreground = #CC3E79
+label-separator = " | "
+label-separator-foreground = #79C9A4
+# Top level
+menu-0-0 = "  Favorites "
+menu-0-0-exec = menu-open-1
+menu-0-1 = "  Utility"
+menu-0-1-exec = menu-open-2
+menu-0-2 = "  System "
+menu-0-2-exec = menu-open-3
+# 1
+menu-1-0 = "  "
+menu-1-0-exec = vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch FileManager
+menu-1-3 = "  "
+menu-1-3-exec = gcolor2 &
+# 2
+menu-2-0 = "  "
+menu-2-0-exec = audacious &
+menu-2-1 = "  "
+menu-2-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-2-2 = "  "
+menu-2-2-exec = lxappearance &
+menu-2-3 = "  "
+menu-2-3-exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+# 3
+menu-3-0 = "   "
+menu-3-0-exec = slimlock
+menu-3-1 = "   "
+menu-3-1-exec = openbox --exit
+menu-3-2 = "  "
+menu-3-2-exec = systemctl reboot
+menu-3-3 = "  "
+menu-3-3-exec = systemctl poweroff
+
+; vim:ft=dosini
+
+;
+;
+;
+;      

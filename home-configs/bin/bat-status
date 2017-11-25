@@ -1,0 +1,23 @@
+#! /usr/bin/env bash
+# Description: A simple script that uses dunst and notify-send to notify the
+#              user when the battery is criticaly low or full. I find this
+#              useful when since Igot rid of my status bar
+
+DISPLAY=:0
+PATH=/home/mohabaks/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+
+if [[ -d /sys/class/power_supply/BAT1 ]]; then
+
+        batteryState=$(cat /sys/class/power_supply/BAT1/status)
+        batteryPower=$(cat /sys/class/power_supply/BAT1/capacity)
+
+        if [[ "${batteryState}" == "Discharging" && ${batteryPower} -le 20 ]]; then
+              notify-send -u critical -t 60000  "Battery Low ..."
+
+        elif [[ "${batteryState}" == "Charging" && ${batteryPower} -eq 80 ]]; then
+                notify-send -u normal "Battery Full ...."
+
+        fi
+
+fi

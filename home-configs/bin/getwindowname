@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if xdotool getactivewindow getwindowname &> /dev/null
+then
+  xdotool getactivewindow getwindowname
+else
+  echo "Desktop"
+fi

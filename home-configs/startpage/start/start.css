@@ -1,0 +1,99 @@
+@font-face {
+  font-family: 'RobotoMono-Light';
+  src: url('RobotoMono-Light.ttf') format('truetype');
+}
+
+.wrapper {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  width: 33%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  float: left;
+}
+
+body {
+  font-family: 'RobotoMono-Light', sans-serif;
+
+  background-color: #0D1111;
+  color: white;
+
+}
+
+main {
+  padding-left: 10vw;
+  padding-right: 10vw;
+  padding-top: 4vw;
+}
+
+
+
+hr {
+  color: #f9f9f9;
+}
+
+
+
+.container {
+  font-size: 16px;
+
+  width: 27%;
+  height: 350px;
+  margin-top: 8vw;
+  margin-right: 2vw;
+  margin-left: 2vw;
+  margin-bottom: 4vh;
+
+  float: left;
+}
+
+.containerHeader {
+  padding-left: 10px;
+  padding-top: 10px;
+
+  font-size: 18px;
+
+  height: 30px;
+  font-weight: bold;
+  color: #ED4781;
+}
+
+
+.containerContent {
+  background-color: #141415;
+
+  padding: 10px;
+
+  min-height: 300px;
+}
+
+.containerContent ul {
+  list-style: none;
+  padding: unset;
+}
+
+.containerContent > ul li {
+
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.containerContent > ul li:hover {
+  background-color: #753747;
+}
+
+.containerContent > ul > li a {
+  color: white;
+
+  text-decoration: none;
+}
+
+.containerContent > ul > li a:hover {
+  text-decoration: underline;
+}

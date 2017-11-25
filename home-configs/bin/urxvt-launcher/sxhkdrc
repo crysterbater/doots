@@ -1,0 +1,2 @@
+super + l
+    urxvt -geometry 50x1 -name "launcher" -e sh -c 'LAUNCHER=true /bin/bash'

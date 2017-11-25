@@ -1,0 +1,48 @@
+# Window geometry
+padding.width:				3
+padding.height:				5
+border.width:				0
+window.client.padding.width:	0
+window.handle.width:		0
+*.justify:					center
+
+*.title.bg:					flat solid
+*.title.bg.color:			#11161B
+*.*.title.separator.color:	#fafafa
+*.label.bg:					parentrelative
+window.*.button.*.bg:		parentrelative
+
+window.*.border.*.color:	#fafafa
+
+window.active.button.unpressed.image.color:	#11161B
+window.inactive.button.unpressed.image.color:	#11161B
+
+window.active.label.text.color:	#11161B
+window.inactive.label.text.color:	#11161B
+
+window.*.button.hover.image.color:	#df253f
+window.*.button.pressed.image.color:	#df253f
+
+# Menu
+menu.border.width:			4
+menu.*.padding.width:		0
+menu.*.padding.height:		4
+menu.overlap.x:				-4
+menu.*.bg:					flat solid
+menu.*.bg.color:			#fafafa
+menu.*.text.color:			#333333
+menu.*.active.text.color:	#df253f
+menu.separator.color:		#e6e9ee
+menu.title.text.color:		#11161B
+menu.title.bg.color:		#11161B
+
+# OSD
+osd.border.width:			1
+osd.border.color:			#333333
+osd.bg:						flat solid
+osd.bg.color:				#333333
+osd.*.label.text.color:		#fafafa
+osd.hilight.bg:				flat solid
+osd.hilight.bg.color:		#df253f
+osd.unhilight.bg:			flat solid
+osd.unhilight.bg.color:		#6e6e6e

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32">
+    <g fill="#f1f2f2">
+        <path style="line-height:normal;-inkscape-font-specification:'Andale Mono';text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M2 8.003v1.031c.011.255.129.51.313.688l5.218 5.281L8.5 15l5.219-5.278c.188-.188.281-.453.281-.719v-1h-1.707c-.265 0-.53.093-.719.282l-3.556 3.844-.003.14-.018-.14-3.584-3.844a.909.909 0 0 0-.75-.282z" color="#f1f2f2" font-weight="400" font-family="Andale Mono" overflow="visible"/>
+        <path d="M7.5 7h1c.277 0 .5.223.5.5v1c0 .277-.223.5-.5.5h-1a.499.499 0 0 1-.5-.5v-1c0-.277.223-.5.5-.5z" style="marker:none" color="#000" overflow="visible"/>
+        <path d="M7.5 1h1c.277 0 .5.223.5.5v1c0 .277-.223.5-.5.5h-1a.499.499 0 0 1-.5-.5v-1c0-.277.223-.5.5-.5zm0 3h1c.277 0 .5.2.5.45v1.1c0 .25-.223.45-.5.45h-1c-.277 0-.5-.2-.5-.45v-1.1c0-.25.223-.45.5-.45z" style="isolation:auto;mix-blend-mode:normal;marker:none" color="#000" overflow="visible"/>
+    </g>
+</svg>

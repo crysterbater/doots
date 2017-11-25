@@ -1,0 +1,9 @@
+QToolButton[popupMode="1"]::menu-button::menu-arrow {
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-down_normal.svg");}
+
+QToolButton[popupMode="1"]::menu-button:!enabled::menu-arrow{
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-down_insensitive.svg");}

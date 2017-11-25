@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+awesome -k
+xinit ~/.xinitrc-testing -- "$(which Xephyr)" :1 -ac -br -noreset -screen 1280x720

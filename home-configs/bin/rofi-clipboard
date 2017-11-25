@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rofi -show "clipboard:greenclip print" -lines 9 -font "Iceberg 13"

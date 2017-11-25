@@ -1,0 +1,143 @@
+
+[colors]
+black = #090909
+blue = #95aec7
+darkgray = #8a8a8a
+gray = #585858
+green = #aec795
+orange = #d79921
+red = #db3f3f
+white = #f9f5d7
+yellow = #c7ae95
+
+background = #070C0F
+background-alt = #111313
+foreground = #f9f5d7
+foreground-alt = #f9f5d7
+
+alert = #db2f2f
+degraded = ${self.red}
+good = ${self.green}
+nominal = ${self.yellow}
+primary = #111313
+secondary = #d79921
+
+[settings]
+format-padding = 1 
+
+[bar/daike-top]
+monitor = eDP1
+background = ${colors.background-alt}
+bottom = false
+font-0 = Fira Mono:size=9;0
+font-1 = FontAwesome:size=10;0
+foreground = ${colors.foreground-alt}
+height = 30
+modules-center = date 
+modules-left = music
+modules-right = wireless-network volume backlight temperature memory cpu bat0 bat1
+padding = 0
+underline-color = ${colors.foreground}
+underline-size = 2
+separator = "|"
+
+[module/bat0]
+adapter = AC
+battery = BAT0
+format-discharging = <ramp-capacity> <label-discharging>
+format-full-prefix = " "
+full-at = 99
+label-charging =  %percentage%%
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
+ramp-capacity-3 = ""
+ramp-capacity-4 = ""
+type = internal/battery
+
+[module/bat1]
+adapter = AC
+battery = BAT1
+format-discharging = <ramp-capacity> <label-discharging>
+format-full-prefix = " "
+full-at = 99
+label-charging =  %percentage%%
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
+ramp-capacity-3 = ""
+ramp-capacity-4 = ""
+type = internal/battery
+
+[module/date]
+date = %Y-%m-%d
+interval = 60
+label = %date% %time%
+time = %H:%M
+type = internal/date
+
+[module/xwindow]
+label = %title:0:49:...%
+type = internal/xwindow
+
+[module/cpu]
+format-prefix = 
+interval = 2
+label = %percentage:3:3%%
+type = internal/cpu
+
+[module/memory]
+format-prefix = 
+interval = 2
+label = %percentage_used:3:3%%
+type = internal/memory
+
+[module/temperature]
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+interval = 1
+label = %temperature%
+label-warn = %temperature%
+label-warn-foreground = ${colors.degraded}
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+thermal-zone = 0
+type = internal/temperature
+warn-temperature = 65
+
+[module/backlight]
+format = <label>
+label =  %percentage%%
+type = internal/xbacklight
+
+[module/wireless-network]
+format-connected = <ramp-signal> <label-connected>
+format-disconnected = <label-disconnected>
+interface = wlp4s0
+interval = 1.0
+label-connected = %essid%
+label-disconnected = Disconnected
+ramp-signal-0 =
+ramp-signal-1 =
+type = internal/network
+
+[module/volume]
+format-volume = <label-volume>
+label-muted =  %percentage%%
+label-volume =  %percentage%%
+type = internal/volume
+
+[module/music]
+exec = ~/.config/polybar/mpris.sh
+interval = 2
+label = %output:0:45:...%
+type = custom/script
+
+[module/notmuch]
+exec = /home/pringle/.config/polybar/scripts/notmuch.sh
+interval = 60
+label = " %output%"
+type = custom/script

@@ -1,0 +1,11 @@
+Fairly self explanitory
+
+backup-original-files.sh should be used before any other scripts. It will backup all of the original files to a folder in the same structure for easy full restore at any time
+
+backup.sh will back up whatever is listed to the external variable set at the start of the script, simply change  external="/where/your/chosen/drive/is/mounted"
+                                            #######  these two must have used the same drive (duh) it cant restore what was never created #######
+restore.sh will put the files backed up to the external variable set at the start of the script, simply change   external="/where/your/backup/drive/is/mounted"
+
+The two install scripts install software listed one is from arch user repository and requires yaourt. the other updates the os, syncs the database and installs base packages
+
+My personal favorite is the full-all-in-one.sh   This will do all of the above as well as sync the database and update the os

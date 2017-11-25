@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 22 22">
+    <g color="#f1f2f2" fill="#f1f2f2">
+        <path style="text-decoration-line:none;text-transform:none;text-indent:0" font-family="Bitstream Vera Sans" d="M2.188 0C.982 0 0 1.017 0 2.219V12.78C0 13.983.982 15 2.188 15h11.624C15.018 15 16 13.983 16 12.781V2.22C16 1.017 15.018 0 13.812 0zm0 2h11.624c.123 0 .188.08.188.219V12.78c0 .138-.065.219-.188.219H2.188C2.064 13 2 12.92 2 12.781V2.22c0-.14.065-.22.188-.22z" overflow="visible" font-weight="400"/>
+        <path style="text-decoration-line:none;text-transform:none;text-indent:0" stroke-width=".591" d="M4.278 3.018a.367.342 0 0 0-.153.588l.956.892-.957.892a.379.353 0 1 0 .536.499l1.224-1.141a.367.342 0 0 0 0-.5L4.66 3.108a.367.342 0 0 0-.383-.09z" overflow="visible" font-weight="400"/>
+        <path d="M7 5h2v1H7z" overflow="visible" stroke-width=".817"/>
+        <path d="M2 7h12v1H2z"/>
+        <path style="text-decoration-line:none;text-transform:none;text-indent:0" stroke-width=".591" d="M4.278 9.018a.367.342 0 0 0-.153.588l.956.892-.957.892a.379.353 0 1 0 .536.5l1.224-1.142a.367.342 0 0 0 0-.5L4.66 9.108a.367.342 0 0 0-.383-.09z" overflow="visible" font-weight="400"/>
+        <path d="M7 11h2v1H7z" overflow="visible" stroke-width=".817"/>
+    </g>
+</svg>

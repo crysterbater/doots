@@ -1,0 +1,65 @@
+cabal: Entering directory '/tmp/cabal-tmp-20592/system-fileio-0.3.16.3'
+Configuring system-fileio-0.3.16.3...
+Building system-fileio-0.3.16.3...
+Preprocessing library system-fileio-0.3.16.3...
+[1 of 1] Compiling Filesystem       ( lib/Filesystem.hs, dist/dist-sandbox-94c3599e/build/Filesystem.o )
+
+lib/Filesystem.hs:19:1: warning: [-Wtabs]
+    Tab character found here, and in 350 further locations.
+    Please use spaces instead.
+
+lib/Filesystem.hs:79:1: warning: [-Wunused-imports]
+    The import of ‘when’ from module ‘Control.Monad’ is redundant
+
+lib/Filesystem.hs:924:1: warning: [-Wunused-top-binds]
+    Defined but not used: ‘throwErrnoPathIfMinus1’
+
+In file included from /usr/include/dirent.h:25:0: error:
+    0,
+                     from lib/hssystemfileio-unix.c:9:
+
+/usr/include/features.h:180:3: error:
+     warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+     # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+       ^~~~~~~
+lib/hssystemfileio-unix.c: In function ‘hssystemfileio_readdir’:
+
+lib/hssystemfileio-unix.c:57:3: error:
+     warning: ‘readdir_r’ is deprecated [-Wdeprecated-declarations]
+       int rc = readdir_r(dir, dirent, &dirent_result);
+       ^~~
+
+In file included from lib/hssystemfileio-unix.c:9:0: error: 
+
+/usr/include/dirent.h:183:12: error:
+     note: declared here
+     extern int readdir_r (DIR *__restrict __dirp,
+                ^~~~~~~~~
+
+In file included from /usr/include/dirent.h:25:0: error:
+    0,
+                     from lib/hssystemfileio-unix.c:9:
+
+/usr/include/features.h:180:3: error:
+     warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+     # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+       ^~~~~~~
+lib/hssystemfileio-unix.c: In function ‘hssystemfileio_readdir’:
+
+lib/hssystemfileio-unix.c:57:3: error:
+     warning: ‘readdir_r’ is deprecated [-Wdeprecated-declarations]
+       int rc = readdir_r(dir, dirent, &dirent_result);
+       ^~~
+
+In file included from lib/hssystemfileio-unix.c:9:0: error: 
+
+/usr/include/dirent.h:183:12: error:
+     note: declared here
+     extern int readdir_r (DIR *__restrict __dirp,
+                ^~~~~~~~~
+Creating package registration file:
+/tmp/pkgConf-system-fileio-0.3.169439477391984210012.3
+Installing library in
+/home/metamist/dev/haskell/workspacer/.cabal-sandbox/lib/x86_64-linux-ghc-8.0.1/system-fileio-0.3.16.3-KMOIsRrOCX8GmvojPJKBJC
+Registering system-fileio-0.3.16.3...
+cabal: Leaving directory '/tmp/cabal-tmp-20592/system-fileio-0.3.16.3'

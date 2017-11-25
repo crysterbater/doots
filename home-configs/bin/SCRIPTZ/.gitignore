@@ -1,0 +1,30 @@
+#======================================#
+#  Caligula's .gitignore for scripts.  #
+#======================================#
+
+# Ignore everything.
+*
+
+# But not these files.
+!.gitignore
+!.zshrcRome
+!.zshrcAntium
+!4scanner.json
+!bat.sh
+!busyscreen.sh
+!colors.sh
+!dmenuAntium.sh
+!dmenuRome.sh
+!installer.sh
+!lock.sh
+!nmap.sh
+!pipes.sh
+!README.md
+!riceman.sh
+!scheme-CanvasedPastel.sh
+!scheme-xErosion.sh
+!snux.sh
+!ss.sh
+!termrecorder.sh
+!termreplayer.sh
+!walcycle.sh

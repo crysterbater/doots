@@ -1,0 +1,4 @@
+#! /bin/dash
+
+grabc | grep -o '#.*' | tr '[:lower:]' '[:upper:]' | tr -d '\n' | xsel -bi
+printf "%s\n" "$(xsel -bo)" | dnotify

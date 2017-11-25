@@ -1,0 +1,8 @@
+QLineEdit {
+color:#f1f2f2;
+background:palette(base);
+border:1px solid rgba(0,0,0,0.6);
+selection-background-color:palette(highlight);
+selection-color:#f1f2f2;}
+QLineEdit:disabled {
+color:#656666;}

@@ -1,0 +1,3 @@
+#! /bin/dash
+
+xsetroot -solid '#FFFEF1'

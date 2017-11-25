@@ -1,0 +1,2 @@
+#!/bin/sh
+exec curl -sSF 'f:1=<-' 'http://ix.io'

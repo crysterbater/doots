@@ -1,0 +1,5 @@
+.QMenu{
+font-weight:bold;}
+.QMenu::separator {
+height: 1px;
+background: rgba(0,0,0,0.6);}

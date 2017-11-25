@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Numica
+Comment=A special flat theme for gnome desktop
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Numica
+MetacityTheme=Numica
+IconTheme=gnome
+CursorTheme=DMZ-Black
+ButtonLayout=:minimize,maximize,close

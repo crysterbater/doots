@@ -1,0 +1,3 @@
+polybar example &
+feh --bg-scale ~/Pictures/wallpapers/4chan/mrastronaut.png &
+setxkbmap pl &

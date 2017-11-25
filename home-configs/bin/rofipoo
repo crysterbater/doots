@@ -1,0 +1,3 @@
+#!/bin/bash
+# Run rofi with a loada config stuffs
+rofi -show run

@@ -1,0 +1,13 @@
+^\.\.\s\?
+^cat\s\?
+^cd\s\?
+^clear\s\?
+^echo\s\?
+^git\s\?
+^ll\s\?
+^ls\s\?
+^mkdir\s\?
+^mpv\s\?
+^mv\s\?
+^ps\s\?
+^z\s\?

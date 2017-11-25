@@ -1,0 +1,83 @@
+#!/bin/bash
+# Author: https://github.com/mohabaks
+# Description: A simple script to switch between dark and light mode. I
+#              maintain two branches using git master(light) and hackish(dark) so this
+#              script simply switch between those to branches. There might be
+#              other ways to switch let me know if their is any ;)
+# Dependencies:
+#                notify-send, dunst
+#                dmenu-xyw-mouse-msel # dmenu patched
+
+# Source colors
+. $HOME/.local/bin/color-parser
+
+# light and dark mode functions
+light(){
+   # switch to dotfiles and check if dir is clean
+   cd ~/Repositories/dotfiles
+   dir_status=$(git status | grep "modified")
+
+   if [[ -n "$dir_status" ]];then
+           notify-send "<span foreground='$RED'>Error</span>" "Hackish branch not clean"
+           exit
+   else
+           git checkout master
+   fi
+
+   # kill apps
+   pkill luakit
+   pkill firefox
+   pkill conky
+   pkill compton
+   pkill dunst
+
+   # restart various applications
+   xrdb -load -I$HOME ~/.Xresources
+   i3-msg restart                            # restart i3
+   compton --config ~/.compton.conf -b
+   conky -c ~/.config/polybar/conky_wrapper &  # polybar wrapper
+   . $HOME/.local/bin/barstart &              #restart polybar
+   feh --bg-scale ~/Pictures/wallpapers/wallhaven-241999.jpg
+
+   notify-send "<span foreground='$BLUE'>Light Mode</span>" "Successfully switched to light-mode"
+   pkill dunst
+}
+
+dark(){
+   # switch to dotfiles and check if dir is clean
+   cd ~/Repositories/dotfiles
+   dir_status=$(git status | grep "modified")
+
+   if [[ -n "$dir_status" ]];then
+           notify-send "Error" "Master branch not clean"
+           exit
+   else
+           git checkout hackish
+   fi
+
+   # kill some application daemon
+   pkill conky
+   pkill luakit
+   pkill firefox
+   pkill compton
+
+   # restart various applications
+   xrdb -load -I$HOME ~/.Xresources
+   i3-msg restart                            # restart i3
+   compton --config ~/.compton.conf -b
+   . $HOME/.local/bin/barstart &             # restart polybar
+   pkill dunst
+
+   feh --bg-scale ~/Pictures/wallpapers/clean.png
+
+   notify-send "<span foreground='$RED'>Dark Mode</span>" "Successfully switched to hackish-mode"
+}
+
+# Grab user options from dmenu
+user_options=$(echo -e "light-mode\nhackish-mode" |dmenu -b -lh 24 -x 500 -y 10 -w 292 -nf "$FG" -sb "$BLUE" -sf "$BG" -nb "$BG" -fn "Iosevka-9")
+
+if [[ "$user_options" = "light-mode" ]];then
+        light
+elif [[ "$user_options" = "hackish-mode" ]];then
+        dark
+fi

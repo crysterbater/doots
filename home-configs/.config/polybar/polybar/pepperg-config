@@ -1,0 +1,540 @@
+[colors]
+foreground = #ffffff
+background = #152128
+modb = #152128
+accent_1 = #ff8787
+accent_2 = #ff8787
+accent_3 = #ff8787
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+override-redirect = true
+
+[bar/top]
+monitor = eDP1
+
+width = 100%
+height = 30
+offset-x = 0%
+offset-y = 0
+
+locale = de_DE.UTF-8
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+font-0 = tewi:size=8:antialias=true;
+;font-1 = MaterialIcons-Regular :size=10:;
+font-1 = FontAwesome:pixelsize=12:antialias=false;2
+font-2 = MaterialIcons:size=12:antialias=false;2
+
+modules-left = date1 volume cpu weather 
+modules-center = spotipy previous playpause next
+modules-right = powermenu openbox menu
+
+tray-position = off
+tray-padding = 2
+tray-transparent = false
+tray-detached = false
+tray-background = ${colors.modb}
+
+spacing = 1
+padding-left = 0
+padding-right = 0
+module-margin-left = 0
+module-margin-right = 0
+
+[module/openbox]
+type=internal/xworkspaces
+pin-workspaces=true
+enable-click=false
+enable-scroll=false
+format=<label-state>
+label-monitor=%name%
+label-active =%icon%%name%
+label-active-foreground =${colors.accent_1}
+label-active-background =${colors.modb}
+;label-active-underline=${colors.cyan}
+label-active-padding=1
+label-occupied =%name%
+label-occupied-background=${colors.foreground}
+label-occupied-padding=1
+label-urgent=%index%
+label-urgent-foreground=${colors.foreground}
+label-urgent-background=${colors.background}
+label-urgent-underline=${colors.accent_1}
+label-empty =%name%
+label-empty-padding=1
+label-empty-background=${colors.background}
+label-empty-foreground=${colors.foreground}
+
+[module/volume]
+type = internal/volume
+
+format-volume = <ramp-volume><label-volume>
+
+format-volume-background = ${colors.modb}
+format-volume-padding = 2
+
+module-margin-right = 0
+ramp-volume-0 =
+ramp-volume-1 =
+ramp-volume-2 =
+ramp-volume-3 =
+ramp-volume-foreground = ${colors.accent_1}
+
+
+label-muted =  muted
+
+[module/date1]
+type = internal/date
+interval = 1
+date = " %I:%M"
+format-prefix = 
+format-prefix-foreground = ${colors.accent_1}
+format-background = ${colors.modb}
+format-padding = 2
+
+
+
+[module/hlws]
+type = custom/script
+exec = python3 scripts/hlws.py
+scroll-down = exec herbstclient use_index +1
+scroll-up = exec herbstclient use_index -1
+interval = 0.01
+format-background = ${colors.modb}
+format-padding = 2
+
+[module/previous]
+type = custom/script
+format-text = <label>
+label = 
+exec = echo label
+click-left = exec playerctl previous
+format-foreground = ${colors.accent_2}
+format-background = ${colors.modb}
+format-padding = 2
+
+[module/next]
+type = custom/script
+format-text = <label>
+label = 
+exec = echo label
+click-left = exec playerctl next
+format-foreground = ${colors.accent_2}
+format-background = ${colors.modb}
+format-padding = 2
+
+[module/spotipy]
+type = custom/script
+exec =  python3 ~/scripts/spoti.py
+exec-if = pgrep spotify > /dev/null
+interval = 0.01
+click-left = playerctl -p spotify play-pause
+format-background = ${colors.modb}
+format-padding = 2
+
+[module/playpause]
+type = custom/script
+exec = python3 /home/pringle/.config/polybar/scripts/playpause.py
+interval = 0.01
+click-left = playerctl -p spotify play-pause
+format-foreground = ${colors.accent_2}
+format-background = ${colors.modb}
+format-padding = 2
+
+
+[module/cpu]
+type = internal/cpu
+label = %percentage-core1%%
+format-prefix = " "
+format-prefix-foreground = ${colors.accent_1}
+format-background = ${colors.modb}
+format-padding = 2
+
+
+[module/pkg]
+type = custom/script
+label-foreground = ${colors.foreground}
+label-background = ${colors.b-alt}
+exec = /home/pringle/.config/polybar/scripts/pkg.sh
+exec-if = "ping -c 1 8.8.8.8 > /dev/null"
+click-left = /home/pringle/.config/polybar/scripts/update.sh
+click-right = /home/pringle/.config/polybar/scripts/aur-update.sh
+label-padding = 0
+interval = 1500
+tail = true
+format-underline = #95B0C7
+
+
+
+[module/compton]
+type = custom/script
+label-background = ${colors.b-alt}
+exec = $HOME/.config/polybar/scripts/compton.sh
+click-left = $HOME/.config/polybar/scripts/compton-toggle.sh
+click-right = $HOME/.config/polybar/scripts/compton-toggle.sh
+interval = 2
+label-padding = 1
+
+
+[module/window_count]
+type = custom/script
+interval = 1
+label = %{A1:skippy-xd --toggle-window-picker:}   %output%  %{A}
+exec = echo "$(($(wmctrl -l -i | wc -l)-1))"
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
+format-padding = 3
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+label-mounted =  %mountpoint%:%percentage_used%%
+label-mounted-foreground = ${colors.foreground}
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.blue}
+
+
+
+
+
+
+[module/trash]
+interval = 1
+type = custom/script
+exec = $HOME/.config/polybar/scripts/trash
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground}
+format-background = ${colors.b-alt}
+click-right = rm -rf $HOME/.local/share/Trash/files/*
+click-left = exo-open --launch FileManager $HOME/.local/share/Trash/files
+
+
+
+[module/menu]
+type = custom/menu
+format-spacing = 1
+format-background = ${colors.background}
+label-open = "   "
+label-open-foreground = ${colors.foreground}
+label-open-background = #16161A
+label-close = "    "
+label-close-foreground = #B52A6E
+label-separator = " || "
+label-separator-foreground = #7DCBBE
+menu-0-0 = "  "
+menu-0-0-exec = menu-open-1
+menu-0-1 = "  "
+menu-0-1-exec = menu-open-2
+menu-0-2 = "  "
+menu-0-2-exec = menu-open-3
+# 1
+menu-1-0 = "  "
+menu-1-0-exec = exo-open --launch WebBrowser
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch TerminalEmulator
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch FileManager
+menu-1-3 = "  "
+menu-1-3-exec = geany &
+# 2
+menu-2-0 = "  "
+menu-2-0-exec = audacious &
+menu-2-1 = "  "
+menu-2-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-2-2 = "  "
+menu-2-2-exec = lxappearance &
+menu-2-3 = "  "
+menu-2-3-exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+# 3
+menu-3-0 = "   "
+menu-3-0-exec = slimlock
+menu-3-1 = "   "
+menu-3-1-exec = openbox --exit
+menu-3-2 = "   "
+menu-3-2-exec = systemctl reboot
+menu-3-3 = "   "
+menu-3-3-exec = systemctl poweroff
+
+
+[module/workspaces]
+type = internal/xworkspaces
+enable-click = true
+enable-scroll = true
+format-padding = 1
+Additional formatting
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+;icon-default = 
+
+format = <label-state>
+label-monitor =  %name%
+
+label-active = " %icon% %name% "
+label-active-foreground = format-foreground = #ffffff
+label-active-background = ${colors.background}
+label-active-underline = ${colors.background}
+
+label-occupied = " %icon% %name% "
+label-occupied-underline = #AE6CEB
+label-occupied-background = ${colors.background}
+label-occupied-foreground = format-foreground = ${colors.accent_2}
+
+label-urgent = " %icon% %name% "
+label-urgent-foreground = ${colors.accent_3}
+label-urgent-background = ${colors.background}
+label-urgent-underline = ${colors.background}
+
+label-empty = " %icon% %name% "
+label-empty-foreground = ${colors.foreground}
+
+
+
+
+[module/xbacklight]
+type = internal/xbacklight
+output = eDP-1
+format = <ramp> <bar>
+
+ramp-0 = 
+ramp-0-foreground = #666
+ramp-1 = 
+ramp-1-foreground = #999
+ramp-2 = 
+ramp-2-foreground = #fff
+
+bar-width = 8
+bar-indicator = 
+bar-indicator-font = 2
+bar-indicator-foreground = #C3437F
+bar-fill = 
+bar-fill-font = 2
+bar-fill-foreground = #938BA0
+bar-empty = 
+bar-empty-font = 2
+bar-empty-foreground = #262B36
+
+
+
+
+[module/wireless-network]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+ping-interval = 10
+
+format-connected = <ramp-signal> <label-connected>
+label-connected = %essid%
+label-disconnected =    not connected
+label-connected-foreground = #e8e8e8
+label-disconnected-foreground = #66
+format-underline = #9167C3
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = #e8e8e8
+
+animation-packetloss-0 = 
+animation-packetloss-0-foreground = #e8e8e8a64c
+animation-packetloss-1 = 
+animation-packetloss-1-foreground = ${bar/top.foreground}
+animation-packetloss-framerate = 500
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;    Extra Modules  (not used)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/arrow]
+; background to trans
+type = custom/text
+content = " "
+content-font = 2
+content-foreground = #96949C
+content-background = #16161A
+
+[module/arrow2]
+; background to trans
+type = custom/text
+content = " "
+content-font = 2
+content-foreground = #96949C
+content-background = #16161A
+
+[module/arrow3]
+; background to trans
+type = custom/text
+content = " "
+content-font = 2
+content-foreground = #96949C
+content-background = #16161A
+
+[module/padding]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/padding2]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/padding3]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/padding4]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/seperator]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator2]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator3]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+
+
+[module/title]
+type = custom/script
+interval = 1
+label = %output%
+label-maxlen = 65
+exec = echo "$(xtitle)"
+format = <label>
+format-background = ${colors.b-alt}
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground}
+format-padding = 3
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = "  "
+format-prefix-foreground = ${colors.accent_1}
+label-foreground = #ffffff
+exec =  /home/pringle/.config/polybar/scripts/weather
+
+[module/eth]
+type = internal/network
+interface = eno1
+interval = 1
+label-connected = "  "
+label-connected-foreground = ${colors.foreground}
+label-connected-background = ${colors.b-alt}
+label-disconnected = "  "
+label-disconnected-foreground = ${colors.foreground}
+label-disconnected-background = ${colors.b-alt}
+
+[module/network]
+type = custom/script
+label-background = ${colors.background}
+exec = $HOME/.config/polybar/scripts/network.sh
+click-left = networkmanager_dmenu
+click-right = networkmanager_dmenu
+label-padding = 1
+interval = 1
+tail = true
+
+[module/coreuse]
+type = internal/cpu
+interval = 1
+format = <label>
+format-background = ${colors.b-alt}
+format-prefix = ""
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.foreground}
+label = %percentage%%
+ramp-coreload-0 = %{F#81817F}▂%{F-}
+ramp-coreload-1 = %{F#81817F}▃%{F-}
+ramp-coreload-2 = %{F#D1D1D0}▄%{F-}
+ramp-coreload-3 = %{F#D1D1D0}▅%{F-}
+ramp-coreload-4 = %{F#D1D1D0}▆%{F-}
+ramp-coreload-5 = %{F#FFFFFF}▇%{F-}
+ramp-coreload-6 = %{F#FFFFFF}█%{F-}
+
+[module/powermenu]
+type = custom/menu
+format-spacing = 1
+format-background = ${colors.background}
+label-open = "   "
+label-open-foreground = ${colors.background}
+label-open-background = ${colors.background}
+label-close = "    "
+label-close-foreground = #CC3E79
+label-separator = " | "
+label-separator-foreground = #95AEC7
+# Top level
+menu-0-0 = "  Favorites "
+menu-0-0-exec = menu-open-1
+menu-0-1 = "  Utility"
+menu-0-1-exec = menu-open-2
+menu-0-2 = "  System "
+menu-0-2-exec = menu-open-3
+# 1
+menu-1-0 = "  "
+menu-1-0-exec = vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch FileManager
+menu-1-3 = "  "
+menu-1-3-exec = gcolor2 &
+# 2
+menu-2-0 = "  "
+menu-2-0-exec = audacious &
+menu-2-1 = "  "
+menu-2-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-2-2 = "  "
+menu-2-2-exec = lxappearance &
+menu-2-3 = "  "
+menu-2-3-exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+# 3
+menu-3-0 = "   "
+menu-3-0-exec = slimlock
+menu-3-1 = "   "
+menu-3-1-exec = openbox --exit
+menu-3-2 = "  "
+menu-3-2-exec = systemctl reboot
+menu-3-3 = "  "
+menu-3-3-exec = systemctl poweroff
+
+;
+;
+;
+;      
+;

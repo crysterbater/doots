@@ -1,0 +1,83 @@
+treeview,
+treeview:backdrop{
+-GtkWidget-window-dragging:false;
+-GtkTreeView-horizontal-separator: 4;
+-GtkTreeView-grid-line-width: 1;
+-GtkTreeView-grid-line-pattern: "\001\001";
+-GtkTreeView-tree-line-width: 1;
+-GtkTreeView-tree-line-pattern: "\001\001";
+-GtkTreeView-expander-size:22;}
+
+treeview>header>button,
+treeview>header>button:backdrop{
+margin-top:-1px;
+margin-left:-1px;
+margin-right:-1px;
+font-weight:bold;
+padding:1px 4px 1px 4px;
+background:shade (@base_color,0.8);}
+treeview>header>button:active{
+color:@selected_text_color;
+background:@selected_base_color;}
+treeview.view:hover:not(:selected){
+border-color:alpha(@selected_base_color,0.0);
+background:alpha(@selected_base_color,0.3);}
+treeview.view.separator,
+treeview.view.separator:backdrop{
+min-height:1px;
+color:alpha(@fg_color,0.4);}
+
+treeview.view.expander:checked{
+-GtkTreeView-expander-size:22;
+min-height:22px;
+min-width:17px;
+-gtk-icon-source:-gtk-scaled(url("../../images/gtk-3.0/arrow-down_active.svg"),url("../../images/gtk-3.0/arrow-down_active2.svg"));}
+treeview.view.expander{
+-GtkTreeView-expander-size:22;
+min-height:22px;
+min-width:17px;
+-gtk-icon-source:-gtk-scaled(url("../../images/gtk-3.0/arrow-down_normal.svg"),url("../../images/gtk-3.0/arrow-down_normal2.svg"));
+-gtk-icon-transform:rotate(0.75turn);}
+treeview.view.expander:dir(rtl) {
+-GtkTreeView-expander-size:22;
+min-height:22px;
+min-width:17px;
+-gtk-icon-source:-gtk-scaled(url("../../images/gtk-3.0/arrow-down_normal.svg"),url("../../images/gtk-3.0/arrow-down_normal2.svg"));
+-gtk-icon-transform:rotate(0.25turn);}
+
+treeview.view.progressbar,
+treeview.view.progressbar:backdrop,
+treeview.view.progressbar:hover,
+treeview.view.progressbar:hover:backdrop{
+border:1px solid rgba(0,0,0,0.8);
+background-color:@selected_base_color;}
+
+treeview.view.progressbar:selected,
+treeview.view.progressbar:selected:backdrop{
+color:@bg_color;
+background-color:@fg_color;}
+
+treeview.view.trough,
+treeview.view.trough:selected,
+treeview.view.trough:hover,
+treeview.view check,
+treeview.view radio,
+treeview.view check:selected:not(:checked),
+treeview.view radio:selected:not(:checked),
+treeview.view check:hover:not(:checked),
+treeview.view radio:hover:not(:checked),
+treeview.view check:disabled:not(:checked),
+treeview.view radio:disabled:not(:checked),
+treeview.view.trough:backdrop,
+treeview.view.trough:selected:backdrop,
+treeview.view.trough:hover:backdrop,
+treeview.view check:backdrop,
+treeview.view radio:backdrop,
+treeview.view check:selected:not(:checked):not(:active):backdrop,
+treeview.view radio:selected:not(:checked):not(:active):backdrop,
+treeview.view check:hover:not(:checked):not(:active):backdrop,
+treeview.view radio:hover:not(:checked):not(:active):backdrop,
+treeview.view check:disabled:not(:checked):not(:active):backdrop,
+treeview.view radio:disabledover:not(:checked):not(:active):backdrop{
+background:shade(@base_color,0.8);
+border:1px solid @border_color;}

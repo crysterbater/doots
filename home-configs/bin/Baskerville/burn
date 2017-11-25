@@ -1,0 +1,51 @@
+#! /bin/dash
+
+usage() {
+	printf "%s [-h|-D|-d DEVICE|-l LABEL] FILE ...\n" "$(basename "$0")"
+	exit ${1:-0}
+}
+
+[ $# -eq 0 ] && usage 1
+
+label="noname"
+dvd=0
+device=/dev/sr1
+
+while getopts "Dhd:l:" opt ; do
+	case $opt in
+		h)
+			usage
+			;;
+		l)
+			label=$OPTARG
+			;;
+		d)
+			device=$OPTARG
+			;;
+		D)
+			dvd=1
+			;;
+	esac
+done
+
+shift $(($OPTIND - 1))
+
+img=$(iso -l "$label" "$@")
+[ -z "$img" ] && exit 1
+isoinfo -J -l -i "$img"
+
+printf "%s" "Ready to burn? [Y/n] "
+read answer
+[ -z "$answer" ] && answer="yes"
+
+case "$answer" in
+	y|Y|yes|Yes)
+		if [ $dvd -eq 0 ] ; then
+			wodim dev=$device -v "$img"
+		else
+			growisofs -Z "${device}=${img}"
+		fi
+		;;
+esac
+
+rm "$img"

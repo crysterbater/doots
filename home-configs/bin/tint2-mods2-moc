@@ -1,0 +1,118 @@
+
+#!/bin/bash
+
+# gets information from mocp, formats it to a defined maximum length, omitting
+# characters in the middle.
+# then it tries to seperate the string into a defined number of lines,
+# respecting word boundaries (only normal whitespace)
+# the first line returns the path to an icon, for use with the EXEC plugin from
+# https://gitlab.com/o9000/tint2-mods2/
+
+me="$(basename "$0")"
+icon1="$HOME/.config/tint2/img/media-playback-pause.png"
+icon2="$HOME/.config/tint2/img/media-playback-start.png"
+maxlen="$2" # maximum length of string before dividing into lines
+lines="$1" # it is best if maxlen%lines is 0
+tmp_dir="/tmp"
+
+function only_me_or_exit {
+	# make sure only 1 instance is running
+	touch "$1"
+	read lastPID < "$1"
+	# if lastPID is not null and a process with that pid exists , exit
+	[ ! -z "$lastPID" -a -d /proc/$lastPID ] && { echo "An instance of $me is already running with pid $lastPID." ; exit 1 ; }
+	# else - save my pid in the lock file, and continue
+	echo $$ > "$1"
+}
+function exit_only_me {
+	rm "$pidfile"
+	exit
+}
+
+function otherinfo_func {
+	# get song length and remaining time and such and format it nicely
+	echo "${info[CurrentTime]#0}/${info[TotalTime]#0}"
+}
+function join_maxlen_func {
+	# 2 strings - $1 and $2 - not more than $maxlen chars altogether.
+	# but the first string is to be shortened, not the 2nd.
+	dots=""
+	[ ${#1} -gt $((maxlen - ${#2})) ] && dots="..."
+	echo "${1:0:((maxlen - ${#dots} - ${#2}))}$dots $2"
+}
+function lines_func {
+	string="$1"
+	for (( ; lines > 1 ; lines-- ))
+	do
+		length=${#string}
+		for (( fwd=$((length/lines)) , bwd=$((length/lines)) ; bwd >= 0 ; fwd++ , bwd-- ))
+		do
+			if [[ "${string:$fwd:1}" = " " ]]
+			then
+				echo "${string:0:$fwd}"
+				string="${string:$((fwd + 1))}"
+				break
+			fi
+			if [[ "${string:$bwd:1}" = " " ]]
+			then
+				echo "${string:0:$bwd}"
+				string="${string:$((bwd + 1))}"
+				break
+			fi
+			#~ "${string:$bwd:1}"
+			#~ wordlength
+		done
+	done
+	echo "$string"
+}
+function get_info_func {
+	if [[ "${info[Title]}" == "" ]]
+	then
+		returnstring="$(basename "${info[File]}")"
+		returnstring="${returnstring%\.*}"
+	else
+		returnstring="${info[Title]}"
+	fi
+	echo "$returnstring"
+}
+#############################################################################
+# make sure only 1 instance is running
+pidfile="$tmp_dir/${me}_pid"
+only_me_or_exit "$pidfile"
+
+if pidof mocp >/dev/null
+then
+	# the fields of the associative array are named after the information contained
+	# in them (as provided by "mocp -i")
+	declare -A info
+	info=()
+	timeout=0
+	while [ "${#info[*]}" -le 1 ] && [ $timeout -le 10 ]
+	do
+		while read -r line
+		do
+			info[${line%%\: *}]="${line##*\: }"
+		done < <(mocp -i)
+	[ "${#info[*]}" -le 1 ] && sleep 0.1
+	timeout=$((timeout + 1))
+	done
+	
+	case "${info[State]}" in
+		"PLAY") 
+		infostring="$(get_info_func)"
+		echo "$icon2"
+		lines_func "$(join_maxlen_func "$infostring" "$(otherinfo_func)")"
+		exit_only_me
+		;;
+		"PAUSE") 
+		infostring="$(get_info_func)"
+		echo "$icon1"
+		lines_func "$(join_maxlen_func "$infostring" "$(otherinfo_func)")"
+		exit_only_me
+		;;
+	esac
+fi
+
+echo # no icon for uptime?
+lines_func "$(uptime -p)"
+exit_only_me

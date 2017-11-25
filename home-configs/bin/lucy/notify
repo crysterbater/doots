@@ -1,0 +1,52 @@
+#!/bin/sh
+# [-a appname]
+# [-c actions]
+# [-h hints]
+# [-i icon]
+# [-t timeout]
+# [title [body]]
+
+set -e
+
+action=
+app=
+body=
+expire=5000
+hint=,
+icon=
+title=
+
+while :; do
+	case "$1" in
+	'') break ;;
+	-a) app="$2"; shift 2 ;;
+	-i) icon="$2"; shift 2 ;;
+	-t) expire="$2"; shift 2 ;;
+	-h) hint="$2"; shift 2 ;;
+	-c) action="$2"; shift 2 ;;
+	-*) printf 'notify: invalid option: %s' "$1" 1>&2; exit 1 ;;
+	*)
+		if [ -z "$title" ]; then
+			title="$1"
+		elif [ -z "$body" ]; then
+			body="$1"
+		else
+			exit 1
+		fi
+		shift
+		;;
+	esac
+done
+
+dbus-send --type=method_call \
+	--dest='org.freedesktop.Notifications' \
+	/org/freedesktop/Notifications \
+	org.freedesktop.Notifications.Notify \
+	"string:$app" \
+	"uint32:0" \
+	"string:$icon" \
+	"string:$title" \
+	"string:$body" \
+	"array:string:$action" \
+	"dict:string:string:$hint" \
+	"int32:$expire"

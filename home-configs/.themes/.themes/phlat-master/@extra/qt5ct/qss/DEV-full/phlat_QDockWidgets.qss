@@ -1,0 +1,16 @@
+QDockWidget {
+border: 1px solid rgba(0,0,0,0.8);
+titlebar-close-icon: url(/usr/share/themes/phlat/images/close.svg);
+titlebar-normal-icon:  url(/usr/share/themes/phlat/images/max.svg);}
+QDockWidget::title {
+text-align: center; 
+margin:-1px;
+border:1px solid rgba(0,0,0,0.6);
+background-color: palette(base);}
+QDockWidget::close-button, QDockWidget::float-button {
+padding:0px;
+icon-size: 22px; }
+QDockWidget::close-button:pressed{
+background:#cc0000}
+QDockWidget::float-button:pressed{
+background:palette(highlight);}

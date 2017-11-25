@@ -1,0 +1,14 @@
+#!/bin/sh
+
+post_install() {
+	sed -i '/^#phlat$/,+1 d' /etc/environment
+	printf '\n#phlat\nGTK_OVERLAY_SCROLLING=0\n#phlat\nLIBOVERLAY_SCROLLBAR=0\n'>> /etc/environment
+}
+
+post_upgrade() {
+	post_install
+}
+
+post_remove() {
+	sed -i '/^#phlat$/,+1 d' /etc/environment
+}

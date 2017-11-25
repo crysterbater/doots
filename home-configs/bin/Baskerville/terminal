@@ -1,0 +1,15 @@
+#! /bin/dash
+
+dir=$@
+
+if [ -z "$dir" ] ; then
+    wid=$(xdo id)
+    if [ -n "$wid" -a "$(xwinfo -c $wid)" = "Termite" ] ; then
+        dir=$(xcwd "$wid")
+    else
+        dir=$(Z -s atime | head -n 1)
+        [ -d "$dir" ] || dir=$HOME
+    fi
+fi
+
+termite -d "$dir"

@@ -1,0 +1,5 @@
+#! /bin/dash
+
+WORDS=$XDG_DATA_HOME/dicfr.txt
+
+[ -n "$@" ] && grep -E "$@" "$WORDS"

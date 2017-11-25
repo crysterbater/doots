@@ -1,0 +1,6 @@
+<svg viewBox="0 0 16 16" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+    <g color="#000" fill="#f1f2f2">
+        <path d="M1.031 0C.468 0 0 .437 0 1v2h16V1c0-.563-.437-1-1-1z" style="isolation:auto;mix-blend-mode:normal;marker:none" overflow="visible" fill-opacity=".365"/>
+        <path d="M0 4.031v10.906a1.04 1.04 0 0 0 1.031 1.032H15c.563 0 1-.468 1-1.032V4.031zM6 5h9v7H6zm1 2v4h7V7zM2 8h3v2H3v4h7v-.969h1V15H2z" style="isolation:auto;mix-blend-mode:normal;marker:none" overflow="visible"/>
+    </g>
+</svg>

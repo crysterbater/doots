@@ -1,0 +1,121 @@
+dialog>box.vertical>widget>widget:first-child,
+dialog>box.vertical>widget>widget:first-child:backdrop {
+background:shade(@bg_color,0.9);}
+
+#ParoleScale trough,
+#ParoleScale trough:backdrop{
+-GtkWidget-window-dragging:false;
+min-height:24px;
+border:1px solid @border_color;
+background:@base_color;}
+#ParoleScale highlight{
+background:@error_color;}
+#ParoleScale slider,
+#ParoleScale slider:backdrop{
+min-height:24px;
+min-width:4px;
+background:@selected_text_color;
+box-shadow:none;}
+
+#XfceNotifyWindow,
+#XfceNotifyWindow:backdrop{
+-GtkWidget-window-dragging:false;
+border:1px solid shade(@bg_color,0.4);
+background:shade(@bg_color,0.6);
+border-radius:1px;}
+#XfceNotifyWindow label,
+#XfceNotifyWindow image {
+color:@fg_color;}
+#XfceNotifyWindow label#summary {
+color:@fg_color;
+font-weight:Bold;}
+
+#xfce4-terminal-notebook,
+#xfce4-terminal-notebook:backdrop{
+border:none;
+margin:-1px;
+padding:0px;}
+#xfce4-terminal-notebook>stack,
+#xfce4-terminal-notebook>stack:backdrop{
+margin-top:-1px;
+border-top:1px solid @border_color;}
+
+#XfcePanelWindowWrapper{
+-GtkWidget-window-dragging:false;
+border-color:transparent;
+color:@fg_color;
+background:@bg_color;}
+
+.xfce4-panel button,
+.xfce4-panel button:backdrop,
+.xfce4-panel button:active,
+.xfce4-panel button:checked,
+.xfce4-panel button:disabled{
+background:transparent;
+border:none;}
+.xfce4-panel>widget>widget>box>widget>button,
+.xfce4-panel>widget>widget>box>widget>button:backdrop {
+font-weight:bold;
+background:transparent;
+color:shade(@fg_color,0.5);
+border:none;}
+.xfce4-panel>widget #whiskermenu-button,
+.xfce4-panel>widget #whiskermenu-button:backdrop,
+.xfce4-panel>widget #clock-button,
+.xfce4-panel>widget #clock-button:backdrop,
+.xfce4-panel>widget #applicationmenu-button,
+.xfce4-panel>widget #applicationmenu-button:backdrop,
+.xfce4-panel>widget #actions-button,
+.xfce4-panel>widget #actions-button:backdrop{
+font-weight:bold;
+background:transparent;
+border:none;}
+.xfce4-panel>widget #clock-button:checked,
+.xfce4-panel>widget #clock-button:checked:backdrop,
+.xfce4-panel>widget #clock-button:active,
+.xfce4-panel>widget #clock-button:active:backdrop,
+.xfce4-panel>widget #whiskermenu-button:checked,
+.xfce4-panel>widget #whiskermenu-button:checked:backdrop,
+.xfce4-panel>widget #whiskermenu-button:active,
+.xfce4-panel>widget #whiskermenu-button:active:backdrop,
+.xfce4-panel>widget #applicationmenu-button:checked,
+.xfce4-panel>widget #applicationmenu-button:checked:backdrop,
+.xfce4-panel>widget #applicationmenu-button:active,
+.xfce4-panel>widget #applicationmenu-button:active:backdrop,
+.xfce4-panel>widget #actions-button:checked,
+.xfce4-panel>widget #actions-button:checked:backdrop,
+.xfce4-panel>widget #actions-button:active,
+.xfce4-panel>widget #actions-button:active:backdrop,
+.xfce4-panel>widget>widget>box>widget>button:checked,
+.xfce4-panel>widget>widget>box>widget>button:checked:backdrop,
+.xfce4-panel>widget>widget>box>widget>button:active,
+.xfce4-panel>widget>widget>box>widget>button:active:backdrop  {
+font-weight:bold;
+color:@selected_fg_color;
+background:@selected_bg_color;
+border:none;}
+.xfce4-panel>widget>widget>box>widget>button:hover,
+.xfce4-panel>widget>widget>box>widget>button:hover:backdrop,
+.xfce4-panel>widget>widget>box>widget>button:checked:hover,
+.xfce4-panel>widget>widget>box>widget>button:checked:hover:backdrop {
+background:alpha(@selected_bg_color,0.6);
+color:@selected_fg_color;}
+
+XfdesktopIconView.view,
+XfdesktopIconView.view:backdrop{
+-GtkWidget-window-dragging:false;
+border-color:transparent;
+font-weight:bold;
+text-shadow: 1px 1px 2px#000000;
+background:transparent;}
+XfdesktopIconView.view:selected,
+XfdesktopIconView.view:selected:backdrop,
+XfdesktopIconView.view:active,
+XfdesktopIconView.view:active:backdrop{
+border-radius:5px;
+text-shadow: none;
+color:@selected_text_color;
+background:@selected_base_color;}
+XfdesktopIconView.rubberband{
+border:1px solid @selected_base_color;
+background:alpha(@selected_base_color,0.2);}

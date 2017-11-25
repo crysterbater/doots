@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# print dmenu dimensions for current monitor, and set prompt.
+# colors are set by Xresources.
+
+# TODO: more dynamic width
+width=500
+height=15
+
+lines=15
+
+mon="$(bspc query -M -m)"
+dim() {
+     bspc query -T -m $mon | jq .rectangle.$1
+}
+
+x="$(( ($(dim width) - width) / 2 ))"
+y="$(( ($(dim height) - height) / 2))"
+
+y=$((y-(height*lines)))
+
+echo "-dim 0.8 -y $y -x $x -h $height -w $width -l $lines -i -p \"${1}:\""

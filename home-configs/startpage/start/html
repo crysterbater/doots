@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Frontpage</title>
+    <link href="start.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+
+    <main>
+      <!-- Tracker Links-->
+      <div class="wrapper">
+
+      <div class="container">
+        <div style="background-color: #141415;" class="containerHeader">Tech</div>
+        <hr>
+
+
+        <div class="containerContent">
+          <ul>
+
+            <li>
+              <a href="https:/githun.com">github</a>
+            </li>
+
+            <li>
+              <a href="http://pastebin.com/">Pastebin</a>
+            </li>
+
+            <li>
+              <a href="http://dotshare.it/">Dotshare</a>
+            </li>
+
+
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4chan -->
+      <div class="container">
+        <div style="background-color: #141415;" class="containerHeader">Wallpapers</div>
+        <hr>
+
+        <div class="containerContent">
+          <ul>
+            <li>
+              <a href="https://alpha.wallhaven.cc/search?q="Ruby+James"&page=4/">wallhaven</a>
+            </li>
+
+            <li>
+              <a href="http://boards.4chan.org/b/">/wg/</a>
+            </li>
+
+            <li>
+              <a href="https://cloudpix.co">cloudpix</a>
+            </li>
+
+            <li>
+              <a href="http://www.wallpapers-web.com">wallweb</a>
+            </li>
+
+            <li>
+              <a href="http://maryposh.livejournal.com/95647.html">misc</a>
+            </li>
+
+            <li>
+              <a href="http://www.walldevil.com">walldevil</a>
+            </li>
+
+
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- Reddit -->
+      <div class="container">
+        <div style="background-color: #141415;" class="containerHeader">Reddit</div>
+        <hr>
+
+        <div class="containerContent">
+          <ul>
+            <li>
+              <a href="https://www.reddit.com/">Front</a>
+            </li>
+
+            <li>
+              <a href="https://www.reddit.com/r/linux/">r/linux</a>
+            </li>
+
+            <li>
+              <a href="https://www.reddit.com/r/unixporn/">r/unixporn</a>
+            </li>
+
+            <li>
+              <a href="https://www.reddit.com/r/desktops/">r/askreddit</a>
+            </li>
+
+            <li>
+              <a href="https://www.reddit.com/r/startpages/">r/startpages</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="container">
+        <div style="background-color: #141415;" class="containerHeader">Social / Forums</div>
+        <hr>
+        <div class="containerContent">
+          <ul>
+            <li>
+              <a href="https://facebook.com">facebook</a>
+            </li>
+
+            <li>
+              <a href="https://tumblr.com">tumblr</a>
+            </li>
+
+            <li>
+              <a href="https://plus.google.com">google+</a>
+            </li>
+
+            <li>
+              <a href="http://vk.com">vik</a>
+            </li>
+
+
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- Music -->
+      <div class="container">
+        <div style="background-color: #141415;" class="containerHeader">Music</div>
+        <hr>
+        <div class="containerContent">
+          <ul>
+            <li>
+              <a href="https://www.soundcloud.com">soundcloud</a>
+            </li>
+
+            <li>
+              <a href="https://youtube.com">youtube</a>
+            </li>
+
+
+            <li>
+              <a href="https://pitchfork.com/">Pitchfork</a>
+            </li>
+
+
+          </ul>
+        </div>
+      </div>
+      <!-- Other -->
+      <div class="container">
+        <div style="background-color: #141415;" class="containerHeader">Other</div>
+        <hr>
+        <div class="containerContent">
+          <ul>
+
+
+            <li>
+              <a href="https://thepiratebay.se/">TPB</a>
+            </li>
+
+            <li>
+              <a href="https://biqle.ru/video/libertines/">biqle</a>
+            </li>
+
+            <li>
+              <a href="http://dotshare.it/">Dotshare</a>
+            </li>
+
+            <li>
+              <a href="http://box-look.org/">box-look</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      </div>
+
+    </main>
+
+  </body>
+</html>

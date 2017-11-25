@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# neeasade's bspwmrc
+# may take one bool arg: gaps or ungapped
+
+set -a
+
+# if none set, keep whatever is open.
+gapped="$1"
+[ -z "$gapped" ] && gapped=$(iif "[ ! $(bspc config window_gap) -le 0 ]")
+
+xinit=$(iif "[ $(( $(date +%s) - xstart )) -lt 2 ]")
+
+PATH=$PATH:$HOME/.wm/scripts/visual
+
+$(iif "[ \"{{p_gap}}\" = \"0\" ]") &&
+    relaunch_panel=true || \
+    relaunch_panel=$(iif "kill -s TERM $(cat /tmp/panel-pid) 2>/dev/null")
+
+bspc config border_width {{b_border_width}}
+bspc config split_ratio  {{b_split_ratio}}
+
+bspc config normal_border_color   "#{{b_normal_border_color}}"
+bspc config active_border_color   "#{{b_active_border_color}}"
+bspc config focused_border_color  "#{{b_focused_border_color}}"
+bspc config presel_feedback_color "#{{b_presel_feedback_color}}"
+
+bspc config focus_follows_pointer     true
+bspc config ignore_ewmh_focus         false
+bspc config remove_unplugged_monitors true
+bspc config remove_disabled_monitors  true
+
+# external rules
+bspc config external_rules_command "{{`echo -n $(which external_rules.sh)`}}"
+
+# to gap or not to gap
+bspc config window_gap $(iif $gapped {{b_window_gap}} -{{b_border_width}})
+
+side_padding=$(iif $gapped 0 {{b_border_width}})
+panel_padding=$(iif $relaunch_panel "{{p_height}}+{{p_gap}}" 0)
+
+bspc config {{p_position}}_padding $((side_padding + panel_padding))
+
+for side in right {{`iif "[ \"$p_position\" = \"top\" ]" bottom top`}} left; do
+    bspc config ${side}_padding $side_padding
+done
+
+bspc config borderless_monocle $(iif "! $gapped")
+bspc config single_monocle     $(iif "! $gapped")
+
+# declare desktops per monitor
+for monitor in $(bspc query -M); do
+    bspc monitor $monitor -d {{b_desktop_names}}
+done
+
+if $relaunch_panel && ! ps -p $(cat /tmp/panel-pid); then
+    "{{p_launch_cmd}}" &
+fi
+
+for visual in $(ls $HOME/.wm/scripts/visual); do
+    pkill -f $HOME/.wm/scripts/visual/$visual 2>/dev/null
+done
+
+# extensions may be defined in themes here:
+{{b_bspwmrc_extend}}
+
+# initial wm startup actions
+if $xinit; then
+    $HOME/.wm/startup.sh &
+    "{{p_launch_cmd}}" &
+fi

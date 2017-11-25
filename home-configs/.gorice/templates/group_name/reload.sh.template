@@ -1,0 +1,11 @@
+killall compton
+killall polybar
+killall conky
+pkill dunst
+gtk-theme-switch2 
+/home/pringle/.themes/midnightish/gtk-2.0/gtkrc.template 
+
+
+sleep 0.5
+notify-send "Config loaded" "{{.Name}}"
+

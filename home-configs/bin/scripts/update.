@@ -1,0 +1,13 @@
+#!/bin/sh
+# Script update system, ARCH...
+read -n 1 -p ":: Are you sure you want to upgrade the system? [Y/n]: " AMSURE
+	[ "$AMSURE" = "y" ] || exit
+	     echo "" 1>&2
+		pacman -Syy
+		pacman -Su
+		pacman -Rscn $(pacman -Qtdq)
+		pacman -Sc
+		pacman-optimize && sync
+exit 0
+# GitHub (c) 2017
+# Required Certificate.

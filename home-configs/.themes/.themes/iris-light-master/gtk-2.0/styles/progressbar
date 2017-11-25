@@ -1,0 +1,11 @@
+style "progressbar" {
+	xthickness	= 0
+	ythickness	= 0
+
+	bg[SELECTED]		=  shade (1.00, @selected_fg_color)
+	fg[PRELIGHT]     	=  @selected_bg_color	#active text-color 
+}
+
+widget_class "*ProgressBar*" style "progressbar"
+class "GtkProgressBar" style "progressbar"
+class "GtkBar" style "progressbar"

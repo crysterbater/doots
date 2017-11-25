@@ -1,0 +1,155 @@
+# Name: Gorice Openbox theme
+# Author: Nathaniel Maia
+
+# Menu
+menu.border.color: #05090D
+
+menu.border.width: 10
+
+menu.title.bg: Solid Flat
+menu.title.bg.color: #05090D
+menu.title.bg.shadow: 0
+menu.title.text.color: #898989
+menu.title.text.justify: Center
+
+menu.items.bg: Solid Flat
+menu.items.bg.color: #05090D
+menu.items.text.color: #bcbcbc
+menu.items.disabled.text.color: #D7D7D7
+
+menu.items.active.bg: Solid Flat
+menu.items.active.bg.color: #292929
+menu.items.active.text.color: #898989
+
+menu.separator.color: #292929
+menu.separator.width: 1
+menu.separator.padding.width: 2
+menu.separator.padding.height: 4
+menu.overlap.x: -20
+menu.overlap.y:	 0
+
+# Window focused
+window.active.title.separator.color: #05090D
+
+# Active window
+window.active.border.color: #898989
+
+
+window.active.title.bg: flat solid
+window.active.title.bg.color: #05090D
+window.active.title.separator.color: #05090D
+window.active.text.justify: center
+
+window.active.label.bg: parentrelative
+window.active.label.text.color: #bcbcbc
+
+window.active.handle.bg: flat solid
+window.active.handle.bg.color: #05090D
+
+window.active.grip.bg: flat solid
+window.active.grip.bg.color: #05090D
+
+window.active.button.unpressed.bg: flat solid
+window.active.button.unpressed.bg.color: #05090D
+window.active.button.unpressed.image.color: #bcbcbc
+
+window.active.button.pressed.bg: flat solid
+window.active.button.pressed.bg.color: #898989
+window.active.button.pressed.image.color: #bcbcbc
+
+window.active.button.disabled.bg: flat solid
+window.active.button.disabled.bg.color: #05090D
+window.active.button.disabled.image.color: #D7D7D7
+
+window.active.button.hover.bg: flat solid
+window.active.button.hover.bg.color: #05090D
+window.active.button.hover.image.color: #898989
+
+#window.active.button.toggled.bg: #898989
+#window.active.button.toggled.image.color: #bcbcbc
+
+# Inactive window
+window.inactive.border.color: #05090D
+
+window.inactive.title.bg: flat solid
+window.inactive.title.bg.color: #05090D
+window.inactive.title.separator.color: #05090D
+window.inactive.text.justify: center
+
+window.inactive.label.bg: parentrelative
+window.inactive.label.text.color: #05090D
+
+window.inactive.handle.bg: flat solid
+window.inactive.handle.bg.color: #05090D
+
+window.inactive.grip.bg: flat solid
+window.inactive.grip.bg.color: #05090D
+
+window.inactive.button.unpressed.bg: flat solid
+window.inactive.button.unpressed.bg.color: #05090D
+window.inactive.button.unpressed.image.color: #05090D
+
+window.inactive.button.pressed.bg: flat solid
+window.inactive.button.pressed.bg.color: #898989
+window.inactive.button.pressed.image.color: #bcbcbc
+
+window.inactive.button.disabled.bg: flat solid
+window.inactive.button.disabled.bg.color: #D7D7D7
+window.inactive.button.disabled.image.color: #05090D
+
+window.inactive.button.hover.bg: flat solid
+window.inactive.button.hover.bg.color: #05090D
+window.inactive.button.hover.image.color: #898989
+
+
+# OSD
+osd.border.width: 4
+osd.border.color: #898989
+
+osd.bg: flat solid
+osd.bg.color: #05090D
+osd.label.bg: flat solid
+osd.label.bg.color: #05090D
+osd.label.text.color: #bcbcbc
+
+# OSD
+osd.bg: Solid Flat
+osd.bg.color: #05090D
+osd.bg.shadow: 0
+
+osd.border.width: 4
+osd.hilight.bg: Solid Flat
+osd.hilight.bg.color: #898989
+osd.unhilight.bg: flat solid
+osd.unhilight.bg.color: #bcbcbc
+
+osd.button.unpressed.bg: flat border
+osd.button.unpressed.bg.color: #bcbcbc
+#osd.button.unpressed.*.border.color: #05090D
+
+osd.button.pressed.bg: flat border
+osd.button.pressed.bg.color: #898989
+#osd.button.pressed.*.border.color: #bcbcbc
+
+osd.button.focused.bg: flat solid border
+osd.button.focused.bg.color: #05090D
+#osd.button.focused.*.border.color: #bcbcbc
+
+osd.button.focused.box.color: #898989
+
+
+# Fonts
+window.active.label.text.font:shadow=n
+window.inactive.label.text.font:shadow=n
+menu.items.font:shadow=n
+menu.title.text.font:shadow=n
+
+
+# Everything else
+border.width: 4
+padding.width: 8
+padding.height: 4
+window.handle.width: 0
+window.client.padding.width: 0
+window.label.text.justify: left
+#menu.overlap: 0

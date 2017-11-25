@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -e -o pipefail
+
+usage() {
+	cat 1>&2 <<-EOF
+	usage: cren [option ...] [path ...]
+	  -f enc  from encoding
+	  -t enc  to encoding
+	  -h      show help
+	  --      end of options
+	cren renames files from one encoding to another, recursively
+	EOF
+}
+
+inenc=
+outenc=
+f=()
+
+while (($#)); do
+	case "$1" in
+	-f) inenc="$2"; shift 2 ;;
+	-t) outenc="$2"; shift 2 ;;
+	-h) usage; exit ;;
+	--) shift; f+=("$@"); break ;;
+	-*) printf 'cren: invalid option: %s\n' "$1" 1>&2; exit 1 ;;
+	*) f+=("$1"); shift ;;
+	esac
+done
+
+if [[ -z "$inenc" || -z "$outenc" ]]; then
+	printf 'cren: missing input or output encoding\n' 1>&2
+	usage
+	exit 1
+fi
+
+for f in "${f[@]}"; do
+	while IFS= read -r -d $'\0' f; do
+		b="$(basename "$f")"
+		d="$(dirname "$f")"
+		n="$(printf '%s' "$b" | iconv -f "$inenc" -t "$outenc")"
+		if [[ "$b" != "$n" ]]; then
+			mv -- "$f" "$d/$n"
+		fi
+	done < <(find "$f" -depth -print0)
+done

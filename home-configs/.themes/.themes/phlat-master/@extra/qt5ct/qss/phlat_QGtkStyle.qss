@@ -1,0 +1,210 @@
+
+/*phlat_QProgressBar.qss*/
+
+QProgressBar {
+color:transparent;
+border: 1px solid rgba(0,0,0,0.6);
+background:palette(base);}
+QProgressBar::chunk {
+color:transparent;
+margin:-1px;
+background:palette(highlight);
+border: 1px solid rgba(0,0,0,0.8);}
+
+/*phlat_QMenu.qss*/
+
+.QMenu{
+font-weight:bold;}
+.QMenu::separator {
+height: 1px;
+background: rgba(0,0,0,0.6);}
+/*phlat_QMisc.qss*/
+
+QDial{
+background:palette(highlight);}
+QStatusBar,
+QStatusBar::item,
+QSizeGrip,
+.QTabWidget::pane {
+border-color:transparent;
+background-color:transparent;}
+
+.QMdiSubWindow{
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+margin:4px;
+border:1px solid rgba(0,0,0,0.6);
+background:palette(window);}
+.QMdiSubWindow::title {}
+
+/*
+.*::right-arrow {
+width: 16px;
+height: 16px;
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-right_normal.svg");}
+.*::left-arrow {
+width: 16px;
+height: 16px;
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-left_normal.svg");}
+.*::up-arrow {
+width: 16px;
+height: 16px;
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-up_normal.svg");}
+.*::down-arrow {
+width: 16px;
+height: 16px;
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-down_normal.svg");}
+.*::right-arrow {
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-right_insensitive.svg");}
+.*::left-arrow:disabled {
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-left_insensitive.svg");}
+.*::up-arrow:disabled {
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-up_insensitive.svg");}
+.*::down-arrow:disabled {
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-down_insensitive.svg");}
+*/
+
+/*phlat_QDockWidgets.qss*/
+
+QDockWidget {
+border: 1px solid rgba(0,0,0,0.8);
+titlebar-close-icon: url(/usr/share/themes/phlat/images/close.svg);
+titlebar-normal-icon:  url(/usr/share/themes/phlat/images/max.svg);}
+QDockWidget::title {
+text-align: center; 
+margin:-1px;
+border:1px solid rgba(0,0,0,0.6);
+background-color: palette(base);}
+QDockWidget::close-button,
+QDockWidget::float-button {
+border:none;
+background:transparent;
+padding:0px;
+icon-size: 22px; }
+QDockWidget::close-button:pressed{
+border:none;
+background:#cc0000}
+QDockWidget::float-button:pressed{
+border:none;
+background:palette(highlight);}
+
+/*phlat_QToolButton.qss*/
+
+QToolButton[popupMode="1"]::menu-button::menu-arrow {
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-down_normal.svg");}
+
+QToolButton[popupMode="1"]::menu-button:!enabled::menu-arrow{
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-down_insensitive.svg");}
+
+/*phlat_QToolBar.qss*/
+
+QToolBar {
+spacing: 0px;}
+
+QToolBar::separator {
+width:1px;}
+
+QToolBar QToolButton:hover:!checked,
+QToolButton::menu-button:hover:!checked {
+background-color: transparent;
+border: 1px solid transparent;
+padding: 1px;}
+
+/*phlat_KWidgets.qss*/
+
+KTitleWidget * {
+background:palette(window);}
+/*phlat_QSplitter.qss*/
+
+QSplitter::handle:horizontal {
+margin-left:4px;
+margin-right:2px;
+height:1px;
+background-repeat:repeat-y;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/line.svg");}
+
+QSplitter::handle:vertical {
+margin-top:4px;
+margin-bottom:2px;
+height:1px;
+background-repeat:repeat-x;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/line.svg");}
+
+/*phlat_QMenuBar.qss*/
+
+.QMenuBar{
+padding:0px;
+font-weight:bold;}
+/*phlat_QTabWidget.qss*/
+
+QTabWidget::tab-bar {
+alignment: center;}
+
+QTabBar::tab {
+padding:2px;
+border:1px solid  rgba(0,0,0,0.6);
+background-color:palette(base);}
+QTabBar::tab:selected {
+border:1px solid  rgba(0,0,0,0.6);
+background-color:palette(highlight);}
+
+QTabBar::tab:top:!first,
+QTabBar::tab:bottom:!first {
+padding:4px 4px;
+margin-left: -1;}
+
+QTabBar::tab:left:!first,
+QTabBar::tab:right:!first {
+padding:4px 4px;
+margin-top: -1;}
+
+QTabBar::tear {
+background:palette(highlight);
+border:1px solid  rgba(0,0,0,0.6);}
+QTabBar QToolButton {
+padding:5px;
+border:1px solid  rgba(0,0,0,0.6);
+background:palette(base);}
+QTabBar::close-button {
+image: url(/usr/share/themes/phlat/images/close.svg);}
+
+/*phlat_QSlider.qss*/
+
+QSlider::groove:horizontal {
+border:1px solid rgba(0,0,0,0.6);
+background:palette(base);
+height:3px;}
+QSlider::handle:horizontal {
+margin:-3px -1px;
+width:14px;
+background:palette(highlight);
+border:1px solid rgba(0,0,0,0.8);}
+QSlider::groove:vertical {
+border:1px solid rgba(0,0,0,0.6);
+background:palette(base);
+width:3px;}
+QSlider::handle:vertical {
+margin:-1px -3px;
+height:14px;
+background:palette(highlight);
+border:1px solid rgba(0,0,0,0.8);}
+QSlider::sub-page:horizontal,
+QSlider::add-page:vertical {
+background:palette(highlight);
+border:1px solid rgba(0,0,0,0.8);}
+QSlider::sub-page:horizontal:disabled,
+QSlider::add-page:vertical:disabled,
+QSlider::handle:disabled{
+background:#424141;}

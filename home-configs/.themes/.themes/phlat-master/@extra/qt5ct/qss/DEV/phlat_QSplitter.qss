@@ -1,0 +1,13 @@
+QSplitter::handle:horizontal {
+margin-left:4px;
+margin-right:2px;
+height:1px;
+background-repeat:repeat-y;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/line.svg");}
+
+QSplitter::handle:vertical {
+margin-top:4px;
+margin-bottom:2px;
+height:1px;
+background-repeat:repeat-x;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/line.svg");}

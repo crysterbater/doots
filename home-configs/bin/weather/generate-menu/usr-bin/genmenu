@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# drop ot on error
+set -e
+
+## Declaring some variables
+config="$HOME/.config/openbox"
+menubase="$config/menu-static.xml"
+
+
+## Will backup current static menu.xml to menu-static.xml
+
+cp $HOME/.config/openbox/menu.xml $HOME/.config/openbox/menu-static.xml
+
+
+## Setup New Menu
+
+## !!Wont continue if there is no backup!! ##
+
+if [ -f "$menubase" ]
+    then
+        obmenu-generator -s -c
+        notify-send 'Success!' 'A new menu was generated.'
+    else
+        notify-send 'Ooops!' 'A backup was never made & is required.. Nothing was changed.'
+fi

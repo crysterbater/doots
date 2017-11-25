@@ -1,0 +1,46 @@
+#!/bin/sh
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MONITOR_LIST=$(xrandr --listmonitors | sed '1 d' | awk 'NF>1{print $NF}')
+
+killall sxhkd 2> /dev/null
+sxhkd &
+
+#Set background image
+#feh --bg-fill "$DIR/background.jpg"
+(
+    $DIR/downloadBackgrounds.sh #Download backgrounds if they don't exist already
+    feh --recursive --randomize --bg-fill "$DIR/backgrounds"
+    killall crossfehde 2> /dev/null
+    "$DIR/crossfehde.sh" '1920x1080' '60' "$DIR/backgrounds"
+) &
+
+"$HOME/bin/launchPolybar" &
+
+i=1
+for monitor in $(bspc query -M); do
+    bspc monitor $monitor -d $monitor/1 $monitor/2 $monitor/3 $monitor/4 $monitor/5 $monitor/6 $monitor/7 $monitor/8 $monitor/9 $monitor/10
+    let i++
+done
+
+bspc config border_width 4
+bspc config window_gap 12
+
+bspc config split_ratio 0.52
+bspc config borderless_monocle true
+bspc config gapless_monocle true
+
+bspc config focus_follows_pointer true
+bspc config click_to_focus true
+
+bspc config initial_polarity second_child
+
+#Colors
+bspc config focused_border_color "#268BD2"
+bspc config normal_border_color "#002B36"
+
+#bspc rule -a Gimp desktop='^8' state=floating follow=on
+#bspc rule -a Chromium desktop='^2'
+#bspc rule -a mplayer2 state=floating
+#bspc rule -a Kupfer.py focus=on
+#bspc rule -a Screenkey manage=off

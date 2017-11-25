@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Searchbar Startpage</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta name="viewport" content="width=device-width">
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+  <body onload="javascript:init();">
+
+  <div class="center">
+    <div class="content" id="form" style="top: 0px; opacity: 1;">
+      <input type="text" id="q" value="" placeholder="Search..." onkeypress="javascript:handleQuery(event,this.value);">
+      <br>
+      <br>
+      <div id="more" onclick="javascript:toggle();">+</div>
+      <br>
+      <br>
+      <div id="help">
+        <ul>
+          <li><b>!g</b> = Search Google (Default)</li>
+          <li><b>!i</b> = Search Google Images</li>
+          <li><b>!r</b> = Search Reddit</li>
+          <li><b>!h</b> = Search GitHub</li>
+          <li><b>!d</b> = Search DuckDuckGo</li>
+          <li><b>!y</b> = Search YouTube</li>
+          <li><b>!w</b> = Search Wikipedia</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <center>
+    <div id="menu" onmouseover="javascript:fade(1);" onmouseout="javascript:fade(0);">
+      <div id="grip"></div>
+      <ul id="mnu"></ul>
+    </div>
+  </center>
+
+</body>
+  
+    <script  src="js/index.js"></script>
+
+</body>
+</html>

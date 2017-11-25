@@ -1,0 +1,2 @@
+#!/bin/sh
+printf '%s\n' "$(curl "$@" -s https://ip.luz.lu/)"

@@ -1,0 +1,11 @@
+#!/bin/sh
+p="$(find "$HOME/.steam/steam/" -iname steamapps -print -quit)"
+[ -n "$p" ] || exit 1
+cat > "$p/appmanifest_${1}.acf" <<EOF
+"AppState"
+{
+  "AppID"  "$1"
+  "Universe" "1"
+  "StateFlags" "1026"
+}
+EOF

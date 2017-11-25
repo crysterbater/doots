@@ -1,0 +1,56 @@
+[options]
+scroll_on_output = false
+scroll_on_keystroke = true
+audible_bell = false
+mouse_autohide = false
+allow_bold = true
+dynamic_title = true
+urgent_on_bell = true
+clickable_url = true
+font = Anonymice Nerd Font 10
+scrollback_lines = 10000
+search_wrap = true
+icon_name = utilities-terminal
+geometry = 745x475
+scrollback_lines = 15000
+clickable_url = true
+cursor_blink = system
+cursor_shape = ibeam
+browser = xdg-open
+filter_unmatched_urls = true
+
+[colors]
+background      = rgba(5,9,13,0.98)
+foreground      = #bcbcbc
+foreground_bold = #EEEEEC
+cursor          = #bcbcbc
+
+# Black, Gray, Silver, White
+color0  = #292929
+color8  = #D7D7D7
+color7  = #EEEEEC
+color15 = #bcbcbc
+
+# Red
+color1  = #494949
+color9  = #494949
+
+# Green
+color2  = #696969
+color10 = #696969
+
+# Yellow
+color3  = #B3B3B3
+color11 = #B3B3B3
+
+# Blue
+color4  = #898989
+color12 = #898989
+
+# Purple
+color5  = #595959
+color13 = #595959
+
+# Teal
+color6  = #969696
+color14 = #969696

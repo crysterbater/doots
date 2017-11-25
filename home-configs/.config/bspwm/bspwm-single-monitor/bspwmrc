@@ -1,0 +1,75 @@
+#!/bin/zsh
+
+sxhkd &
+
+ws1=home
+ws2=browse
+ws3=files
+ws4=mail
+ws5=code
+ws6=android
+ws7=music
+ws8=vbox
+ws9=edit
+ws0=empty2
+
+bspc config border_width          1
+bspc config window_gap            3
+bspc config top_padding           32
+
+bspc config split_ratio           0.52
+bspc config single_monocle        true
+bspc config borderless_monocle    true
+bspc config gapless_monocle       true
+bspc config focus_by_distance     true
+bspc config history_aware_focus   true
+bspc config focus_follows_pointer false
+bspc config pointer_follows_focus false
+bspc config click_to_focus        true
+bspc config adaptive_raise        true
+##+ colors
+bspc config focused_border_color         "#ffffff"
+bspc config normal_border_color          "#ffffff"
+bspc config active_border_color          "#ffffff"
+bspc config focused_locked_border_color  "#ffffff"
+bspc config normal_locked_border_color   "#ffffff"
+bspc config active_locked_border_color   "#ffffff"
+bspc config urgent_border_color          "#ffffff"
+bspc config presel_border_color          "#ffffff"
+
+
+bspc monitor eDP-1 -d $ws1 $ws2 $ws3 $ws4 $ws5 $ws6 $ws7 $ws8 $ws9 $ws0
+
+#bspc desktop $ws2 -l monocle
+
+bspc rule -a Firefox desktop=^2
+bspc rule -a Chromium desktop=^2
+bspc rule -a Thunderbird desktop=^4
+bspc rule -a Termite desktop=^1
+bspc rule -a Nautilus desktop=^3
+bspc rule -a Atom desktop=^5
+bspc rule -a jetbrains-studio desktop=^6
+bspc rule -a Spotify desktop=^7
+bspc rule -a VirtualBox state=floating desktop=^8
+bspc rule -a Gedit state=floating
+bspc rule -a Gimp state=floating desktop=^9
+bspc rule -a libreoffice-writer desktop=^9 state=tiled
+bspc rule -a libreoffice-calc desktop=^9 state=tiled
+bspc rule -a libreoffice-impress desktop=^9 state=tiled
+bspc rule -a libreoffice-draw desktop=^9 state=tiled
+bspc rule -a libreoffice-math desktop=^9 state=tiled
+bspc rule -a libreoffice-startcenter desktop=^9 state=tiled
+bspc rule -a Soffice desktop=^9
+bspc rule -a TeamSpeak desktop=^4
+bspc rule -a Gnome-clocks state=floating
+bspc rule -a KeePass2 state=floating
+
+
+compton -b &
+udiskie -q &
+	feh --bg-center ~/Pictures/hondacivic.jpg
+#xss-lock -- i3lock -i ~/Pictures/paris.png -e &
+xss-lock -- i3lock-fancy -p &
+~/.config/polybar/launch.sh
+xrdb ~/.Xresources
+~/.bin/laptopautostart.sh

@@ -1,0 +1,159 @@
+# -*- mode: python -*-
+
+import os
+from qutebrowser.config.configfiles import ConfigAPI  # noqa: F401
+from qutebrowser.config.config import ConfigContainer  # noqa: F401
+from enum import Enum
+
+config = config  # type: ConfigAPI # noqa: F821
+c = c  # type: ConfigContainer # noqa: F821
+
+initial_start = c.tabs.background == False
+
+if initial_start:
+    # ui
+    c.completion.scrollbar.width = 10
+    c.tabs.position = 'top'
+    c.tabs.show = 'multiple'
+    c.tabs.favicons.show = False
+    c.tabs.width.indicator = 0
+    c.tabs.title.format = '{title}'
+    c.tabs.title.alignment = 'center'
+    c.downloads.position = 'bottom'
+    c.tabs.favicons.show = False
+
+    # behavior
+    c.downloads.location.prompt = False
+    c.hints.scatter = False
+    c.url.searchengines = {'DEFAULT': 'https://google.com/search?q={}' }
+    c.input.insert_mode.auto_load = True
+    c.input.insert_mode.auto_leave = False
+    c.tabs.background = True
+    c.editor.command = [ os.environ['EDITOR'] + ' "{}"' ]
+    c.auto_save.session = True
+
+    # binds
+    config.bind('<Shift-i>', 'config-source')
+
+
+# mustache templated from current theme
+theme = {
+    'panel': {
+        'height': {{p_height}},
+    },
+
+    'fonts': {
+        'main': '{{q_tab_font}}',
+        'tab_bold': {{q_tab_bold}},
+        'tab_size': {{q_tab_fontsize}},
+    },
+
+    'colors': {
+        'bg': {
+            'normal': '#{{p_bg_normal}}',
+            'active': '#{{p_bg_active}}',
+            'inactive': '#{{p_bg_inactive}}',
+        },
+
+        'fg': {
+            'normal': '#{{p_fg_normal}}',
+            'active': '#{{p_fg_active}}',
+            'inactive': '#{{p_fg_inactive}}',
+            'match': '#{{p_icon}}', # completion and hints
+        },
+    }
+}
+
+# colors
+colors = theme['colors']
+
+def setToBG(colortype, target):
+    config.set('colors.' + target, colors['bg'][colortype])
+
+def setToFG(colortype, target):
+    config.set('colors.' + target, colors['fg'][colortype])
+
+def colorSync(colortype, setting):
+    if setting.endswith('.fg'):
+        setToFG(colortype, setting)
+    elif setting.endswith('.bg'):
+        setToBG(colortype, setting)
+    elif setting.endswith('.top') or setting.endswith('.bottom'):
+        setToFG(colortype, setting)
+    else:
+        setToFG(colortype, setting + '.fg')
+        setToBG(colortype, setting + '.bg')
+
+targets = {
+    'normal' : [
+        'statusbar.normal',
+        'statusbar.command',
+        'statusbar.url.success.http.fg',
+        'statusbar.url.success.https.fg',
+        'tabs.even',
+        'tabs.odd',
+        'hints',
+        'downloads.bar.bg',
+    ],
+
+    'active' : [
+        'tabs.selected.even',
+        'tabs.selected.odd',
+        'statusbar.insert',
+        'downloads.stop',
+        'prompts',
+        'messages.warning',
+        'messages.error',
+        'statusbar.url.hover.fg',
+        'completion.item.selected',
+        'completion.category',
+
+        'completion.category.border.top',
+        'completion.category.border.bottom',
+        'completion.item.selected.border.top',
+        'completion.item.selected.border.bottom',
+    ],
+
+    'inactive' : [
+        'completion.scrollbar',
+        'downloads.start',
+        'messages.info',
+        'completion.fg',
+        'completion.odd.bg',
+        'completion.even.bg',
+
+    ],
+
+    'match' : [
+        'completion.match.fg',
+        'hints.match.fg',
+    ]
+}
+
+for colortype in targets:
+    for target in targets[colortype]:
+        colorSync(colortype, target)
+
+setToFG('active', 'statusbar.progress.bg')
+
+config.set('hints.border', '1px solid ' + colors['fg']['normal'])
+
+# tabbar
+def makePadding(top, bottom, left, right):
+    return { 'top': top, 'bottom': bottom, 'left': left , 'right': right }
+
+# TODO improve this logic
+# assume height of font is ~10px, pad top by half match panel height
+surround = round((theme['panel']['height'] - 10) / 2)
+c.tabs.padding = makePadding(surround, surround, 8, 8)
+c.tabs.indicator_padding = makePadding(0, 0, 0, 0)
+
+# fonts
+fonts = theme['fonts']
+c.fonts.monospace = fonts['main']
+
+tabFont = str(fonts['tab_size']) + 'pt ' + fonts['main']
+if fonts['tab_bold']:
+    tabFont = 'bold '  + tabFont
+
+c.fonts.tabs = tabFont

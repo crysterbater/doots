@@ -1,0 +1,42 @@
+#!/bin/sh
+ 
+DMENU="rofi -p SaveLayout: -bg #922713 -dmenu"
+if ! command -v "jshon" >/dev/null 2>&1; then
+    printf "%s\\n" "you need to install 'jshon' to run this program" >&2
+    exit 1
+fi
+ 
+if ! command -v "rofi" >/dev/null 2>&1; then
+    printf "%s\\n" "you need to install 'rofi' to run this program" >&2
+    exit 1
+fi
+ 
+LNAME="$(ls ~/.i3/layouts | ${DMENU})"
+ 
+if [ -z "$LNAME" ]; then
+  echo 1
+  exit 1
+else
+  echo $LNAME
+ 
+echo '// vim:ts=4:sw=4:et
+{
+    // this is a manually added container to restore the vertical split
+    "layout": "splith",
+    "percent": 0.5,
+    "type": "con",
+    "nodes": [
+ 
+' > ~/.i3/layouts/${LNAME} 
+ 
+  WORKSPACE="$(i3-msg -t get_workspaces | jshon -a -e focused -u -p -e name -u | awk 'f{print;f=0} /true/{f=1}')"
+ 
+  ## Last sed is for some few problems with save-tree returning "} {" without 
+  ## comma, i dunno regexp but "multi document" json wont fix itself.
+  i3-save-tree --workspace ${WORKSPACE} | sed 's/\/\/[ ]"class":[ ]"\(.*\)",/"class": "\1"/g' | sed ':a;N;$!ba;s/}\n\n{/},\n{/g' >> ~/.i3/layouts/${LNAME} 
+ 
+  echo '
+    ]
+}
+' >> ~/.i3/layouts/${LNAME} 
+fi

@@ -1,0 +1,232 @@
+# For the benefit of emacs users: -*- shell-script -*-
+###########################
+# xbindkeys configuration #
+###########################
+#
+# Version: 1.8.6
+#
+# If you edit this file, do not forget to uncomment any lines
+# that you change.
+# The pound(#) symbol may be used anywhere for comments.
+#
+# To specify a key, you can use 'xbindkeys --key' or
+# 'xbindkeys --multikey' and put one of the two lines in this file.
+#
+# The format of a command line is:
+#    "command to start"
+#       associated key
+#
+#
+# A list of keys is in /usr/include/X11/keysym.h and in
+# /usr/include/X11/keysymdef.h
+# The XK_ is not needed.
+#
+# List of modifier:
+#   Release, Control, Shift, Mod1 (Alt), Mod2 (NumLock),
+#   Mod3 (CapsLock), Mod4, Mod5 (Scroll).
+#
+
+# The release modifier is not a standard X modifier, but you can
+# use it if you want to catch release events instead of press events
+
+# By defaults, xbindkeys does not pay attention with the modifiers
+# NumLock, CapsLock and ScrollLock.
+# Uncomment the lines above if you want to pay attention to them.
+
+#keystate_numlock = enable
+#keystate_capslock = enable
+#keystate_scrolllock= enable
+
+# volume up
+"sh ~/scripts/volup.sh"
+m:0x4 + c:85 # Ctrl+KP_Right
+
+# volume down
+"sh ~/scripts/voldown.sh"
+m:0x4 + c:83 #Ctrl+KP_Left
+
+# volume mute toggle
+"sh ~/scripts/volmute.sh"
+m:0x4 + c:91 #Ctrl+KP_Delete
+
+"teiler"
+m:0x40  + c:67   #Mod4+F1
+
+# Rofi:
+"rofi -show drun"
+m:0x40 + c:68   #Mod4+F2
+
+"rofi -show run"
+m:0x40 + c:69 #mod4+F3
+
+"rofi -show window"
+m:0x40  + c:70   #Mod4+F4
+
+"rofi -show ssh"
+m:0x40  + c:71  #Mod4+F5
+
+"play"
+m:0x40 + c:133 #Mod4 + Super_L  #Mod4 + F6
+
+#rofi-locate
+"/home/cirrus/scripts/loc8"
+m:0x40 + c:73    #Mod4 + F7
+
+"surfraw -browser=$BROWSER $(sr -elvi | awk -F'-' '{print $1}' | sed '/:/d' | awk '{$1=$1};1' | rofi -kb-row-select "Tab" -kb-row-tab "Control+space" -color-window "#000000, #000000, #000000" -color-normal "#000000, #b3e774, #000000, #b3e774, #000000" -color-active "#000000, #b3e774, #000000, #b3e774, #000000" -color-urgent "#000000, #b3e774, #000000, #b3e774, #000000" -dmenu -mesg ">>> Tab = Autocomplete" -i -p "websearch: ")"
+m:0x40  + c:39   #Mod4+s
+
+"termite -e tmux"
+m:0x40  + t    #Mod4+t
+
+"xkill"
+m:0x40  + c:24   #Mod4+q
+
+#dmenu
+"dmenu_run -nb "#191919" -nf "#2aa198" -sb "#000" -sf "#cb4b16" -p dmenu: "
+m:0x40 + c:40   #Mod4+d
+
+# Examples of commands:
+"xbindkeys_show"
+control+shift + q
+
+
+# set directly keycode (here control + f with my keyboard)
+#"xterm"
+#c:41 + m:0x4
+
+# specify a mouse button
+"rox"
+ control + b:2
+ 
+"pcmanfm"
+  control + b:9
+  
+"leafpad"
+  control + b:8
+  
+"sh ~/scripts/volup.sh"
+  control + b:7
+  
+"sh ~/scripts/voldown.sh"
+  control + b:6
+  
+"rox"
+m:0x40 + b:9
+
+"mpv --profile=pseudo-gui"
+m:0x40 + b:2  
+
+##xte##
+# Present Windows
+#"xte 'keydown Control_L' 'key F10' 'keyup Control_L'"
+#  b:8
+
+# Desktop Grid
+#"xte 'keydown Control_L' 'key F8' 'keyup Control_L'"
+#  b:9
+  
+# Back
+"xte 'keydown Alt_L' 'key Left' 'keyup Alt_L'"
+  b:6
+
+# Forward
+"xte 'keydown Alt_L' 'key Right' 'keyup Alt_L'"
+  b:7  
+
+# Lockscreen
+"i3lock -i /home/cirrus/pictures/lock.png" 
+m:0x40 + c:115   #Mod4 + End
+ 
+#"xterm -geom 50x20+20+20"
+#   Shift+Mod2+alt + s
+#
+## set directly keycode (here control+alt+mod2 + f with my keyboard)
+#"xterm"
+#  alt + c:0x29 + m:4 + mod2
+#
+## Control+Shift+a  release event starts rxvt
+#"rxvt"
+#  release+control+shift + a
+#
+##"notify-send -i ~/.icons/volmute.png 'Toggle Volume Mute' && pactl set-sink-mute 3 toggle"
+##################################
+# End of xbindkeys configuration #
+##################################
+radio
+#!/bin/bash
+
+#black=`tput setaf 0`
+red=`tput setaf 1`
+green=`tput setaf 2`
+yellow=`tput setaf 3`
+blue=`tput setaf 4`
+#magenta=`tput setaf 5`
+cyan=`tput setaf 6`
+red=`tput setaf 1`
+norm=`tput sgr0`
+
+bold=`tput bold`
+#ulbegin=`tput smul`
+#ulend=`tput rmul`
+
+ser="$cyan"
+name="$bold$cyan"
+echo '
+        
+                  | _)       
+     _| _` |   _` |  |   _ \ 
+   _| \__,_| \__,_| _| \___/ 
+                           ' | ccze -A
+                          
+            
+stations=(
+BBCRadio1="http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p"
+BBCRadio2="http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p"
+BBCRadio3="http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio3_mf_p"
+BBCRadio4="http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4fm_mf_p"
+BBCRadio4.Xtra="http://www.radiofeeds.co.uk/bbcradio4extra.pls"
+BBCRadio5.Live="http://www.radiofeeds.co.uk/bbc5live.pls"
+BBCWorld.Service="rtmp://wsliveflash.bbc.co.uk:1935/live/eneuk_live@6512"
+MyMPD="http://192.168.1.33:9001"
+Talksport="http://www.radiofeeds.co.uk/talksport.m3u"
+Dubstep="http://67.212.233.124:8014"
+Hardcore="http://67.212.233.124:8002"
+Clyde1="http://icy-e-bl-04-cr.sharp-stream.com:8000/clyde1.mp3.m3u"
+Clyde2="http://icy-e-bl-04-cr.sharp-stream.com:8000/clyde2.mp3.m3u"
+Capital="http://media-ice.musicradio.com/CapitalEdinburghMP3.m3u"
+PinkFloyd="http://99.198.112.59:8000"
+LBC="http://media-ice.musicradio.com/LBCLondonMP3Low.m3u"
+Smooth="http://uk1.internet-radio.com:4086"
+Zenradio="http://zenradio.fr:8800"
+RadioParadise="http://stream-sd.radioparadise.com:9000/rp_128.mp3"
+)
+
+#show_inf () {
+#  sed -n '/Name/,/Bitrate/ p' $tfile
+#  }
+
+while(true); do
+  index=0
+  echo
+  for i in "${stations[@]}"; do
+    echo ${ser}$index.${norm} ${name}${i%%=*}${norm}
+    index=$[index+1]
+  done
+
+  echo
+  read -p "${blue}Station:${norm} " sta
+  echo
+
+  capture="-capture -dumpfile ${stations[$sta]%%=*}_`date "+%T_%F"`.mp3"
+
+  #tfile=`mktemp`
+  mplayer -vc null -vo null -nolirc -msglevel all=4 ${capture} -msgcolor `echo ${stations[$sta]} | cut -d '=' -f2`
+ 
+  echo -ne "${cyan}\nPress Entr to change station ${norm}"
+  read -t 5
+  [[ $? -gt 128 ]] && { echo && exit 0; }
+  #rm $tfile
+  unset -v index sta capture
+done
+
+exit 0

@@ -1,0 +1,11 @@
+QToolBar {
+spacing: 0px;}
+
+QToolBar::separator {
+width:1px;}
+
+QToolBar QToolButton:hover:!checked,
+QToolButton::menu-button:hover:!checked {
+background-color: transparent;
+border: 1px solid transparent;
+padding: 1px;}

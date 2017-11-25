@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# usage: mdmig [mdmi opts [-- aria2c opts]]
+o=()
+while (($#)); do
+	case "$1" in
+	--) shift; break ;;
+	*) o+=("$1"); shift ;;
+	esac
+done
+mdmi "${o[@]}" | aria2c -i - --max-overall-download-limit=6000K -c -R "$@"

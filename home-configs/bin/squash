@@ -1,0 +1,255 @@
+#!/usr/bin/env bash
+
+COLORS="$1"
+echo "${COLORS}"
+
+# Remove all previous colors
+
+cleanup()
+{
+	rm -f ~/.cache/squash/colors
+}
+
+reload_x()
+{
+	write_xcolors
+	xrdb ~/.Xresources
+}
+
+write_css()
+{
+cat > ~/.cache/squash/colors.css << EOL
+:root {
+	--background: ${main_bg};
+	--foreground: ${fg};
+
+	--color0: ${blk};
+	--color1: ${red};
+	--color2: ${grn};
+	--color3: ${ylw};
+	--color4: ${blu};
+	--color5: ${mag};
+	--color6: ${cyn};
+	--color7: ${wht};
+	--color8: ${bblk};
+	--color9: ${bred};
+	--color10: ${bgrn};
+	--color11: ${bylw};
+	--color12: ${bblu};
+	--color13: ${bmag};
+	--color14: ${bcyn};
+	--color15: ${bwht};
+}
+EOL
+
+cat ~/.cache/squash/colors.css
+}
+
+write_lemonbar_colors()
+{
+cat > ~/.cache/squash/colors.sh << EOL
+#!/usr/bin/env bash
+
+#colors
+#text="#fff"
+text=${fg}
+warning="#e17878"
+background="${bg}"
+
+#other stuff
+trs="%{F#00000000}"
+bg="%{B$bg}"
+txt="%{F$fg}"
+wrn="%{F$warning}"
+
+# accents
+acc0="${acc0}"
+acc1="${acc1}"
+acc2="${acc2}"
+acc3="${acc2}"
+acc4="${acc3}"
+
+a0="%{B$acc0}"
+a1="%{B$acc1}"
+a2="%{B$acc2}"
+a3="%{B$acc3}"
+a4="%{B$acc4}"
+
+af0="%{F$acc0}"
+af1="%{F$acc1}"
+af2="%{F$fg}"
+
+bgt="%{B$fg}"
+bgf="%{F$bg}"
+EOL
+
+cat ~/.cache/squash/colors.sh
+	
+}
+
+write_xcolors()
+{
+cat > ~/.cache/squash/colors << EOL
+#define bg ${main_bg}
+#define fg ${fg}
+#define blk ${blk}
+#define bblk ${bblk}
+#define red ${red}
+#define grn ${grn}
+#define ylw ${ylw}
+#define blu ${blu}
+#define mag ${mag}
+#define cyn ${cyn}
+#define wht ${wht}
+#define bred ${bred}
+#define bgrn ${bgrn}
+#define bylw ${bylw}
+#define bblu ${bblu}
+#define bmag ${bmag}
+#define bcyn ${bcyn}
+#define bwht ${bwht}
+EOL
+
+cat ~/.cache/squash/colors
+}
+
+write_ob()
+{
+# define menu colors
+MENU_A_bg=${main_bg}
+MENU_A_TEXT=${acc0}
+MENU_bg=${main_bg}
+MENU_BORDER=${main_bg}
+MENU_SEPERATOR=${main_bg}
+MENU_TITLE_bg=${main_bg}
+MENU_TITLE_TEXT=#eee
+
+# define osd colors
+OSD_bg=${main_bg}
+OSD_TEXT=${main_bg}
+
+# define active window colors
+WINDOW_A_bg=${acc0}
+WINDOW_A_bg_BUTTON=${acc0}
+WINDOW_A_H_BUTTON=${acc0}
+WINDOW_A_P_BUTTON=${acc0}
+WINDOW_A_T_BUTTON=${acc0}
+WINDOW_A_U_BUTTON=${acc0}
+
+# devine inactive window colors
+WINDOW_I_bg=${acc4}
+WINDOW_I_bg_BUTTON=${acc4}
+WINDOW_I_H_BUTTON=${acc4}
+WINDOW_I_T_BUTTON=${acc4}
+WINDOW_I_U_BUTTON=${acc4}
+
+cat > ~/.local/share/themes/generic/openbox-3/themerc << EOL
+# titlebars
+border.width: 0
+padding.height: 10
+padding.width: 7
+
+# menu
+menu.items.active.bg: Solid Flat
+menu.items.active.bg.color: ${MENU_A_bg}
+menu.items.active.text.color: ${MENU_A_TEXT}
+menu.items.bg: Flat Solid
+menu.items.bg.color: ${MENU_bg}
+menu.items.disabled.text.color: #666
+menu.items.text.color: ${fg}
+menu.border.width: 15
+menu.border.color: ${MENU_BORDER}
+menu.separator.color: ${MENU_SEPERATOR}
+menu.title.bg: Solid Flat
+menu.title.bg.color: ${MENU_TITLE_bg} 
+menu.title.text.color: ${fg} 
+menu.title.text.justify: Center
+
+# osd
+osd.bg: Solid Flat
+osd.bg.color: ${OSD_bg}
+osd.label.text.color: ${OSD_TEXT}
+ 
+# windows
+window.client.padding.width: 0
+window.handle.width: 0
+ 
+# active window
+window.active.button.disabled.bg: Solid Flat
+window.active.button.disabled.bg.color: ${WINDOW_A_bg}
+window.active.button.disabled.image.color: ?
+window.active.button.hover.bg: Solid Flat
+window.active.button.hover.bg.color: ${WINDOW_I_bg}
+window.active.button.hover.image.color: ?
+window.active.button.pressed.bg: Solid Flat
+window.active.button.pressed.bg.color: ${WINDOW_A_bg}
+window.active.button.pressed.image.color: ?
+window.active.button.toggled.bg: Solid Flat
+window.active.button.toggled.bg.color: ${WINDOW_A_bg}
+window.active.button.toggled.image.color: #ffffff
+window.active.button.unpressed.bg: Solid Flat
+window.active.button.unpressed.bg.color: ${WINDOW_A_bg}
+window.active.button.unpressed.image.color: #ffffff
+window.active.client.color: ${WINDOW_A_bg}
+window.active.grip.bg: Solid flat
+window.active.grip.bg.color: ${WINDOW_A_bg}
+window.active.handle.bg: Solid Flat
+window.active.handle.bg.color: ${WINDOW_A_bg}
+window.active.label.bg: Parentrelative
+window.active.label.text.color: ${WINDOW_I_bg}
+window.active.label.text.font: shadow=n
+window.active.title.bg: Solid Flat
+window.active.title.bg.color: ${WINDOW_A_bg}
+
+ 
+# inactive window
+window.inactive.*.bg: Solid Flat
+window.inactive.*.bg.color: ${WINDOW_I_bg}
+window.inactive.button.*.bg.color: ${WINDOW_I_bg_BUTTON}
+window.inactive.button.hover.image.color: ${WINDOW_I_H_BUTTON}
+window.inactive.button.toggled.image.color: ${WINDOW_I_T_BUTTON}
+window.inactive.button.unpressed.image.color: ${WINDOW_I_U_BUTTON}
+EOL
+
+cat ~/.local/share/themes/generic/openbox-3/themerc
+}
+
+reload_ob()
+{
+	write_ob
+	openbox --reconfigure
+}
+
+reload_pbar()
+{
+	pkill -x polybar
+	polybar base &
+}
+
+reload_lemonbar()
+{
+	killall -9 lemonbar
+	bar &
+}
+
+set_wallpaper()
+{
+	pkill -x nitrogen
+	nitrogen --set-zoom-fill ${wallpaper}
+}
+
+main()
+{
+	cleanup
+	. ~/.config/squash/themes/${COLORS}
+	write_xcolors
+	write_css
+	reload_x
+	reload_ob
+	reload_lemonbar
+	#reload_pbar
+	write_lemonbar_colors
+	set_wallpaper
+}
+
+main "$@"

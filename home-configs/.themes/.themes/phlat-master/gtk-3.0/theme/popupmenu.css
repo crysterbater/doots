@@ -1,0 +1,37 @@
+menu,
+.context-menu{
+font-weight:bold;
+padding:1px;
+border:1px solid @border_color;}
+
+menu>menuitem{
+padding:1px 0px;
+min-height:20px;}
+menu>menuitem>label:dir(ltr){
+padding-right:10px;}
+menu>menuitem>label:dir(rtl){
+padding-left:10px;}
+menu>menuitem:dir(ltr){
+padding-left:5px;}
+menu>menuitem:dir(rtl){
+padding-right:5px;}
+menu>menuitem:hover,
+menu>menuitem:backdrop:hover{
+background:@selected_bg_color;
+border-style:none;}
+
+popover.background,
+popover.background:backdrop{
+padding:0px;
+background:shade(@bg_color,0.9);
+border:1px solid @border_color;}
+popover scrolledwindow{
+border-top:1px solid @border_color;
+border-bottom:1px solid @border_color;
+background:@base_color;}
+popover.background modelbutton{
+padding:2px 0px;
+font-weight:bold;}
+popover.background modelbutton:hover{
+background:@selected_base_color;}
+

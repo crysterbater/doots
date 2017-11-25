@@ -1,0 +1,7 @@
+#! /bin/dash
+
+[ $# -eq 0 ] && exit 1
+
+for p in $(seq 710 713) ; do
+    printf "\033]%i;xft:%s\007" "$p" "$@" > /dev/tty
+done

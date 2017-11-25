@@ -1,0 +1,3 @@
+#! /bin/dash
+
+imlibsetroot -t "$WALLPAPER" 2> /dev/null

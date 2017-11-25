@@ -1,0 +1,15 @@
+cabal: Entering directory '/tmp/cabal-tmp-20594/monad-control-1.0.2.2'
+Configuring monad-control-1.0.2.2...
+Building monad-control-1.0.2.2...
+Preprocessing library monad-control-1.0.2.2...
+[1 of 1] Compiling Control.Monad.Trans.Control ( Control/Monad/Trans/Control.hs, dist/dist-sandbox-94c3599e/build/Control/Monad/Trans/Control.o )
+
+Control/Monad/Trans/Control.hs:429:10: warning: [-Wredundant-constraints]
+    • Redundant constraint: Error e
+    • In the instance declaration for ‘MonadTransControl (ErrorT e)’
+Creating package registration file:
+/tmp/pkgConf-monad-control-1.0.28594844211914544919.2
+Installing library in
+/home/metamist/dev/haskell/workspacer/.cabal-sandbox/lib/x86_64-linux-ghc-8.0.1/monad-control-1.0.2.2-Kivdoy7u7LCHp1alncx67F
+Registering monad-control-1.0.2.2...
+cabal: Leaving directory '/tmp/cabal-tmp-20594/monad-control-1.0.2.2'

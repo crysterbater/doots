@@ -1,0 +1,76 @@
+# Name: phlat
+# Author: sxsixfive <sixsixfive.deviantart.com>
+
+# Menu settings
+menu.title.bg: Flat Solid
+menu.title.bg.color: #323131
+menu.title.text.color: #f1f2f2
+menu.title.text.justify: Center
+
+menu.items.bg: Flat Solid
+menu.items.bg.color: #323131
+menu.items.text.color: #f1f2f2
+menu.items.disabled.text.color: #656666
+
+menu.items.active.bg: Flat Solid
+menu.items.active.bg.color: #a070be
+menu.items.active.text.color: #f1f2f2
+menu.separator.color: #141313
+
+# Window settings (focused)
+window.active.title.bg: Flat Solid
+window.active.title.bg.color: #323131
+
+window.active.label.bg: Parentrelative
+window.active.label.text.color: #f1f2f2
+
+window.active.handle.bg: Flat Solid
+window.active.handle.bg.color: #323131
+
+window.active.grip.bg: Flat Solid
+window.active.grip.bg.color: #323131
+
+window.active.button.*.bg: Parentrelative
+window.active.button.*.image.color: #f1f2f2
+window.active.button.*.hover.image.color: #f1f2f2
+window.active.button.*.pressed.image.color: #f1f2f2
+
+window.active.border.color: #141313
+window.active.title.separator.color: #141313
+window.active.client.color: #424141
+# Window settings (unfocused)
+window.inactive.title.bg: Flat Solid
+window.inactive.title.bg.color: #323131
+
+window.inactive.label.bg: Parentrelative
+window.inactive.label.text.color: #656666
+
+window.inactive.handle.bg: Flat Solid
+window.inactive.handle.bg.color: #323131
+
+window.inactive.grip.bg: Flat Solid
+window.inactive.grip.bg.color: #323131
+
+window.inactive.button.*.bg: parentrelative
+window.inactive.button.*.image.color : #656666
+window.inactive.button.*.hover.image.color: #656666
+window.inactive.button.*.pressed.image.color: #656666
+
+window.inactive.border.color: #141313
+window.inactive.title.separator.color: #141313
+window.inactive.client.color: #424141
+
+### Everything else
+border.width: 1
+padding.width: 4
+window.handle.width: 5
+window.client.padding.width: 0
+window.label.text.justify: Center
+menu.overlap: 0
+
+### Fonts
+window.active.label.text.font:Sans:Bold:pixelsize=12:shadow=n:shadowtint=0:shadowoffset=0
+window.inactive.label.text.font:Sans:Bold:pixelsize=12:shadow=n:shadowtint=0:shadowoffset=0
+menu.title.text.font=Sans:pixelsize=11:shadow=n:shadowtint=0:shadowoffset=0
+osd.label.text.font=Sans:pixelsize=11:shadow=n:shadowtint=0:shadowoffset=0
+menu.items.font=Sans:pixelsize=11:shadow=n:shadowtint=0:shadowoffset=0

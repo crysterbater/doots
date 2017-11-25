@@ -1,0 +1,76 @@
+html,body {
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
+  font-family: "Droid Sans", "Liberation Sans", "DejaVu Sans", "Segoe UI", Sans-Serif; font-size: 10pt;
+  background: #0D1111;
+}
+ul, li { list-style-type: none; margin: 0; padding: 0; }
+
+a, a:link, a:visited { color: #444; text-decoration: none; }
+a:hover, a:active    { color: #222; }
+
+.center { position: relative; width: 100%; height: 100%; }
+.center .content {
+  margin: auto; overflow: auto; width: 600px; height: 300px;
+  position: absolute; left: 0; top: 0; right: 0; bottom: -50px; /* search box align */
+  text-align: center; opacity: 1; transition: .3s ease-out;
+}
+
+#q {
+  width: 500px;
+  background: #0C0C0C; color: #fff;
+  border: 1px solid #4F808A; border-radius: 1px;
+  padding: 8px 8px; font-size: 12pt;
+}
+#q:focus { border-color: #3971ED !important; }
+#q:hover { border-color: #CECECE; }
+
+#more {
+  background: #0C0C0C; color: #4F808A; border-radius: 1px;
+  cursor: pointer; display: inline-block;
+  font-size: 18pt; line-height: 20px; /* vertical align "+" button */
+  width: 24px; height: 24px;
+  text-align: center; font-weight: bold;
+}
+#help {
+  display: inline-block; width: 320px; cursor: default;
+  font-family: "Droid Sans Mono", "Liberation Sans Mono", "DejaVu Sans Mono", "Consolas", "Lucida Console", monospace;
+  background: #CECECE; color: #444;
+  padding: 8px; text-align: left; border-radius: 1px;
+  opacity: 0; transition: .2s ease-out;
+}
+
+#menu {
+  position: fixed; bottom: -64px; left: 0; z-index: 11;
+  width: 100%; height: 128px;
+  background: transparent; color: #444; cursor: default;
+  transition: .2s ease-out;
+}
+#menu:hover            { bottom: 0; }
+#mnu                   { height: 64px; line-height: 32px; }
+
+#grip                  { width: 100%; height: 64px; background: transparent; }
+
+#menu ul               { display: inline-table; position: relative; list-style: none; }
+#menu label            { padding: 0; display: inline-block; font-weight: bold; width: 200px; } /* menu title width */
+
+#menu ul li            { float: left; border-radius: 2px; height: 64px; }
+#menu ul li:hover      { background: #CECECE; color: #222; }
+#menu ul li:hover > ul { visibility: visible; bottom: 100%; opacity: 1; transition: .2s ease-out; }
+#menu ul li a          { display: block; white-space: nowrap; padding: 0 10px; }
+
+#menu ul ul            {
+  display: block; visibility: hidden; width: 200px;
+  position: absolute; bottom: 200%;
+  background: transparent; opacity: 0;
+  transition: .3s ease-out;
+}
+
+#menu ul ul li         { width: 100%; height: 32px; text-align: left; } /* menu links align */
+#menu ul ul li:hover   { background: #CECECE; }
+
+#menu img {
+  width: 16px; height: 16px;
+  position: relative; top: 3px;
+  padding-right: 3px; visibility: hidden;
+}

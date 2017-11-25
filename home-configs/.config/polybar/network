@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+online=$(ifconfig | grep "RUNNING,MULTICAST" | cut -d ":" -f1)
+
+
+if [[ "$online" ]]
+then
+    echo %{F#6BBDE7}
+  else
+    echo %{F#758BF9}
+fi
+
+exit 0

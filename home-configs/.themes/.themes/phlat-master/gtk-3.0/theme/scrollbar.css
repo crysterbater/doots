@@ -1,0 +1,75 @@
+
+scrollbar.vertical,
+scrollbar.vertical:backdrop {
+min-width:17px;
+min-height:60px;
+border:1px solid @border_color;
+background:shade (@bg_color,0.6);}
+
+scrollbar.horizontal,
+scrollbar.horizontal:backdrop {
+min-width:60px;
+min-height:17px;
+border:1px solid @border_color;
+background:shade (@bg_color,0.6);}
+
+scrollbar>contents>button,
+scrollbar>contents>button:checked,
+scrollbar>contents>button:backdrop{
+min-width:16px;
+min-height:16px;
+margin:1px;
+-gtk-icon-source:-gtk-scaled(url("../../images/gtk-3.0/arrow-down_normal.svg"),url("../../images/gtk-3.0/arrow-down_normal2.svg"));}
+scrollbar.vertical>contents>button.down,
+scrollbar.vertical>contents>button.down:backdrop{
+border:none;
+background-color:transparent;
+background-size:16px 16px;}
+scrollbar.vertical>contents>button.up,
+scrollbar.vertical>contents>button.up:backdrop{
+-gtk-icon-transform:rotate(0.5turn);
+border:none;
+background-color:transparent;
+background-size:16px 16px;}
+scrollbar.horizontal>contents>button.down,
+scrollbar.horizontal>contents>button.down:backdrop{
+-gtk-icon-transform:rotate(0.75turn);
+border:none;
+background-color:transparent;
+background-size: 16px 16px;}
+scrollbar.horizontal>contents>button.up,
+scrollbar.horizontal>contents>button.up:backdrop{
+-gtk-icon-transform:rotate(0.25turn);
+border:none;
+background-color:transparent;
+background-size:16px 16px;}
+
+scrollbar slider,
+scrollbar slider:backdrop{
+margin:-1px;
+min-width:18px;
+min-height:21px;
+background-color:@selected_bg_color;
+border:1px solid rgba(0,0,0,0.8);}
+scrollbar.horizontal slider,
+scrollbar.horizontal slider:backdrop{
+margin:-1px;
+min-width:21px;
+min-height:18px;}
+
+scrolledwindow.frame>scrollbar.vertical,
+scrolledwindow.frame>scrollbar.vertical:backdrop{
+margin:-1px -1px -1px -0px;}
+scrolledwindow.frame>scrollbar.vertical:dir(rtl),
+scrolledwindow.frame>scrollbar.vertical:dir(rtl):backdrop{
+margin:-1px 0px -1px -1px;}
+scrolledwindow.frame>scrollbar.horizontal,
+scrolledwindow.frame>scrollbar.horizontal:backdrop{
+margin:-0px -1px -1px -1px;}
+window>stack>scrolledwindow:not(.frame),
+window>stack>scrolledwindow:not(.frame):backdrop{
+margin:1px;
+border:1px solid @border_color;}
+notebook.frame>stack>scrolledwindow.frame,
+notebook.frame>stack>scrolledwindow.frame:backdrop {
+margin:-1px;}

@@ -1,0 +1,27 @@
+compctl -K _colorscheme-switch colorscheme-switch
+
+_colorscheme-switch() {
+  local word words themes
+  read -cA words
+  word=${words[2]}
+
+  if [ "${#words}" -eq 2 ]; then
+    reply=(-s -l -a)
+  else
+    case "$word" in
+      -s)
+        themes="$(colorscheme-switch -l)"
+        reply=("${(ps:\n:)themes}")
+        ;;
+    esac
+  fi
+}
+
+compctl -K _quotes quotes
+
+_quotes() {
+    local quotes
+
+    quotes="$(quotes -l)"
+    reply=("${(ps:\n:)quotes}")
+}

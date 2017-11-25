@@ -1,0 +1,19 @@
+#! /bin/dash
+
+TEMPLATES_DIR="$XDG_DOTFILES_DIR/templates"
+COLOR_SCHEMES_DIR="$XDG_DOTFILES_DIR/color_schemes"
+OUTPUT_DIR=$(mktemp -d)
+
+trtpl -s '-dark' -i LCH -c "${COLOR_SCHEMES_DIR}/current-dark" -o "$OUTPUT_DIR" "${TEMPLATES_DIR}/hybrid"
+trtpl -s '-light' -i LCH -c "${COLOR_SCHEMES_DIR}/current-light" -o "$OUTPUT_DIR" "${TEMPLATES_DIR}/hybrid"
+trtpl -i LCH -c "${COLOR_SCHEMES_DIR}/current-dark" -o "$OUTPUT_DIR" "${TEMPLATES_DIR}/dark_only"
+trtpl -i LCH -c "${COLOR_SCHEMES_DIR}/current-light" -o "$OUTPUT_DIR" "${TEMPLATES_DIR}/light_only"
+trtpl -c "${COLOR_SCHEMES_DIR}/current-symbolic" -o "$OUTPUT_DIR" "${TEMPLATES_DIR}/symbolic"
+
+cp -r -t "$XDG_DOTFILES_DIR" "${OUTPUT_DIR}"/dotfiles/*
+cp -r -t "$XDG_BIN_DIR" "${OUTPUT_DIR}"/bin/*
+
+# tmp_out=$(mktemp)
+# grep -iv '#[a-f0-9]\{6\}' "${XDG_DOTFILES_DIR}/dwb_config" > "$tmp_out"
+# cat "${XDG_DOTFILES_DIR}/dwb_colors" >> "$tmp_out"
+# mv "$tmp_out" "$XDG_DOTFILES_DIR/dwb_config"

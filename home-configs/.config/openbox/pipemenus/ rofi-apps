@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+
+###########################################################
+##                  LAUNCH OPTIONS                       ##
+###########################################################
+
+#  -width 60    ###sets window width (if less than 100 will be % of screen  if more than 100 will be pixel size)
+
+#  -location 1    ### sets location values 0-8  going around the screen 0=center  1=top center
+
+#  -lines 6           ### sets number of items to display (will determine the height)
+
+#  -font "Ubuntu 11"  ### sets the font
+
+#  -show  run       ### sets the visible mode when starting (any mode can be used here)
+
+#  -modi  combi,run,drun,window   ###sets available modes (switch between with Shift+arrow left/right or lump together with combi)
+
+#  -combi-modi run,drun,window    ### enables combining different modes into one combi mode
+
+#  -fullscreen    ### sets fullscreen
+
+#  -show-icons    ### enables icons
+
+#  -me-select-entry '' -me-accept-entry 'Mouse1'   ### Enables single click to avtivate items
+
+#  -yoffset 24   ### sets offset from a given edge, "y" is vertical (use negative values to change which edge)
+
+#  -xoffset 24   ### sets offset from a given edge, "x" is horizontal (use negative values to change which edge)
+
+
+# do the launcher
+rofi -modi run,drun,window -show drun -show-icons -me-select-entry '' -me-accept-entry 'Mouse1' -sidebar-mode

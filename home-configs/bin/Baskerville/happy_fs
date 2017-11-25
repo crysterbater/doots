@@ -1,0 +1,15 @@
+#! /bin/dash
+
+timeout=$((DPMS_STANDBY - 10))
+
+[ $timeout -lt 1 ] && exit 1
+
+while true ; do
+    sleep $timeout
+    state=$(xwinfo -s $(xdo id) 2> /dev/null)
+    if [ "$state" = fullscreen ] ; then
+        xset -dpms
+    else
+        xset +dpms
+    fi
+done

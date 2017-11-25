@@ -1,0 +1,3 @@
+tooltip.chromium {
+color: @fg_color;
+background-color: shade(@bg_color,0.6);}

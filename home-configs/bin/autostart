@@ -1,0 +1,31 @@
+#=======================================================================
+#                             Startup Programs
+#=======================================================================
+
+# Set the screen refresh rate to 144hz
+xrandr -r 144
+
+# Start compton with all those fancy effects
+pkill compton
+compton --config ~/.compton.conf -b &
+
+# Set the cursor
+xsetroot -cursor_name left_ptr
+
+# Need those notifications
+pkill dunst
+dunst -config ~/.config/dunst/config &
+
+# Launch the top and bottom bars
+pkill polybar
+polybar -r top & polybar -r bottom &
+
+# Start the Polkit so we can user mount drives
+#exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# Set the wallpaper
+feh --bg-scale ~/rice/bg/bg4.jpg
+
+# Start blurme for dynamic wallpaper bluring
+pkill blurme
+exec ~/rice/scripts/blurme &

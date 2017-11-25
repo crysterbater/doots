@@ -1,0 +1,192 @@
+.mate-panel-menu-bar,
+.mate-panel-menu-bar menubar,
+#PanelApplet-window-menu-applet-button,
+#PanelPlug #clock-applet-button {
+border-radius:0px;
+margin:0px;
+padding:0px;
+border:none;
+box-shadow:none;}
+
+PanelToplevel.background > grid > button,
+.mate-panel-menu-bar #tasklist-button,
+#PanelApplet button,
+#PanelApplet > button,
+#PanelPlug button{
+border:none;
+margin:0px;
+padding:0px;
+border-radius:0px;
+box-shadow:none;}
+
+.mate-panel-applet-slider > frame {
+padding:0px;
+border:1px solid rgba(0,0,0,0.3);
+border-radius:2px;
+background:shade(@bg_color,1.05);}
+
+.mate-panel-menu-bar menubar>menuitem>label,
+.mate-panel-menu-bar menubar:backdrop>menuitem>label,
+#PanelPlug label,
+#PanelApplet > button > label{
+border-radius:0px;
+padding:1px;
+color:@fg_color;}
+
+.mate-panel-menu-bar menubar>menuitem>label,
+.mate-panel-menu-bar menubar:backdrop>menuitem>label{
+font-weight:bold;}
+
+.mate-panel-menu-bar #showdesktop-button{
+background:transparent;}
+.mate-panel-menu-bar wnck-tasklist label{
+font-weight:bold;}
+
+.mate-panel-menu-bar #tasklist-button:hover {
+background-color:alpha(@selected_bg_color,0.7);}
+.mate-panel-menu-bar #tasklist-button:active,
+.mate-panel-menu-bar #tasklist-button:checked {
+background-color:@selected_bg_color;}
+.mate-panel-menu-bar #tasklist-button:disabled label{
+color:@inactive_fg_color;}
+
+#PanelPlug menuitem label{
+color:@fg_color;}
+
+#clock-applet-button label,
+#tasklist-button label,
+#tasklist-button,
+#tasklist-button *,
+#PanelPlug #tasklist-button{
+font-weight:bold;
+color:@selected_fg_color;}
+
+#tasklist-button box image{
+opacity:0;}
+
+#PanelPlug #clock-applet-button:checked,
+#PanelPlug #clock-applet-button:checked label,
+.mate-panel-menu-bar menubar>menuitem:hover,
+.mate-panel-menu-bar menubar:backdrop>menuitem:hover {
+color:@selected_fg_color;
+background:@selected_bg_color;}
+
+#PanelApplet{
+padding:0px 2px;}
+
+#mate-menu>widget>box>widget>*{
+margin:5px;}
+
+#mate-menu widget widget widget notebook {
+margin:5px;}
+
+#mate-menu widget widget widget notebook>stack,
+#mate-menu widget widget widget notebook>stack>box>viewport>grid{
+background-color:rgba(255,255,255,0.5);}
+#mate-menu widget widget widget notebook>stack scrolledwindow>viewport {
+background:@base_color;}
+
+/*weird other mate apps*/
+
+#MyControlCenter > frame{
+margin:3px;}
+#MyControlCenter > frame scrolledwindow.frame{
+border:1px solid @border_color;
+margin:3px;}
+#slab_section_style2 { 
+padding:6px;
+margin:-6px;
+border-color:transparent;
+background:@base_color;}
+#slab_section_style2>widget>box>label{ 
+color:@selected_base_color;}
+
+.pluma-window>box>paned>paned>notebook,
+.pluma-window>box>paned>paned>notebook:backdrop{
+margin:2px;
+border:1px solid @border_color;}
+.pluma-window>box>paned>paned>notebook>stack>box>scrolledwindow.frame,
+.pluma-window>box>paned>paned>notebook>stack>box>scrolledwindow.frame:backdrop {
+margin:2px;}
+.pluma-window>box>paned>box>notebook.frame entry,
+.pluma-window>box>paned>box>notebook.frame entry:backdrop,
+.pluma-window>box>paned>box>notebook.frame button,
+.pluma-window>box>paned>box>notebook.frame button:backdrop,
+.pluma-window>box>paned>box>notebook>stack>box>scrolledwindow.frame,
+.pluma-window>box>paned>box>notebook>stack>box>scrolledwindow.frame:backdrop{
+margin:1px;}
+
+
+.caja-pathbar button {
+padding:0px;}
+.caja-pathbar button,
+.caja-pathbar button.toggle.text-button,
+.caja-pathbar button.toggle.text-button.image-button {
+border-radius:0px;
+border: none;
+border-bottom:2px solid transparent;
+background:none;
+box-shadow:none;}
+.caja-pathbar button:hover,
+.caja-pathbar button.toggle.text-button:hover,
+.caja-pathbar button.toggle.text-button.image-button:hover {
+background:none;
+border:none;
+border-bottom:2px solid transparent;}
+.caja-pathbar button:checked,
+.caja-pathbar button:active,
+.caja-pathbar button.toggle.text-button:active,
+.caja-pathbar button.toggle.text-button.image-button:active,
+.caja-pathbar button.toggle.text-button:checked,
+.caja-pathbar button.toggle.text-button.image-button:checked {
+border:none;
+border-bottom:2px solid @selected_base_color;}
+
+.caja-side-pane .frame,
+.caja-side-pane notebook stack,
+.caja-side-pane notebook treeview.view,
+.caja-side-pane notebook widget box,
+.caja-side-pane notebook box scrolledwindow,
+.caja-side-pane notebook textview text,
+.caja-side-pane .frame:backdrop,
+.caja-side-pane notebook stack:backdrop,
+.caja-side-pane notebook treeview.view:backdrop,
+.caja-side-pane notebook widget box:backdrop,
+.caja-side-pane notebook box scrolledwindow:backdrop,
+.caja-side-pane notebook textview text:backdrop{
+background:@bg_color;
+border:1px solid transparent;}
+
+.caja-notebook,
+.caja-notebook:backdrop {
+margin:2px;
+border:1px solid @border_color;}
+.caja-side-pane scrolledwindow.frame,
+.caja-notebook scrolledwindow.frame,
+.caja-side-pane scrolledwindow.frame:backdrop,
+.caja-notebook scrolledwindow.frame:backdrop {
+margin:-1px;}
+
+.caja-navigation-window grid paned box paned box notebook box box scrolledwindow widget widget.entry,
+.caja-navigation-window grid paned box paned box notebook box box scrolledwindow widget widget.entry:backdrop {
+background:shade (@base_color,0.9);
+color:@text_color;
+border:1px solid @border_color;}
+.caja-navigation-window grid paned box paned box notebook box box scrolledwindow widget widget.entry:selected,
+.caja-navigation-window grid paned box paned box notebook box box scrolledwindow widget widget.entry:backdrop:selected {
+background:@selected_base_color;
+color:@selected_text_color;}
+
+.caja-navigation-window>grid>paned>box>paned>box>notebook.caja-notebook>stack>box>frame,
+.caja-navigation-window>grid>paned>box>paned>box>notebook.caja-notebook>stack>box>frame:backdrop {
+margin:-1px;}
+
+.caja-navigation-window grid paned box notebook stack scrolledwindow.frame treeview:selected,
+.caja-navigation-window grid paned box notebook stack scrolledwindow.frame treeview:selected:backdrop{
+color:@selected_text_color;
+background:@selected_base_color;}
+
+.caja-pathbar button.slider-button,
+.caja-pathbar button.slider-button:backdrop{ 
+background:none;
+border:1px solid transparent;}

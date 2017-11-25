@@ -1,0 +1,44 @@
+#! /bin/dash
+
+while [ $# -gt 0 ] ; do
+    trm=1
+    case "$1" in
+        browser)
+            cmd=$BROWSER
+            name=$cmd
+            trm=0
+            ;;
+        *)
+            name=$1
+            case "$1" in
+                mutt|ncmpcpp|top)
+                    cmd=$1
+                    ;;
+                slrn)
+                    cmd="$1 --spool"
+                    ;;
+                bspwmrc|sxhkdrc)
+                    arg="${XDG_DOTFILES_DIR}/$1"
+                    ;;
+                *)
+                    arg="${XDG_DATA_HOME}/$1"
+                    ;;
+            esac
+            ;;
+    esac
+    wid=$(xdo id -n $name $(bspc query -W) | tail -n 1)
+    if [ -n "$wid" ] ; then
+        bspc window "$wid" -f
+    else
+        if [ -n "$cmd" ] ; then
+            if [ $trm -eq 1 ] ; then
+                fork termite --name "$name" -e "$cmd"
+            else
+                fork $cmd
+            fi
+        else
+            fork termite --name "$name" -e "editor '$arg'"
+        fi
+    fi
+    shift
+done

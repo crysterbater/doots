@@ -1,0 +1,7 @@
+#!/bin/bash
+NR_OF_MONITORS=$(xrandr -q | grep ' connected' | wc -l )
+if [ $NR_OF_MONITORS = "2" ]; then
+exec conky -c /home/hrfee/.conky/.conkybarrr -d
+else [ $NR_OF_MONITORS = "1" ];
+exec conky -c /home/hrfee/.conky/.conkybarrr1 -d
+fi

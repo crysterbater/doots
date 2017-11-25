@@ -1,0 +1,8 @@
+#!/bin/bash
+# reload lemonbar over and over again.
+while true
+do
+  killall lemonbar
+  /home/hrfee/bin/bar.sh &
+  sleep 2 
+done 

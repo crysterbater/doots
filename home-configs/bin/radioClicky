@@ -1,0 +1,234 @@
+#!/bin/bash
+
+array=(
+http://wfmu.org/wfmu.pls
+http://64.150.176.42:8242/stream
+http://wruv.org/wruv256.m3u
+http://listen.xray.fm:8000/stream
+https://kexp-mp3-128.streamguys1.com/kexp128.mp3
+http://relay.181.fm:8094
+http://relay.181.fm:8008
+http://relay.181.fm:8064
+http://streaming.radionomy.com:80/12Bar
+http://relay.181.fm:8000
+http://relay.181.fm:8002
+)
+
+store="$HOME/tmp"
+pidPath="$store/radiopid"
+mpvtxt="$store/mpv.txt"
+#mpverr="$store/mpv.err"
+idPath="$store/id"
+
+mkdir -p "$store"
+
+# store station id to file
+storeid () {
+    echo "$id" > "$idPath"
+}
+
+# should read id number from store
+if [ -f "$idPath" ]; then
+    id=$(cat "$idPath")
+else
+    id="0"
+    storeid
+fi
+
+on=" / "
+off=" \\ "
+
+radio=${array[$id]}
+
+echoid () {
+    >&2 echo "id $id / radio $radio"
+}
+
+notifyid () {
+    notify-send -u normal "id $id / radio $radio" 2>/dev/null
+}
+
+croplog () {
+    #>&2 echo "croplog"
+    # crop and clean log, this shall only happen when mpv is not writing to file
+    file="$mpvtxt"
+    if [ -f "$file" ]; then
+        # let's just keep 'icy-title' and 'Playing' lines and crop to last 100 lines
+        grep -E "icy-title:|Playing:" "$mpvtxt" | grep -wv "^ icy-title: $" | uniq | tail -n 100 > "$file.tmp" && cp "$file.tmp" "$file" && rm "$file.tmp"
+        touch "$file"
+    fi
+}
+
+off () {
+    # if file
+    [ -f "$pidPath" ] && Rpid=$(cat "$pidPath")
+    # if var
+    [[ ! -z "$Rpid" ]] && kill "$Rpid"; rm "$pidPath"
+    echo "$off" # off
+    croplog
+}
+
+on () {
+    mpv --no-config --no-video --no-resume-playback --no-ytdl --cache-secs 7 --af=lavfi=[loudnorm=LRA=10:I=-17] "$radio" >> "$mpvtxt" 2> /dev/null &
+
+    Rpid="$!"
+    echo "$Rpid" > "$pidPath"
+    echo "$on" # on
+}
+
+switch () {
+
+    # next station
+    if [ "$1" == "+" ]; then
+        ((id+=1))
+    # previous station
+    elif [ "$1" == "-" ]; then
+        ((id-=1))
+    # exact id (check if integer)
+    elif [[ $1 =~ ^-?[0-9]+$ ]]; then
+        id="$1"
+    else # next station, assume + if nothing is send
+        ((id+=1))
+    fi
+
+    max=$(( ${#array[@]} - 1 ))
+
+    if (( id > max )); then
+       id=0
+    elif (( id < 0 )); then
+       id="$max"
+    fi
+
+    radio=${array[$id]}
+
+    echoid
+    storeid
+    off
+    on
+    #notifyid
+}
+
+status () {
+    echoid # for tooltip
+    if [ -f "$pidPath" ]; then
+        echo "$on" # on
+    else
+        echo "$off" # off
+    fi
+}
+
+getnotify () {
+    # only last one of this two should be shown, where icy-title could be empty
+    # get last one and if icy-title and if empty ...
+    if ! grep -E "icy-title:|Playing:" "$mpvtxt" | tail -n 1 | grep -wv "^ icy-title: $" > /dev/null ; then
+        # icy-title is empty, get playing instead
+        tmpinfo="$(sed -n 's/^Playing: //p' "$mpvtxt" | tail -1)"
+    else
+        # icy-title is fine, lets use that
+        tmpinfo="$(sed -n 's/^ icy-title: //p' "$mpvtxt" | tail -1)"
+    fi
+}
+
+# main
+if [ "$1" == "toggle" ]; then
+
+    if [ -f "$pidPath" ]; then
+        off
+    else
+        on
+    fi
+
+elif [ "$1" == "notify" ]; then
+
+    getnotify
+    >&2 echo "$tmpinfo"
+    notify-send -u normal "$tmpinfo" 2>/dev/null
+
+elif [ "$1" == "switch" ]; then
+
+    # "$2" must be + or -
+    switch "$2"
+
+elif [ "$1" == "last" ]; then
+
+    if [ -f "$mpvtxt" ]; then
+        sed -n 's/^ icy-title: //p' "$mpvtxt" | grep -v '^$' | uniq | tail -n 12
+    fi
+
+elif [ "$1" == "id" ]; then
+
+    notifyid
+    echoid
+
+elif [ "$1" == "openbox" ]; then # openbox pipe menu
+
+    # header
+    echo "<openbox_pipe_menu>"
+
+    # stations
+    count="0"
+    for label in "${array[@]}"
+        do
+            # crop label and remove http, https
+            label="$(sed 's~http[s]*://~~g' <<< "${label:0:50}")"
+
+            if [ "$count" == "$id" ]; then
+                title="$(status) $count $label" # $(status)
+            else
+                title="$count $label"
+            fi
+
+            # mark active station with separator at the top
+            # [ "$count" == "$id" ] && echo "<separator />"
+
+                echo "<item label='$title'>"
+                echo "    <action name='Execute'>"
+            # use active station as on/off switch
+            if [ "$count" == "$id" ]; then
+                echo "        <execute>radioClicky toggle</execute>"
+            else
+                echo "        <execute>radioClicky switch $count</execute>"
+            fi
+                echo "    </action>"
+                echo "</item>"
+
+            # mark active station with separator at the bottom as well
+            # [ "$count" == "$id" ] && echo "<separator />"
+
+            ((count++))
+        done
+
+    # footer
+    echo "</openbox_pipe_menu>"
+
+
+else # status
+
+    status
+
+fi
+
+
+## tint2rc executor, to tint2rc
+## add a new E to line that starts with
+## panel_items =
+
+#execp = new
+#execp_centered = 1
+#execp_has_icon = 0
+#execp_command = radioClicky                  # echo status / or \
+#execp_continuous = 0
+#execp_font = cuprum 12
+#execp_font_color = #111111 70
+#execp_padding = 0 0 0
+#execp_lclick_command = radioClicky toggle    # on/off
+#execp_rclick_command = radioClicky notify    # echo icy-title or playing
+#execp_mclick_command = radioClicky id        # echo station id, url
+#execp_interval = 12                          # echo status / or \ every N seconds
+#execp_dwheel_command = radioClicky switch +  # switch to next station
+#execp_uwheel_command = radioClicky switch -  # switch to previous station
+
+## openbox pipemenu, to menu.xml add:
+# <separator/>
+# <menu id="radio" label="radio" execute="radioClicky openbox" />
+# <separator/>

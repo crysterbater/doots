@@ -1,0 +1,69 @@
+#!/bin/bash
+# Requires wal or pywal (github)
+
+# Run like this
+# wally /path/to/wallpaper/or/directory 
+# examples: 
+#	wally ~/Pictures/Wallpapers
+#	wally .
+#	wally ~/Pictures/Wallpapers/pape.jpg
+
+# Arguments checking
+if [ $# == 0 ]; then
+	echo "> No path to wallpaper or directory specified :(" 
+	exit 0;
+fi
+
+# Declare arrays
+declare -a color
+declare -a XCOLOR_OLD
+declare -a XCOLOR_NEW
+
+# Grab old Xresources colors
+for (( i = 0; i < 8; i++ )); do
+	color[$i]="$(echo color$i)"
+	XCOLOR_OLD[$i]="$(cat ~/.Xresources | grep -m 1 ${color[$i]} | awk '{print $2}')"
+done
+
+# Call wal to generate new colors
+ARG=$1
+echo "> Calling wal at $ARG... toot toot..."
+wal -i $ARG
+echo "> New colorscheme generated!"
+
+# Apply new colors to Xresources
+echo "> Setting .Xresources..."
+cp ~/.wally/Xresources-clean ~/.wally/Xresources-new
+cat ~/.cache/wal/colors.xresources >> ~/.wally/Xresources-new
+cp ~/.wally/Xresources-new ~/.Xresources
+reloadXr
+echo "> New .Xresources set!"
+
+# Grab new Xresources colors
+for (( i = 0; i < 8; i++ )); do
+	XCOLOR_NEW[$i]="$(cat ~/.Xresources | grep -m 1 ${color[$i]} | awk '{print $2}')"
+done
+
+# Replace colors to all linked files in wally's folder
+for (( i = 0; i < 8; i++ )); do
+	sed -i --follow-symlinks "s@${XCOLOR_OLD[$i]}@${XCOLOR_NEW[$i]}@gI" ~/.wally/links/*
+done
+
+# Restart tint2 to reload config file
+tint2restart
+echo "> tint2 has restarted!"
+
+# Reconfigure openbox to reload theme
+# Template: ~/.local/share/themes/thebox/openbox-3/themerc
+openbox --reconfigure
+echo "> Openbox is reconfigured!"
+
+# Copy new wallpaper path to wally's directory
+cp ~/.cache/wal/wal ~/.wally/path_to_wallpaper
+WALLPAPER="$(cat ~/.wally/path_to_wallpaper)"
+
+# Display new colors with a color script
+# (other good scripts: spectrum, colortest)
+~/Scripts/Color/colortest
+echo "> Current wallpaper: $WALLPAPER"
+echo "> All done :)"

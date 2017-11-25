@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 22 22">
+    <rect ry="1" y="5" x="4" height="7" width="7" fill="#f1f2f2"/>
+    <rect ry=".5" y="6" height="1" width="3" fill="#f1f2f2"/>
+    <rect ry=".5" y="8" height="1" width="3" fill="#f1f2f2"/>
+    <rect ry=".5" y="10" height="1" width="3" fill="#f1f2f2"/>
+    <rect width="3" height="1" x="12" y="6" ry=".5" fill="#f1f2f2"/>
+    <rect width="3" height="1" x="12" y="8" ry=".5" fill="#f1f2f2"/>
+    <rect width="3" height="1" x="12" y="10" ry=".5" fill="#f1f2f2"/>
+    <rect transform="rotate(90)" ry=".5" y="-8" x="13" height="1" width="3" fill="#f1f2f2"/>
+    <rect transform="rotate(90)" ry=".5" y="-10" x="13" height="1" width="3" fill="#f1f2f2"/>
+    <rect transform="rotate(90)" ry=".5" y="-6" x="13" height="1" width="3" fill="#f1f2f2"/>
+    <rect width="3" height="1" x="1" y="-8" ry=".5" transform="rotate(90)" fill="#f1f2f2"/>
+    <rect width="3" height="1" x="1" y="-10" ry=".5" transform="rotate(90)" fill="#f1f2f2"/>
+    <rect width="3" height="1" x="1" y="-6" ry=".5" transform="rotate(90)" fill="#f1f2f2"/>
+</svg>

@@ -1,0 +1,12 @@
+style"infobar"{
+GtkInfoBar::action-area-border=10
+GtkInfoBar::button-spacing=6
+GtkInfoBar::content-area-border=8
+GtkInfoBar::content-area-spacing=32
+engine"pixmap"{
+image{
+function=BOX
+shadow=OUT
+file="../images/gtk-2.0/none.svg"
+stretch=FALSE}}}
+widget_class"*GtkInfoBar"style"infobar"

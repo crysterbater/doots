@@ -1,0 +1,172 @@
+#!/usr/bin/env bash
+
+set -e 
+set -o pipefail
+
+usage() {
+	cat 1>&2 <<-EOF
+	usage: v command [arg ...]
+
+	commands:
+	  b path version  bump package
+	  u path          commit bump
+	  c pkgspec       copy from tree
+	  d path          diff
+
+	b options:
+	  -n  don't commit changes
+EOF
+}
+
+# shellcheck disable=SC2059
+log() { fmt="$1"; shift; printf "$fmt\n" "$@" 1>&2; }
+
+pkgver()  { perl -pe 's/.*\/.*?(\d+(:?\.\d+)*[a-zA-Z]?(?:-r\d+)?)\.ebuild/\1/'; }
+pkgname() { perl -pe 's/(.*\/.*?)\d+(:?\.\d+)*[a-zA-Z]?(?:-r\d+)?\.ebuild/\1/'; }
+
+v_bump() {
+	local opt_commit=1
+	local path=
+	local version=
+	while (($#)); do
+		case "$1" in
+		-n) shift; opt_commit=0 ;;
+		-*) log "v b: invalid option: %s" "$1"; return 1 ;;
+		*)
+			if [[ -z "$path" ]]; then
+				path="$1"
+			elif [[ -z "$version" ]];  then
+				version="$1"
+			else
+				log 'usage: v b [option ...] path version'
+				return 1
+			fi
+			shift
+			;;
+		esac
+	done
+
+	if [[ -d "$path" ]]; then
+		shopt -s nullglob
+		local fs=("$path"/*.ebuild)
+		shopt -u nullglob
+		if [[ "${#fs[@]}" != 1 ]]; then
+			log "v b: can't decide on an ebuild"
+			return 1
+		fi
+		path="${fs[0]}"
+	fi
+
+	local pkgname
+	pkgname="$(printf '%s' "$path" | pkgname)"
+	mv "$path" "$pkgname$version.ebuild"
+	(cd "$(dirname "$path")" && sudo repoman manifest)
+	if ((opt_commit)); then
+		v_update "$(dirname "$path")"
+	fi
+}
+
+v_update() {
+	local path=
+	while (($#)); do
+		case "$1" in
+		-*) log "v u: invalid option: %s" "$1"; return 1 ;;
+		*)
+			if [[ -z "$path" ]]; then
+				path="$1"
+			else
+				log 'usage: v u path'
+				return 1
+			fi
+			shift
+			;;
+		esac
+	done
+	# remove trailing slashes
+	path="$(printf '%s' "$path" | sed -e 's/\/*$//')"
+	local old new
+	old="$(git status --porcelain "$path" | grep ' *D .*\.ebuild' | pkgver)"
+	new="$(git status --porcelain "$path" | grep ' *?? .*\.ebuild' | pkgver)"
+	git add "$path"
+	git commit -m "$path: update from $old to $new"
+}
+
+v_copy() {
+	local pkg=
+	while (($#)); do
+		case "$1" in
+		-*) log "v c: invalid option: %s" "$1"; return 1 ;;
+		*)
+			if [[ -z "$pkg" ]]; then
+				pkg="$1"
+			else
+				log 'usage: v c pkgspec'
+				return 1
+			fi
+			shift
+			;;
+		esac
+	done
+	local ebuild path
+	ebuild="$(equery w "$pkg")"
+	path="$(dirname "$ebuild")"
+	printf '%s? ' "$path"
+	while read -r c; do
+		case "$c" in
+		n|N) return;;
+		*) break;;
+		esac
+	done
+	local c
+	c="$(basename "$(dirname "$path")")"
+	mkdir -vp "$c"
+	cp -rv "$path" "$c/$(basename "$path")"
+}
+
+v_diff() {
+	git --no-pager diff --color=auto --no-ext-diff --no-index "/var/portage/gentoo/$1" "$1"
+}
+
+v_rm() {
+	local p reason nocommit=0
+	while (($#)); do
+		case "$1" in
+		-n) nocommit=1; shift ;;
+		--) shift; break ;;
+		-*) log "v r: invalid option: %s" "$1"; return 1 ;;
+		*)
+			if [[ -z "$p" ]]; then
+				p="$1"
+			elif [[ -z "$reason" ]]; then
+				reason="$1"
+			else
+				log 'usage: v r path [reason] [-- gitopts]'
+				return 1
+			fi
+			shift
+			;;
+		esac
+	done
+
+	git rm "$@" -- "$p"
+	if ((nocommit)); then
+		return
+	fi
+	if [[ -n "$reason" ]]; then
+		git commit -m "remove $p ($reason)"
+	else
+		git commit -m "remove $p"
+	fi
+}
+
+while (($#)); do
+	case "$1" in
+	b) shift; v_bump "$@"; exit ;;
+	u) shift; v_update "$@"; exit ;;
+	c) shift; v_copy "$@"; exit ;;
+	d) shift; v_diff "$@"; exit ;;
+	r) shift; v_rm "$@"; exit ;;
+	-h) usage; exit ;;
+	*) log "v: invalid argument: %s" "$1"; exit 1 ;;
+	esac
+done

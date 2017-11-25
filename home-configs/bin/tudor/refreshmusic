@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Updates the database
+mpc update
+
+# Clears the playlist
+mpc clear
+
+# Add all songs to the playlist
+mpc ls | mpc add

@@ -1,0 +1,60 @@
+window.nemo-desktop-window *,
+window.nemo-desktop-window *:backdrop{
+background:none;}
+window.nemo-desktop-window *:selected,
+window.nemo-desktop-window *:selected:backdrop{
+color:@selected_text_color;
+background:@selected_base_color;}
+.nemo-window-pane *{
+-GtkWidget-window-dragging:false;}
+.nemo-places-sidebar,
+.nemo-places-sidebar>viewport,
+.nemo-places-sidebar>viewport treeview.view,
+.nemo-places-sidebar:backdrop,
+.nemo-places-sidebar>viewport:backdrop,
+.nemo-places-sidebar>viewport treeview.view:backdrop{
+border:none;
+background:@bg_color;
+-GtkWidget-window-dragging:false;}
+.nemo-places-sidebar>viewport treeview.view:hover{
+background:alpha(@selected_bg_color,0.6);
+-GtkWidget-window-dragging:false;}
+.nemo-places-sidebar>viewport treeview:selected{
+background:@selected_bg_color;}
+window.nemo-window toolbar button:not(:checked):not(:selected),
+window.nemo-window toolbar button:not(:checked):not(:selected):backdrop{
+background:transparent;
+border:1px solid transparent;}
+window.nemo-window toolbar entry,
+window.nemo-window toolbar entry:backdrop{
+margin:-2px;}
+.nemo-window-pane:not(.nemo-desktop-window),
+.nemo-window-pane:not(.nemo-desktop-window):backdrop {
+margin:2px;
+border:1px solid @border_color;}
+.nemo-window>grid>paned>box.sidebar>scrolledwindow.frame:dir(ltr),
+.nemo-window>grid>paned>box.sidebar>scrolledwindow.frame:dir(ltr):backdrop {
+margin-left:-1px;
+margin-bottom:-1px;}
+.nemo-window>grid>paned>box.sidebar>scrolledwindow.frame:dir(rtl),
+.nemo-window>grid>paned>box.sidebar>scrolledwindow.frame:dir(rtl):backdrop {
+margin-right:-1px;
+margin-bottom:-1px;}
+.nemo-properties-dialog frame,
+.nemo-properties-dialog frame:backdrop{
+border:0px;}
+.nemo-desktop .rubberband,
+.nemo-desktop  rubberband,
+.nemo-desktop  .rubberband:backdrop,
+.nemo-desktop  rubberband:backdrop{
+border:1px solid @selected_base_color;
+background:alpha(@selected_base_color,0.2);}
+
+.cs-header,
+.cs-header:backdrop {
+margin:-1px;
+background:@border_color;}
+stack scrolledwindow.view.cs-category-view,
+stack scrolledwindow.view.cs-category-view:backdrop {
+border:1px solid @border_color;
+margin:4px;}

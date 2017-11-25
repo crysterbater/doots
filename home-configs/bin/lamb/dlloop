@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+# url/%02d.jpg
+read url
+
+i=1
+
+# if [[ -z "$referer" ]]; then
+  # referer=""
+# fi
+
+# Try once with zero. This means the script works for 0-index and incorrect-index resources
+wget $(printf "$url" 0) --referer "$referer"
+
+while wget $(printf "$url" $i) --referer "$referer"; do
+  ((i++))
+done
+

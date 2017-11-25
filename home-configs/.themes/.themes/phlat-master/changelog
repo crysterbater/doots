@@ -1,0 +1,172 @@
+phlat (0.29-1) unstable; urgency=low
+
+  * more icons
+  * more support for old icons apps(eg old gtk stock)
+  * 32px icons fixed
+  * some GTK3 fixes
+  * IceWM theme
+  * added the wallpaper paths to the pkgbuild and the rpm
+
+-- SSF <https://github.com/sixsixfive> Tue, 25 Jul 2017 18:36:22 +0200
+
+phlat (0.28-1) unstable; urgency=low
+
+  * more icons
+  * more bug fixes
+  * better nemo support
+  * openbox theme
+
+-- SSF <https://github.com/sixsixfive> Tue, 18 Jul 2017 22:15:19 +0200
+
+phlat (0.27-1) unstable; urgency=low
+
+  * more icons
+  * reworked the GTK3 tabstyle
+
+-- SSF <https://github.com/sixsixfive> Tue, 11 Jul 2017 23:42:07 +0200
+
+phlat (0.26-1) unstable; urgency=low
+
+  * new icons
+  * mate panel settings can now override the color of the panel
+  * better tabs in gtk3 windows
+  * a few usability improvements(contrast fixes)
+
+-- SSF <https://github.com/sixsixfive> Sat, 08 Jul 2017 00:58:15 +0200
+
+phlat (0.25-1) unstable; urgency=low
+
+  * many new icons
+  * change the default color from blue to pink ;P
+  * some tiny GTK3 improvements
+
+-- SSF <https://github.com/sixsixfive> Thu, 02 Jul 2017 23:15:34 +0200
+
+phlat (0.23-1) unstable; urgency=low
+
+  * make the metacity theme look like the xfwm theme
+  * many new icons
+  * many changed icons
+
+-- SSF <https://github.com/sixsixfive> Thu, 29 Jun 2017 21:17:55 +0200
+
+phlat (0.22-1) unstable; urgency=low
+
+  * many MATE fixes
+  * a few other fixes
+  * a few new icons
+
+-- SSF <https://github.com/sixsixfive> Fri, 23 Jun 2017 20:05:10 +0200
+
+phlat (0.21-1) unstable; urgency=low
+
+  * improve the icon theme
+
+-- SSF <https://github.com/sixsixfive> Sat, 17 Jun 2017 11:51:21 +0200
+
+phlat (0.20-1) unstable; urgency=low
+
+  * added a matching icon theme
+  * re-enabled the icons in the menus
+  * some minor fixes
+
+-- SSF <https://github.com/sixsixfive> Sat, 10 Jun 2017 11:54:47 +0200
+
+phlat (0.13-1) unstable; urgency=low
+
+  * A usable Qt5 theme(QGtkStyle + QSS fixes)
+
+-- SSF <https://github.com/sixsixfive> Sun, 21 May 2017 17:05:07 +0000
+
+phlat (0.12-1) unstable; urgency=low
+
+  * more GTK2 improvements
+  * a few GTK3 fixes
+  * The GTK themes are now nearly finished
+
+-- SSF <https://github.com/sixsixfive> Thu, 18 May 2017 19:40:53 +0200
+
+phlat (0.11-1) unstable; urgency=low
+
+  * no borders for maximized metacity windows
+  * qt5ct to deb
+  * better gtk3 pathbars
+  * some other very minor fixes
+  * exo-open as print preview command
+  * the theme should now look better in lightdm
+  * darker buttons, switches, entrys in views
+  * better mate support
+  * better unity support
+  * SuSE RPM(only tested on thumbleweed)
+  * fake hidpi gtk2 theme
+
+-- SSF <https://github.com/sixsixfive> Sat, 14 May 2017 08:10:38 +0200
+
+phlat (0.10-1) unstable; urgency=low
+
+  * xfce support has been improved
+  * GTK3 like paneds in GTK2
+  * fixed the huge separators in old GTK2 apps
+  * PKGBUILD is now available
+  * GTK3 headerbars got some fixes
+
+-- SSF <https://github.com/sixsixfive> Sun, 07 May 2017 14:36:05 +0200
+
+phlat (0.09-1) unstable; urgency=low
+
+  * better lxde support
+  * better mate support
+  * better gnome support
+  * balou theme
+  * firefox fix
+  * better chrome@gtk3 support
+  * chrome/chromium scrollbars
+
+-- SSF <https://github.com/sixsixfive> Mon, 01 May 2017 23:34:15 +0200
+
+phlat (0.08-1) unstable; urgency=low
+
+  * more treeview fixes
+  * better gnome app support
+  * better csd and nocsd hack support
+  * onboard theme
+  * different default colors for different deb based distros
+
+-- SSF <https://github.com/sixsixfive> Sun, 30 Apr 2017 18:05:46 +0200
+
+phlat (0.07-1) unstable; urgency=low
+
+  * fixed treeview progressbars
+  * added more gnome/unity support
+  * improved the filechooser
+  * pathbar is now themed
+
+-- SSF <https://github.com/sixsixfive> Sat, 29 Apr 2017 18:42:18 +0200
+
+phlat (0.06-1) unstable; urgency=low
+
+  * fixed the gtk3 scrollbars
+  * added the metacity theme
+  * basic mate support
+
+-- SSF <https://github.com/sixsixfive> Fri, 28 Apr 2017 00:02:30 +0200
+
+phlat (0.05-1) unstable; urgency=low
+
+  * add a simple color script
+  * fixed the treeview hover
+
+-- SSF <https://github.com/sixsixfive> Tue, 25 Apr 2017 18:14:37 +0200
+
+phlat (0.04-1) unstable; urgency=low
+
+  * fix popups
+  * add xfterminal
+
+-- SSF <https://github.com/sixsixfive> Mon, 24 Apr 2017 20:35:21 +0200
+
+phlat (0.03-1) unstable; urgency=low
+
+  * Initial beta release
+
+-- SSF <https://github.com/sixsixfive> Mon, 24 Apr 2017 19:59:21 +0200

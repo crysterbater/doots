@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+source ~/.bashrc
+[ -z $WIDTH ] && WIDTH=1366
+[ -z $HEIGHT ] && HEIGHT=768
+scr='/tmp/screenshot.png'
+icon="lock-icon-white.png"
+dir="$(dirname $0)"
+# To change the font used add `-font $font`
+# After pointsize in the 'add fortune text section'
+# font="$HOME/.local/share/fonts/Aller_Lt.ttf"
+[ -z "$message" ] && message=$(fortune $dir/bash_quotes.txt)
+message=$(echo "$message" | fold -s -w 70)
+gradientColor='#6699cc'
+#gradientDimensions='1920x1080'
+font="Circular Std Book"
+scrot "$scr"
+convert "$scr" -scale 10% -scale 1000%\
+	-size "$(echo "$WIDTH * 2" | bc)x${HEIGHT}" -gravity south-west \
+	gradient:none-"$gradientColor" -composite -matte \
+	\( "$dir/$icon" -resize 50%  \) -geometry -$(echo "$WIDTH / 2" | bc)+0 -gravity center -composite -matte \
+	\( "$dir/$icon" -resize 50%  \) -geometry +$(echo "$WIDTH / 2" | bc)+0 -gravity center -composite -matte \
+	-gravity center \
+	-fill "#EAE4D1" -family "$font" -style Normal -pointsize 20 -annotate -$(echo "$WIDTH / 2" | bc)+$(echo "${HEIGHT} * 0.3 / 1" | bc) "$message" \
+	-fill "#EAE4D1" -family "$font" -style Normal -pointsize 20 -annotate +$(echo "$WIDTH / 2" | bc)+$(echo "${HEIGHT} * 0.3 / 1" | bc) "$message" "$scr"
+i3lock -ui "$scr"

@@ -1,0 +1,36 @@
+#! /bin/dash
+
+while [ $# -gt 0 ]
+do
+    filelist=""
+    case "$1" in
+        dots)
+            filelist=".coordinates .mpoprc .msmtprc .procmailrc .eatrc .castgetrc"
+            ;;
+        dirs)
+            filelist=".local .config .mutt .vim .mpd .themes .fonts .icons .aria2 .irssi .pal .FontForge .ssh .w3m .elinks .lftp .ncmpcpp .audacity-data .audacity-files"
+            ;;
+        usenet)
+            filelist=".jnewsrc .usenet_id .usenet .slrn"
+            ;;
+        mail)
+            filelist=".maildir"
+            ;;
+        src)
+            filelist="src/lang"
+            ;;
+        abs)
+            filelist="src/abs"
+            ;;
+        doc)
+            filelist="doc"
+            ;;
+        sys)
+            filelist="/etc/hostname /etc/vconsole.conf /etc/locale.conf /etc/timezone /etc/lirc/lircd.conf /etc/pacman.conf /etc/pacman.d/mirrorlist /usr/share/kbd/keymaps/extra.map /etc/default/grub /etc/leafnode/config /etc/systemd/system /etc/udev/rules.d /etc/modprobe.d /etc/modules-load.d /usr/local/bin /etc/dict"
+            ;;
+    esac
+    if [ -n "$filelist" ] ; then
+        tar -cvz -C "$HOME" -f "${1}.tgz" $filelist
+    fi
+    shift
+done

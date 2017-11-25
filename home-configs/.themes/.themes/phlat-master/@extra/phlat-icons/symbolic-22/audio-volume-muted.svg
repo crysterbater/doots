@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 22 22">
+    <path style="marker:none" d="M0 5h2.484l2.97-3L6 2.016v12h-.475L2.485 11H0z" color="#f1f2f2" overflow="visible" fill="#f1f2f2"/>
+    <path style="line-height:normal;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M11 1v1.438c1.832 2.095 2.41 4.954 1.781 7.562h1.938c.596-3.14-.203-6.512-2.406-9zM9 3v1.813c1.41 1.843 1.41 4.531 0 6.375V13h1v-3h1.719c.636-2.402.096-5.122-1.625-7z" color="#000" font-weight="400" font-family="Sans" overflow="visible" opacity=".35" fill="#f1f2f2"/>
+    <path style="marker:none" d="M11 11h1.375l1.125 1.094L14.593 11H16v1.469l-1.094 1.062L16 14.594V16h-1.438L13.5 14.937 12.437 16H11v-1.406l1.062-1.063L11 12.47z" color="#f1f2f2" overflow="visible" fill="#c00"/>
+    <path style="line-height:normal;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M9 8c0-1.257-.312-2.216-1-3H7v6h1c.672-.837 1-1.742 1-3z" color="#000" font-weight="400" font-family="Sans" overflow="visible" opacity=".35" fill="#f1f2f2"/>
+</svg>

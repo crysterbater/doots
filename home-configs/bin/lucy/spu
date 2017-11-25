@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+while IFS= read -r l; do
+	h="$(printf '%s' "$l" | sed -e 's/^[^#]*\( #\)\?/\1/')"
+	c="$(printf '%s' "$l" | sed -e 's/^\([^#]*\).*/\1/')"
+	p="$(printf '%s' "$c" | sed -e 's/^\([^ ]*\) .*/\1/')"
+	IFS=' ' f=($(printf '%s' "$c" | sed -e 's/^[^ ]*\ //'))
+	printf '%s' "$p"
+	printf '%s\n' "${f[@]}" | sort | while IFS= read -r u; do
+		printf ' %s' "$u"
+	done
+	printf '%s\n' "$h"
+done | sed -e 's/  */ /g' -e 's/^ *//'

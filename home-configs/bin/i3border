@@ -1,0 +1,19 @@
+#!/bin/bash
+# Tool for loading i3 borders.
+if [[ $1 == -l ]]
+then
+  if [ $# -eq 2 ]
+  then
+    fullpath="$(readlink -m $2)"
+    if [ ! -f $fullpath ]
+    then
+      echo "File does not exist!"
+    else
+      testingtesting="$(cat $fullpath | grep -n jhjk)"
+      shorttest=${testingtesting:0:1}
+      echo $shorttest
+    fi
+  else
+    echo "Too many files or too little! please supply one .border file"
+  fi
+fi

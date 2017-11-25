@@ -1,0 +1,13 @@
+#! /bin/dash
+
+tmp_dir="$XDG_TMP_DIR"
+file_path=$3
+# number_of_files=$2
+# gid=$1
+[ -z "$file_path" ] && exit 1
+
+after_tmp=${file_path#"$tmp_dir/"}
+top_base=${after_tmp%%/*}
+top_elt="$tmp_dir/$top_base"
+
+ln -s -t "$XDG_DOWNLOAD_DIR" "$top_elt"

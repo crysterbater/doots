@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# print alsa master volume as ascii slider ─────│───── ☐ Ξ      · ‖ •
+# awk, bc needed
+
+(echo ""; stdbuf -oL alsactl monitor) |
+while read
+do
+    debug="nottrue"
+
+    volPercents=$(awk -F"[^0-9]*" '/dB/ { print $3 }' <(amixer sget Master))
+
+    if (( volPercents > 100 )); then
+        volPercents=100
+    fi
+    if (( volPercents < 0 )); then
+        volPercents=0
+    fi
+
+    chars="57"
+
+    fil="."
+    pos="     "
+    pos=" $volPercents " # Enable this to have a display like ─────50─────
+
+    [ "$debug" = true ]  && { echo "$volPercents volPercents" ;}
+
+    faktor=$(echo "scale=2;$chars/100" | bc)
+
+    vol=$(echo "scale=0;($volPercents*$faktor+0.5)/1" | bc -l)
+
+    [ "$debug" = true ]  && { echo "$vol vol" ;}
+
+    postloop=$(echo "$chars-$vol" | bc)
+
+    if (( vol == chars )); then
+        postloop=0
+    fi
+
+    preloop=$(echo "$vol-1" | bc)
+
+    if (( vol == 0 )); then
+        preloop=0
+        postloop=$(echo "$chars-$vol-1" | bc)
+    fi
+
+    [ "$debug" = true ]  && { echo "$preloop preloop" ;}
+    [ "$debug" = true ]  && { echo "$postloop postloop" ;}
+
+    prefix=$(eval printf "${fil}%.0s" {1..$preloop})
+    suffix=$(eval printf "${fil}%.0s" {1..$postloop})
+    printf "${prefix}${pos}${suffix}\n"
+    #printf " $volPercents"
+done

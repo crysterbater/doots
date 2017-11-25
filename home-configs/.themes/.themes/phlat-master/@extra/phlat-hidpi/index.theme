@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=phlat-HiDPI
+Comment=phlat scaled by 2
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=phlat-HiDPI
+MetacityTheme=phlat-HiDPI
+IconTheme=phlat
+CursorTheme=DMZ-White
+CursorSize=48
+NotificationTheme=coco
+BackgroundImage=/usr/share/themes/phlat/@extra/backgrounds/patterns/phlat_Phlat-lines.svg
+ButtonLayout=:minimize,maximize,close

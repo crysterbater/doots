@@ -1,0 +1,48 @@
+#!/bin/bash
+# Updated: Tues May 17 11:04:10 (c) 2015
+# Copyright Free Software Foundation, Inc.
+
+echo "Active Arch .:mirrorlist:." &
+echo "Pactience has not much"
+
+	ping -c3 archlinux.org
+	
+function get_mirrors () #{{{1
+{
+   if [[ -s $MIRRORS ]]; then
+          cat $MIRRORS;
+   else
+          curl -LksS -o - 'https://www.archlinux.org/mirrors/status/json/' | \
+          sed 's,{,\n{,g' | sed -n '/rsync/d; /pct": 1.0/p' | sed 's,^.*"url": "\([^"]\+\)".*,\1,g' > $MIRRORS
+          cat $MIRRORS;
+   fi
+}
+
+function get_core_urls () #{{{1
+{
+   get_mirrors | sed "s,$,core/os/${ARCH}/core.db.tar.gz,g"
+}
+
+function get_gcc_urls () #{{{1
+{
+   get_mirrors | sed "s,$,core/os/${ARCH}/${GCC_URL},g"
+}
+
+trap "exitcode=\$?; (rm -f \$MIRRORS 2>/dev/null;) && exit \$exitcode" 0;
+trap "exit 1" 1 2 13 15;
+
+MIRRORS=`(mktemp -t reflector-mirrorsXXXX) 2>/dev/null` && test -w "$MIRRORS" || MIRRORS=~/reflector.mirrorsXXX
+
+ARCH=`(uname -m) 2>/dev/null` || ARCH=x86_64
+
+GCC_URL=$( curl -LksSH --url ftp://ftp.archlinux.org/core/os/${ARCH}/ 2>/dev/null | sed -n 's/^.*\ \(gcc-[0-9]\+.*.tar.xz.sig\)\ -.*$/\1/gp' );
+
+{
+   get_gcc_urls | xargs -I'{}' -P40 curl -Lks -o /dev/null -m 3 --retry 0 --no-keepalive -w '%{time_total}@%{speed_download}@%{url_effective}\n' --url '{}' |\
+   sort -t@ -k2 -nr | head -n 50 | cut -d'@' -f3 | sed 's,core/os/'"${ARCH}/${GCC_URL}"',$repo/os/$arch,g'
+
+   get_core_urls | xargs -I'{}' -P10 curl -Lks -o /dev/null -m 5 --retry 0 --no-keepalive -w '%{time_total}@%{speed_download}@%{url_effective}\n' --url '{}' |\
+   sort -t@ -k2 -nr | head -n 50 | cut -d'@' -f3 | sed 's,core/os/'"${ARCH}"'/core.db.tar.gz,$repo/os/$arch,g'
+} | sed 's,^,Server = ,g' | awk '{ if (!h[$0]) { print $0; h[$0]=1 } }'
+
+exit $?;

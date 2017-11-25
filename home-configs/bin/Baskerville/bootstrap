@@ -1,0 +1,30 @@
+#! /bin/bash
+
+select task in network user sound
+do
+    printf "%s\n" "$task"
+    case $task in
+        network)
+            # as root
+            SUPPLICONF= /etc/wpa_supplicant/wpa_supplicant.conf
+            printf "%s\n" "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=wheel" > "$SUPPLICONF"
+            read -p "SSID? " SSID
+            read -p "PASS? "  PASS
+            wpa_passphrase "$SSID" "$PASS" >> "$SUPPLICONF"
+            wpa_supplicant -B -D wext -i wlan0 -c "$SUPPLICONF"
+            dhcpcd wlan0
+            pacman -S sudo netcfg wpa_actiond dhclient
+            ;;
+        user)
+            # as root
+            pacman -Syu
+            useradd -m -g users -G audio,lp,optical,storage,video,wheel,games,power,scanner,log -s /bin/bash ice
+            ;;
+        sound)
+            sudo pacman -S alsa-utils
+            alsamixer
+            speaker-test -c 2
+            sudo alsactl store
+            ;;
+    esac
+done

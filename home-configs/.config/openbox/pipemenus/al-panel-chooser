@@ -1,0 +1,327 @@
+#!/usr/bin/env bash
+
+
+
+if [ $# -gt "0" ]; then
+  echo -e "This is the ArchLabs Panel Switcher and Dock Launcher
+  \n\nThis program takes no arguments please just run $0"
+
+  exit 0
+fi
+
+# Written for use in ArchLabs by Josiah Ward
+# Touched up and improved by Nathaniel Maia
+
+
+
+AUTOSTART="$HOME/.config/openbox/autostart"
+TINTPATH="$HOME/.config/tint2"
+LIST="zenity --list --radiolist --width=300 --height=350"
+TITLE="ArchLabs Panel Chooser"
+WINICON="--window-icon=/usr/share/icons/hicolor/256x256/apps/al-hello-logo.png"
+
+
+
+setup () {
+
+    # unsure we're working with clean values while looping
+    unset dock
+    unset choice
+    unset dockArr
+    unset runningDock
+    dockCheck=(plank docky cairo-dock)  #used in finding running docks and installed docks
+
+    # finds our docks and whether they are running or not
+    for name in ${dockCheck[@]}; do
+        if hash $name > /dev/null 2>&1; then
+          dockArr=(${dockArr[@]} $name)
+          if pgrep -x $name > /dev/null 2>&1; then
+            runningDock=(${runningDock[@]} TRUE)  # checkmark running docks
+          else
+            runningDock=(${runningDock[@]} FALSE) # we append false to ensure our count later is correct
+          fi
+        fi
+    done
+
+}
+
+panelswitch() {
+
+    while ! [[ $choice ]]; do   # loop until a choice is made
+
+        # calls setup function to return us current values for docks
+        setup
+
+        # Setup dialog depending on what apps we have installed  (Don't hate me for dumb logic LOL)
+        if hash tint2 polybar; then
+          if [ ${#runningDock[@]} -gt 0 ]; then  # if we have more than 0 docks installed
+            if [[ ${runningDock[@]} = *TRUE* ]]; then  # if we have a dock running checkmark it
+              choice=$($LIST --title="$TITLE" $WINICON --column Select \
+              --text="<big><b>This is the Archlabs Panel chooser</b></big>\n\nWhat would you like to do?" \
+              --column Option FALSE "Enable Polybar" FALSE "Enable Tint2" FALSE "Enable Dock" FALSE "Disable Dock")
+            else
+              choice=$($LIST --title="$TITLE" $WINICON --column Select \
+              --text="<big><b>This is the Archlabs Panel chooser</b></big>\n\nWhat would you like to do?" \
+              --column Option FALSE "Enable Polybar" FALSE "Enable Tint2" FALSE "Enable Dock")
+            fi
+          else
+            choice=$($LIST --title="$TITLE" $WINICON --column Select \
+            --text="<big><b>This is the Archlabs Panel chooser</b></big>\n\nWhat would you like to do?" \
+            --column Option FALSE "Enable Polybar" FALSE "Enable Tint2")
+          fi
+        elif hash polybar > /dev/null 2>&1; then
+          choice=$($LIST --title="$TITLE" $WINICON --column Select \
+          --text="<big><b>This is the Archlabs Panel chooser</b></big>\n\nWhat would you like to do?" \
+          --column Option FALSE "Enable Polybar")
+        elif hash tint2 > /dev/null 2>&1; then
+          choice=$($LIST --title="$TITLE" $WINICON --column Select \
+          --text="<big><b>This is the Archlabs Panel chooser</b></big>\n\nWhat would you like to do?" \
+          --column Option FALSE "Enable Tint2")
+        else
+          choice=$(zenity --info --title="$TITLE" $WINICON --width=220 --height=150 \
+          --text="<big><b>You have no Panels or docks..</b></big>\n\nPlease install a Panel or a dock")
+        fi
+
+
+        if [[ $? == 1 ]]; then  # cancel button pressed
+          exit 0
+        fi
+
+        if ! [[ $choice ]]; then  # ok pressed but no choice
+          sure=$(zenity $WINICON --title="$TITLE" --question --width=220 --height=150 \
+          --ok-label="Yes Please" --cancel-label="No Thanks" \
+          --text="<big><b>Nothing Chosen</b></big>\n\nWant to go back?")
+
+          if ! [[ $? = 1 ]]; then
+            continue
+          else
+            exit 0
+          fi
+        fi
+
+        # do the choice
+        if [[ $choice = "Enable Polybar" ]]; then
+            echo " " > $TINTPATH/tint2-sessionfile  # empty tint2 sessionfile so it WON'T start but we CAN have it in autostart
+
+            if [ -e "$HOME/.config/polybar/scripts/launch-polybar" ]; then
+              if ! grep "launch-polybar" $AUTOSTART > /dev/null 2>&1; then   # make autostart entry in the best spot we can
+                if grep "al-tint2-session" $AUTOSTART > /dev/null 2>&1; then
+                  sed -i '/al-tint2-session/ a sleep 1; $HOME/.config/polybar/scripts/launch-polybar &' $AUTOSTART
+                elif grep "tint2" $AUTOSTART > /dev/null 2>&1; then
+                  sed -i '/nitrogen/ a sleep 1; $HOME/.config/polybar/scripts/launch-polybar &' $AUTOSTART
+                else
+                  sed -i '1s/^/$HOME/.config/polybar/scripts/launch-polybar & \n/' $AUTOSTART
+                fi
+              fi
+            else
+              if ! grep "launch-polybar" $AUTOSTART > /dev/null 2>&1; then   # make autostart entry in the best spot we can
+                if grep "al-tint2-session" $AUTOSTART > /dev/null 2>&1; then
+                  sed -i '/al-tint2-session/ a sleep 1; launch-polybar &' $AUTOSTART
+                elif grep "tint2" $AUTOSTART > /dev/null 2>&1; then
+                  sed -i '/nitrogen/ a sleep 1; launch-polybar &' $AUTOSTART
+                else
+                  sed -i '1s/^/launch-polybar & \n/' $AUTOSTART
+                fi
+              fi
+            fi
+
+
+            if ! grep "launch-polybar" $AUTOSTART > /dev/null 2>&1; then   # make autostart entry in the best spot we can
+              if grep "al-tint2-session" $AUTOSTART > /dev/null 2>&1; then
+                sed -i '/al-tint2-session/ a sleep 1; launch-polybar &' $AUTOSTART
+
+              elif grep "tint2" $AUTOSTART > /dev/null 2>&1; then
+                sed -i '/nitrogen/ a sleep 1; launch-polybar &' $AUTOSTART
+
+              else
+                sed -i '1s/^/launch-polybar & \n/' $AUTOSTART
+
+              fi
+            fi
+
+            tintApps=(tint2 volumeicon)
+            for x in $tintApps; do      # kill tint2 and tray apps
+              pkill $x > /dev/null 2>&1
+            done
+
+            # check if home launch script exists
+            if [ -e "$HOME/.config/polybar/scripts/launch-polybar" ]; then
+              $HOME/.config/polybar/scripts/launch-polybar > /dev/null 2>&1 # launch polybar (tint2 MUST NOT be running) send its output to /dev/null
+            else
+              launch-polybar > /dev/null 2>&1 # launch polybar (tint2 MUST NOT be running) send its output to /dev/null
+            fi
+
+            sure=$(zenity $WINICON --title="$TITLE" --question --width=220 \
+            --height=150 --ok-label="Yes Please" --cancel-label="No Thanks" \
+            --text="<big><b>Polybar Setup Complete</b></big>\n\nWant to do something else?")
+
+            if [[ $? == 1 ]]; then  # cancel button
+              exit 0
+            else
+              unset choice
+              continue  # go back to dock choice
+            fi
+
+
+        elif [[ $choice = "Enable Tint2" ]]; then
+            echo "$TINTPATH/tint2rc" > $TINTPATH/tint2-sessionfile   # no sessionfile means tint2 will Use $TINTPATH/tint2rc
+
+            if ! grep "al-tint2-session" $AUTOSTART > /dev/null 2>&1; then   # make autostart entry in the best spot we can
+              if grep "launch-polybar" $AUTOSTART > /dev/null 2>&1; then
+                sed -i '/launch-polybar/ i al-tint2-session &' $AUTOSTART
+
+              elif grep "nitrogen" $AUTOSTART > /dev/null 2>&1; then
+                sed -i '/nitrogen/ a al-tint2-session &' $AUTOSTART
+
+              else
+                sed -i '1s/^/al-tint2-session & \n/' $AUTOSTART
+
+              fi
+            fi
+
+            polybarApps=(volumeicon polybar)
+            for x in $polybarApps; do      # kill polybar and problematic tray apps that duplicate like volumeicon
+              pkill $x > /dev/null 2>&1
+            done
+
+            nm-applet &
+            volumeicon &
+            al-tint2-session > /dev/null 2>&1  # launch tint2
+
+            sure=$(zenity $WINICON --title="$TITLE" --question --width=220 \
+            --height=150 --ok-label="Yes Please" --cancel-label="No Thanks" \
+            --text="<big><b>Tint2 Setup Complete</b></big>\n\nWant to do something else?")
+
+            if [[ $? == 1 ]]; then  # cancel button
+              exit 0
+            else
+              unset choice
+              continue  # go back to dock choice
+            fi
+
+
+
+
+         # Docks
+        elif [[ $choice = "Enable Dock" ]]; then
+
+            while ! [[ $dock ]]; do   # loop until a dock choice is made
+
+                # calls setup function to return us current values for docks
+                setup
+
+                unset DOCKS
+                for ((d=0; d<${#dockArr[@]}; d++));do
+                  DOCKS="$DOCKS FALSE ${dockArr[d]}"
+                done
+
+                dock=$(zenity --list --checklist --multiple $WINICON --title="$TITLE" \
+                --text="\n<big><b>Please choose a dock to setup</b></big>\n" \
+                --width=300 --height=350 --column="Select" --column="Dock" $DOCKS )
+
+                if [[ $? == 1 ]]; then  # cancel button (loops back to main selection)
+                  dock="nil"
+                  unset choice
+                  continue
+                fi
+
+
+                if ! [[ $dock ]]; then
+                  sure=$(zenity $WINICON --title="$TITLE" --question --width=220 \
+                  --height=150 --ok-label="Yes Please" --cancel-label="No Thanks" \
+                  --text="<big><b>Nothing Selected</b></big>\n\nWant to go back?")
+
+                  if [[ $? == 1 ]]; then  # cancel button
+                    exit 0
+                  else
+                    continue  # go back to dock choice
+                  fi
+
+                else
+
+                  for x in $dock; do  # launch docks
+                    # launch the dock & ensure autostart has an entry
+                    if ! grep "$dock" $AUTOSTART > /dev/null 2>&1; then
+                      echo "sleep 1; $dock &" >> $AUTOSTART
+                    fi
+                    $dock &
+                  done
+
+                  sure=$(zenity $WINICON --title="$TITLE" --question --width=220 \
+                  --height=150 --ok-label="Yes Please" --cancel-label="No Thanks" \
+                  --text="<big><b>Dock Setup Complete</b></big>\n\nWant to do something else?")
+
+                  if [[ $? == 1 ]]; then  # cancel button
+                    exit 0
+                  else
+                    unset choice
+                    continue  # go back to main selection
+                  fi
+
+                fi
+            done
+
+
+
+        elif [[ $choice = "Disable Dock" ]]; then
+
+            while ! [[ $dock ]]; do  # loop until a dock choice is made
+
+                # calls setup function to return us current values for docks
+                setup
+
+                # Create a list zenity can work with, check if they are running and if so checkmark
+                unset DOCKS
+                for ((d=0; d<${#dockArr[@]}; d++));do
+                  DOCKS="$DOCKS${runningDock[d]} ${dockArr[d]} "
+                done
+
+                dock=$(zenity --list --checklist --multiple $WINICON --title="$TITLE" \
+                --text="\n<big><b>Please choose a dock to disable</b></big>\n" \
+                --width=300 --height=350 --column="Select" --column="Dock" $DOCKS )
+
+                if [[ $? == 1 ]]; then  # cancel button
+                  dock="nil"
+                  unset choice
+                  continue
+                fi
+
+
+                if ! [[ $dock ]]; then
+
+                  sure=$(zenity $WINICON --title="$TITLE" --question --width=220 \
+                  --height=150 --ok-label="Yes Please" --cancel-label="No Thanks" \
+                  --text="<big><b>Nothing Selected</b></big>\n\nWant to go back?")
+
+                  if [[ $? == 1 ]]; then # cancel button
+                    exit 0
+                  else
+                    continue   # go back to dock choice
+                  fi
+
+                else   # if a dock was picked for removal then do it
+                  for x in $dock; do
+                    sed -i "/${dock}/d" $AUTOSTART
+                    pkill $dock
+                  done
+
+                  sure=$(zenity $WINICON --title="$TITLE" --question --width=220 \
+                  --height=150 --ok-label="Yes Please" --cancel-label="No Thanks" \
+                  --text="<big><b>Dock Disabled</b></big>\n\nWant to do something else?")
+
+                  if [[ $? == 1 ]]; then  # cancel button
+                    exit 0
+                  else
+                    unset choice
+                    continue  # go back to dock choice
+                  fi
+
+                fi
+            done
+        fi
+    done
+
+}
+
+
+panelswitch

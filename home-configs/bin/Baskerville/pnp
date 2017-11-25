@@ -1,0 +1,106 @@
+#! /bin/dash
+
+MEDIA_DIR=/media
+DVD_LABEL=dvd
+
+verbose_output=0
+
+while getopts "v-:" opt ; do
+    case $opt in
+        v)
+            verbose_output=1
+            ;;
+        -)
+            case $OPTARG in
+                verbose)
+                    verbose_output=1
+                    ;;
+            esac
+            ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
+
+if [ $# -lt 1 ] ; then
+    printf "No arguments given.\n" >&2
+    exit 1
+fi
+
+action=$1
+device=$2
+
+case $action in
+    m|mount)
+        if [ -z "$device" ] ; then
+            device=$(ls -1td /dev/s* | grep '/dev/s\(d[b-z]\|r\)[0-9]\+' | head -n 1)
+            if [ -z "$device" ] ; then
+                printf "No device matched.\n" >&2
+                exit 1
+            fi
+        elif ! [ -e "$device" ] ; then
+            printf "Device not found: '%s'.\n" "$device" >&2
+            exit 1
+        fi
+        mount_point=''
+        mount_options=''
+        case $device in
+            /dev/sr*)
+                mount_point="$MEDIA_DIR/$DVD_LABEL"
+                ;;
+            *)
+                mount_options='-o relatime'
+                device_label=$(sudo blkid -o value -s LABEL $device | tr '[:upper:] ' '[:lower:]_')
+                device_type=$(sudo blkid -o value -s TYPE $device)
+                case $device_type in
+                    vfat|ntfs)
+                        mount_options="$mount_options,flush,utf8,gid=100,umask=002"
+                        ;;
+                esac
+                if [ -n "$device_label" ] ; then
+                    mount_point="$MEDIA_DIR/$device_label"
+                else
+                    mount_point=$(sudo mktemp -ud --tmpdir="$MEDIA_DIR" nonameXXX)
+                fi
+                ;;
+        esac
+        if [ -e "$mount_point" ] ; then
+            printf "Mount point exists: '%s'.\n" "$mount_point" >&2
+            exit 1
+        fi
+        if [ $verbose_output -eq 1 ] ; then
+            printf "Mounting '%s' to '%s'.\n" "$device" "$mount_point"
+        else
+            printf "%s\n" "$mount_point"
+        fi
+        sudo mkdir "$mount_point"
+        sudo mount $mount_options "$device" "$mount_point" || sudo rmdir "$mount_point"
+        ;;
+    u|umount)
+        if [ -z "$device" ] ; then
+            mount_point=$(ls -1td $MEDIA_DIR/* | head -n 1) > /dev/null 2>&1
+        else
+            mount_point="$MEDIA_DIR/$device"
+        fi
+        if [ -n "$mount_point" ] ; then
+            if [ $verbose_output -eq 1 ] ; then
+                printf "Unmounting '%s'.\n" "$mount_point"
+            else
+                printf "%s\n" "$mount_point"
+            fi
+            sudo umount "$mount_point" && sudo rmdir "$mount_point"
+            [ -t 1 ] && printf '\a'
+        fi
+        ;;
+    d|devices)
+        ls --color=auto -1drtc /dev/* 2> /dev/null
+        ;;
+    l|list)
+        cd "$MEDIA_DIR"
+        ls --color=auto -1dtc * 2> /dev/null
+        ;;
+    *)
+        printf "Unknown action: '%s'.\n" $action >&2
+        exit 1
+        ;;
+esac

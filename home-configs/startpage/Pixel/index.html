@@ -1,0 +1,152 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Startpage</title>
+        <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet" />
+    </head>
+
+    <style>
+        body {
+            font-family: 'VT323', monospace;
+            background-color: black;
+            color: #cccccc;
+            font-size: 17px;
+        }
+
+        .box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            border: 10px solid #222F3C;
+            padding: 2px;
+            text-align: center;
+        }
+
+        .sectiontitle {
+            float: left;
+            text-align: right;
+            display: inline-block;
+            width: 80px;
+            font-family: "VT323";
+        }
+
+        .links {
+            text-align: left;
+            margin-left: 80px;
+            padding-left: 10px;
+            margin-right: 80;
+            padding-right: 10px;
+        }
+
+        a {
+            color: #D3EEF5;
+            text-decoration: none
+        }
+
+        a:hover {
+            color: #333333;
+        }
+
+        .search {
+            color: #333333;
+            font-size: 20px;
+            font-family: 'VT323', monospace;
+            border: 0px;
+            border-bottom: 1px solid #93CDD5;
+            outline: gray;
+            background: transparent;
+            text-align: center;
+            display: inline-block;
+            position: fixed;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+        }
+
+        .clock {
+            color: #F2F2F2;
+            font-size: 80px;
+            font-family: 'VT323', monospace;
+            font-weight: 600;
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+            position: fixed;
+            top: 90%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <script>
+        'use strict'
+        window.onload = function() {
+            clock();
+            loadOptions();
+            document.getElementById('clock').addEventListener('click', displayHelpMenu);
+
+            // Broke user options with update (new format for options), this should fix it
+
+            if (JSON.parse(localStorage.getItem('options-version')) == null) {
+            localStorage.removeItem('userOptions');
+            loadOptions();
+            localStorage.setItem('options-version', 1);
+            }
+        }
+
+        var SETTINGS = JSON.parse(localStorage.getItem('userOptions'));
+
+        function clock() {
+            var date = new Date();
+            var h = date.getHours();
+            h = (h > 12) ? (checkTime(h -= 12)) : checkTime(h); // 12hr clock
+
+            var m = checkTime(date.getMinutes());
+            document.getElementById('clock').innerHTML = h + ':' + m;
+            setTimeout(clock, 1000);
+        }
+            function checkTime(n) {
+            n = (n < 10) ? (n = '0' + n) : n;
+            return n;
+        }
+    </script>
+
+    <body>
+        <div class="box">
+            <div class="sectiontitle">One <<</div>
+                <div class="links">
+                    <a href="#">Google+</a> //
+                    <a href="#">Dropbox</a> //
+                    <a href="#">GitHub</a> //
+                    <a href="#">Reddit</a> >>
+                </div>
+
+            <div class="sectiontitle">Two <<</div>
+                <div class="links">
+                    <a href="https://javier.xyz/cohesive-colors/">cohesive.colors</a> //
+                    <a href="https://yeun.github.io/open-color/">open.color</a> //
+                    <a href="http://boards.4chan.org/wg/">wallpapers</a> //
+                    <a href="http://terminal.sexy/">terminal.sexy</a> >>
+                </div>
+
+            <div class="sectiontitle">Three <<</div>
+                <div class="links">
+                    <a href="https://www.reddit.com/r/unixporn/">unixporn</a> //
+                    <a href="https://zivallh.deviantart.com/art/Start-Page-261029460">DeviantArt</a> //
+                    <a href="https://forums.bunsenlabs.org/viewforum.php?id=9">bunsen.forums</a> //
+                    <a href="https://www.tapatalk.com/groups/archlabs/index.php?sid=272b69a1a5eaf5e23a4741904e0b07ec">archlabs.bbs</a> >>
+                </div>
+        </div>
+        <div>
+            <form method="get" action="https://www.google.com/search">
+            <input type="text" name="q" placeholder="" class="search" autocomplete='off' spellcheck='false' autofocus></input>
+            </form>
+        </div>
+        <div class="clock" id='clock' align=center>00:00</div>
+    </body>
+</html>

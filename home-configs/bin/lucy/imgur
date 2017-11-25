@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+client_id=ec60e35f76dc44f
+for file in "$@"; do
+	resp="$(curl --location --progress-bar \
+		https://api.imgur.com/3/upload \
+		--header "Authorization: Client-ID $client_id" \
+		-F "image=@$file" -F type=file)"
+	printf '%s %s\n' \
+		"$(printf '%s' "$resp" | jshon -e data -e link -u)" \
+		"$(printf '%s' "$resp" | jshon -e data -e deletehash -u)"
+done

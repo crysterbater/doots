@@ -1,0 +1,3 @@
+#!/bin/bash
+
+Xephyr :1 -screen 1024x768 -br -reset -terminate  & sleep 1 ; DISPLAY=:0.0 pcmanfm & sleep 1 ; DISPLAY=:1 xmonad

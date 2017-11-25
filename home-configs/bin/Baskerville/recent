@@ -1,0 +1,3 @@
+#! /bin/dash
+
+find "$@" -mindepth 1 -maxdepth 1 -printf '%C@ %p\n' | sort -rn | cut -d ' ' -f 2-

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -e
+
+ua='Mozilla/5.0 (X11; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0'
+dl() {
+	curl --silent -H "User-Agent: $ua" "$@"
+}
+
+set -e
+url="$1"
+p1="$(dl "$url")"
+(
+grep 'episode_no=[0-9]*' <<< "$p1" | sed -e 's/.*href="\([^"]*\)".*/\1/'
+while IFS= read -r line; do
+	dl "$url&page=$line" | grep 'episode_no=[0-9]*' | sed -e 's/.*href="\([^"]*\)".*/\1/'
+done < <(grep 'page=' <<< "$p1" | grep '"/en' | sed -e 's/.*page=\([0-9]*\).*/\1/')
+) | sort -V -r -u |
+while IFS= read -r line; do
+	ep="$(printf '%s' "$line" | sed -e 's/.*episode_no=\([0-9]*\).*/\1/')"
+	page=0
+	while IFS= read -r i; do
+		printf '%s\n' "$i"
+		printf '\tdir=%05d\n' "$ep"
+		printf '\tout=%05d.jpg\n' "$page"
+		printf '\treferer=%s\n' "$line"
+		((page+=1))
+	done < <(dl "$line" | grep 'class="_images"' | sed -e 's/.*data-url="\([^"]*\)".*/\1/') \
+		| aria2c \
+		--deferred-input=true \
+		--enable-http-keep-alive \
+		--enable-http-pipelining\
+		--input-file - \
+		--conditional-get \
+		--user-agent="$ua"            
+done

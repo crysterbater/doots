@@ -1,0 +1,113 @@
+## PKGBUILD
+# https://github.com/sixsixfive/phlat/tree/master/%40extra/PKGS/PKGBUILD
+pkgname=xfce-theme-phlat
+pkgver=2017.05.06.174703
+pkgrel=1
+pkgdesc='Plain and simple dark theme without any specials..'
+arch=('x86_64')
+url='https://github.com/sixsixfive/phlat'
+depends=('sed'
+	'gtk2'
+	'gtk3>=3.20'
+	'gtk-engines'
+	'gtk-engine-murrine')
+makedepends=(git coreutils)
+optdepends=('qt5ct'
+	'qt5-styleplugins'
+	'xcursor-vanilla-dmz'
+	'gtk3-nocsd'
+	'xfwm4'
+	'marco'
+	'icewm'
+	'openbox'
+	'xfce4-notifyd'
+	'xfdashboard'
+	'parole'
+	'plank'
+	'onboard'
+	'audacious'
+	'lightdm-gtk-greeter-settings')
+install="install"
+provides=("${pkgname}=$pkgver")
+#kde gtk config breaks gtks font settings!
+conflicts=("${pkgname}" "kde-gtk-config")
+license=(CCPL:cc-by-sa-4.0)
+source=("${pkgname}.zip::https://github.com/sixsixfive/phlat/archive/master.zip")
+sha256sums=('SKIP')
+ 
+pkgver() {
+	printf "$(date -u +%Y.%m.%d.%H%M%S)"
+}
+ 
+package() {
+	install -d $pkgdir/usr/share/themes/phlat
+	mv phlat-master/* $pkgdir/usr/share/themes/phlat
+	if [ -f "/etc/manjaro-release" ]; then
+		sh $pkgdir/usr/share/themes/phlat/@extra/scripts/changecolor.sh -c "#16A085"
+	else
+		sh $pkgdir/usr/share/themes/phlat/@extra/scripts/changecolor.sh -c "#0088CC"
+	fi
+##other_stuff
+	_tmpdir=$pkgdir
+#icewm theme
+	mkdir -p ${_tmpdir}/usr/share/icewm/themes
+	ln -sf ../../themes/phlat/@extra/icewm/phlat ${_tmpdir}/usr/share/icewm/themes/phlat
+#plank theme
+	mkdir -p ${_tmpdir}/usr/share/plank/themes
+	ln -sf ../../themes/phlat/@extra/plank/phlat ${_tmpdir}/usr/share/plank/themes/phlat
+	ln -sf ../../themes/phlat/@extra/plank/phlat-full ${_tmpdir}/usr/share/plank/themes/phlat-full
+#onboard
+	mkdir -p ${_tmpdir}/usr/share/onboard/themes
+	ln -sf ../../themes/phlat/@extra/onboard/phlat.colors ${_tmpdir}/usr/share/onboard/themes
+	ln -sf ../../themes/phlat/@extra/onboard/phlat.theme ${_tmpdir}/usr/share/onboard/themes
+#qt5ct
+	mkdir -p ${_tmpdir}/usr/share/qt5ct/colors ${_tmpdir}/usr/share/qt5ct/qss
+	ln -sf ../../themes/phlat/@extra/qt5ct/colors/phlat_QGtkStyle.conf ${_tmpdir}/usr/share/qt5ct/colors
+	ln -sf ../../themes/phlat/@extra/qt5ct/qss/phlat_QGtkStyle.qss ${_tmpdir}/usr/share/qt5ct/qss
+#hidpi
+	ln -sf phlat/@extra/phlat-hidpi ${_tmpdir}/usr/share/themes/phlat-HiDPI
+#icon theme
+	mkdir -p ${_tmpdir}/usr/share/icons
+	ln -sf ../themes/phlat/@extra/phlat-icons ${_tmpdir}/usr/share/icons/phlat
+#WinAMP theme(audacious example)
+	mkdir -p ${_tmpdir}/usr/share/audacious/Skins
+	ln -sf ../../themes/phlat/@extra/WinAMP/phlat ${_tmpdir}/usr/share/audacious/Skins/phlat
+#wallpapers
+	mkdir -p ${_tmpdir}/usr/share/backgrounds/phlat_patterns
+	mkdir -p ${_tmpdir}/usr/share/backgrounds/xfce
+	mkdir -p ${_tmpdir}/usr/share/mate-background-properties
+	mkdir -p ${_tmpdir}/usr/share/gnome-background-properties
+	for _f in $(find ${_tmpdir}/usr/share/themes/phlat/@extra/backgrounds/patterns -type f|sed 's\^.*/\\g'); do
+		ln -s ../../themes/phlat/@extra/backgrounds/patterns/$_f ${_tmpdir}/usr/share/backgrounds/phlat_patterns/$_f
+	done
+	for _f in $(find ${_tmpdir}/usr/share/themes/phlat/@extra/backgrounds/patterns -type f|sed 's\^.*/\\g'); do
+		ln -s ../../themes/phlat/@extra/backgrounds/patterns/$_f ${_tmpdir}/usr/share/backgrounds/xfce/$_f
+	done
+	cat <<\EOF > ${_tmpdir}/usr/share/mate-background-properties/phlat_patterns.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wallpapers SYSTEM "mate-wp-list.dtd">
+<wallpapers>
+
+EOF
+	for _f in $(find ${_tmpdir}/usr/share/themes/phlat/@extra/backgrounds/patterns -type f|sed 's\^.*/\\g'); do
+		cat << EOF2 >> ${_tmpdir}/usr/share/mate-background-properties/phlat_patterns.xml
+	<wallpaper deleted="false">
+		<name>$_f</name>
+		<filename>/usr/share/backgrounds/phlat_patterns/$_f</filename>
+		<shade_type>vertical-gradient</shade_type>
+		<pcolor>#343434</pcolor>
+		<scolor>#444444</scolor>
+		<options>wallpaper</options>
+		<artist>sixsixfive</artist>
+	</wallpaper>
+EOF2
+done
+	cat <<\EOF3 >> ${_tmpdir}/usr/share/mate-background-properties/phlat_patterns.xml
+	
+</wallpapers>
+EOF3
+
+	ln -s ../mate-background-properties/phlat_patterns.xml ${_tmpdir}/usr/share/gnome-background-properties/phlat_patterns.xml
+
+	chmod -R 755 ${_tmpdir}
+}

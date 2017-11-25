@@ -1,0 +1,73 @@
+#!/bin/bash
+# My dotfile, config & other stuff backup solution
+export username="$(echo $USER)"
+export HOME=/home/$username
+export repo=$HOME/my-stuff
+mkdir $HOME/my-stuff 2>/dev/null
+# There obviously is a more efficient way to do this part, but idk how, im a noob afterall. This also means only 20 backup files/folders allowed in main repo.
+export l1="$(cat $repo/.files | sed -n '1p')"
+export l2="$(cat $repo/.files | sed -n '2p')"
+export l3="$(cat $repo/.files | sed -n '3p')"
+export l4="$(cat $repo/.files | sed -n '4p')"
+export l5="$(cat $repo/.files | sed -n '5p')"
+export l6="$(cat $repo/.files | sed -n '6p')"
+export l7="$(cat $repo/.files | sed -n '7p')"
+export l8="$(cat $repo/.files | sed -n '8p')"
+export l9="$(cat $repo/.files | sed -n '9p')"
+export l10="$(cat $repo/.files | sed -n '10p')"
+export l11="$(cat $repo/.files | sed -n '11p')"
+export l12="$(cat $repo/.files | sed -n '12p')"
+export l13="$(cat $repo/.files | sed -n '13p')"
+export l14="$(cat $repo/.files | sed -n '14p')"
+export l15="$(cat $repo/.files | sed -n '15p')"
+export l16="$(cat $repo/.files | sed -n '16p')"
+export l17="$(cat $repo/.files | sed -n '17p')"
+export l18="$(cat $repo/.files | sed -n '18p')"
+export l19="$(cat $repo/.files | sed -n '19p')"
+export l20="$(cat $repo/.files | sed -n '20p')"
+
+if [[ $1 == flush ]]
+then
+  echo "Adding files..."
+  export lineno=$(wc -l $repo/.files)
+  cp -r "$l1" $repo/ 2>/dev/null
+  cp -r "$l2" $repo/ 2>/dev/null
+  cp -r "$l3" $repo/ 2>/dev/null
+  cp -r "$l4" $repo/ 2>/dev/null
+  cp -r "$l5" $repo/ 2>/dev/null
+  cp -r "$l6" $repo/ 2>/dev/null
+  cp -r "$l7" $repo/ 2>/dev/null
+  cp -r "$l8" $repo/ 2>/dev/null
+  cp -r "$l9" $repo/ 2>/dev/null
+  cp -r "$l10" $repo/ 2>/dev/null
+  cp -r "$l11" $repo/ 2>/dev/null
+  cp -r "$l12" $repo/ 2>/dev/null
+  cp -r "$l13" $repo/ 2>/dev/null
+  cp -r "$l14" $repo/ 2>/dev/null
+  cp -r "$l15" $repo/ 2>/dev/null
+  cp -r "$l16" $repo/ 2>/dev/null
+  cp -r "$l17" $repo/ 2>/dev/null
+  cp -r "$l18" $repo/ 2>/dev/null
+  cp -r "$l19" $repo/ 2>/dev/null
+  cp -r "$l20" $repo/ 2>/dev/null
+  git --git-dir=$repo/.git --work-tree $repo/ add .
+  echo "Done."
+  echo "Committing to git..."
+  git --git-dir=$repo/.git --work-tree $repo/ commit -m "$RANDOM"
+  echo "Done."
+  echo "Pushing to git. Be ready to enter server login details."
+  git --git-dir=$repo/.git --work-tree $repo/ push -u origin master
+elif [[ $1 == dump ]]
+then
+  export absolutedir="$(readlink -f $2 2>/dev/null)"
+  if cat $repo/.files | grep $absolutedir;
+  then
+  echo "File already logged!"
+  else
+  echo "$absolutedir" >> $repo/.files
+  echo "File added to repo! Now type 'poop flush' to finalize and push to git."
+  fi
+elif [ $# -eq 0 ]
+then
+  echo "Usage: poop [ARG] [PATH(If needed)]"
+fi

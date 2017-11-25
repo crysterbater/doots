@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="thunar" version="1.0">
+  <property name="last-view" type="string" value="ThunarIconView"/>
+  <property name="last-icon-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_NORMAL"/>
+  <property name="last-separator-position" type="int" value="152"/>
+  <property name="last-show-hidden" type="bool" value="true"/>
+  <property name="last-window-width" type="int" value="700"/>
+  <property name="last-window-height" type="int" value="343"/>
+  <property name="last-window-maximized" type="bool" value="false"/>
+  <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_SMALLER"/>
+  <property name="last-details-view-column-widths" type="string" value="50,99,50,50,869,50,50,59,339"/>
+  <property name="last-sort-column" type="string" value="THUNAR_COLUMN_DATE_MODIFIED"/>
+  <property name="last-sort-order" type="string" value="GTK_SORT_DESCENDING"/>
+  <property name="misc-single-click" type="bool" value="false"/>
+  <property name="misc-exec-shell-scripts-by-default" type="bool" value="true"/>
+  <property name="misc-small-toolbar-icons" type="bool" value="true"/>
+  <property name="last-compact-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_SMALLER"/>
+  <property name="last-statusbar-visible" type="bool" value="false"/>
+  <property name="last-location-bar" type="string" value="ThunarLocationButtons"/>
+  <property name="last-menubar-visible" type="bool" value="true"/>
+  <property name="hidden-bookmarks" type="array">
+    <value type="string" value="file:///home/pringle/.cache/blurme"/>
+    <value type="string" value="file:///usr/share/applications"/>
+    <value type="string" value="file:///home/pringle/Dropbox"/>
+    <value type="string" value="file:///home/pringle/Pictures"/>
+    <value type="string" value="file:///home/pringle/Desktop"/>
+    <value type="string" value="file:///home/pringle/Videos"/>
+    <value type="string" value="file:///home/pringle/Music"/>
+    <value type="string" value="file:///home/pringle/.config/termite"/>
+    <value type="string" value="network:///"/>
+    <value type="string" value="file:///"/>
+    <value type="string" value="file:///home/pringle/.config/openbox"/>
+    <value type="string" value="file:///home/pringle/Templates"/>
+    <value type="string" value="file:///home/pringle/.fonts"/>
+    <value type="string" value="file:///home/pringle/.config/polybar"/>
+    <value type="string" value="file:///home/pringle/.config/neofetch"/>
+    <value type="string" value="file:///home/pringle/Documents"/>
+  </property>
+  <property name="last-side-pane" type="string" value="ThunarShortcutsPane"/>
+</channel>

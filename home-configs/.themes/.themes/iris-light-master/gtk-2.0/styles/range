@@ -1,0 +1,14 @@
+style "range"			= "default"
+{
+	xthickness = 0
+	ythickness = 0
+	bg[NORMAL] = @bg_color
+	bg[ACTIVE] = shade (0.96, @bg_color)
+	bg[SELECTED] = @selected_fg_color
+	bg[INSENSITIVE] = shade (0.95, @bg_color)        
+}
+
+class "GtkScale" style "range"
+class "GtkVScale" style "range"
+class "GtkHScale" style "range"
+

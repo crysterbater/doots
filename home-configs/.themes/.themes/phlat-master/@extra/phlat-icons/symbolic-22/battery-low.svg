@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 22 22">
+    <g fill="#f1f2f2">
+        <path d="M5 11v2h6v-2z"/>
+        <path style="line-height:normal;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M5.469 0c-.49 0-.797.228-1.032.469-.235.24-.437.527-.437 1V2H2v14h12V2h-2v-.437a1.577 1.577 0 0 0-.406-1A1.53 1.53 0 0 0 10.437.03V0H5.47zm.53 2h4v2h2v10H4V4h2V3z" color="#f1f2f2" font-weight="400" font-family="Sans" overflow="visible"/>
+    </g>
+</svg>

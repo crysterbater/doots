@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -e
+
+usage() {
+	cat 2>&1 <<-EOF
+	Usage: vgy [file ...]
+	  -h  show help
+	EOF
+}
+
+while :; do
+	case "$1" in
+	-h) usage; exit ;;
+	*) break ;;
+	esac
+done
+
+for file in "$@"; do
+	resp="$(curl --progress-bar https://vgy.me/upload -F "file=@$file")"
+	if [ "$(printf '%s' "$resp" | jshon -e error -u)"  = true ]; then
+		printf 'error from vgy.me: %s\n' \
+			"$(printf '%s' "$resp" | jshon -e message -u)" \
+			1>&2
+		exit 1
+	fi
+	printf '%s %s\n' \
+		"$(printf '%s' "$resp" | jshon -e image -u)" \
+		"$(printf '%s' "$resp" | jshon -e delete -u)"
+done

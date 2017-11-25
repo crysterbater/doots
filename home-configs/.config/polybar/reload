@@ -1,0 +1,26 @@
+#! /usr/bin/env sh
+
+killall -q polybar
+while pgrep -x polybar > /dev/null; do sleep 1; done
+
+xrandr --output eDP1 --auto
+polybar --config=/home/pringle/.config/polybar/polybar/orng/orng-config default &
+
+ &
+
+xrandr --output HDMI2 --auto
+polybar --config=//home/pringle/.config/polybar/polybar/leaftop/leaftop-config vortex &
+
+if (xrandr | grep "DP1 connected" > /dev/null)
+then
+    xrandr --output DP1 --auto --left-of eDP1
+    polybar --config=/home/pringle/.config/polybar/polybar/orng/orng-config default
+ &
+else
+    xrandr --output DP1 --off
+
+    if (xrandr | grep "HDMI2 connecteD" > /dev/null)
+    then
+        xrandr --output HDMI2 --auto --right-of HDMI2
+    polybar --config=//home/pringle/.config/polybar/polybar/leaftop/leaftop-config vortex
+fi

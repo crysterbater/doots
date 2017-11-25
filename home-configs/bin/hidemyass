@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+#      Author:  https://github.com/mohabaks
+# Description: A script to enable anomity of cli apps e.g wget, curl, nmap etc
+# Dependencies: tor, torscocks
+
+
+# A function to check for tor and other tools
+# for anomity
+anomity_tools(){
+        check_tor=$(pgrep "tor")
+        echo "[*] Checking for tor service .."
+        sleep 1
+        if [[ -n check_tor ]];then
+                echo "[+] DONE: Tor service running"
+        else
+                echo '[-] ERROR: Tor service not running'
+                exit 1
+        fi
+}
+
+# A function to activate anomity from cli appps
+# such as wget, curl etc.
+cli_anomity(){
+        check_connection=$(ping -c 1 -W 1 8.8.8.8 2> /dev/null)
+        echo "[*] Checking network connectivity ..."
+        if [[ "$check_connection" ]];then
+                echo "[+] DONE: your connected"
+                echo "[*] Getting your current public IP address ... "
+                echo -n "[+] DONE: "
+                curl ipinfo.io/ip
+                echo "[*] Initializing torsocks ..."
+                sleep 1
+                source /usr/bin/torsocks on &> /dev/null
+                echo "[+] DONE: torsocks initialized"
+                echo -n "[*] Current public IP address: "
+                curl ipinfo.io/ip
+        else
+                echo "[-] ERROR: not internet connection. Internet is required to test your anomity online. "
+                exit 1
+        fi
+}
+
+anomity_tools
+cli_anomity

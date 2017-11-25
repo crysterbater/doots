@@ -1,0 +1,39 @@
+#!/usr/bin/bash
+# Author: https://github.com/mohabaks
+# Description: A simple script to remove insane pacman errors e.g file exist
+#              during an upgrade of package installation.
+
+usage(){
+cat << EOF
+Usage: ${0##/*} <error_file>
+EOF
+}
+
+if [[ $# -eq 0 ]] || [[ $# -gt 1 ]];then
+        usage
+        exit 1
+else
+        if [[ -s $1 ]];then
+                #notify-send "Removing all the insane files"
+                while IFS= read -r line; do
+                        rm -vrf "$line"
+                done < "$1"
+                #notify-send "Files successfully deleted!!"
+                echo -n "Perform a system upgrade [y]es or [n]o ? "
+                read cont
+                case $cont in 
+                        y|Y)
+                                sudo pacman -Syu
+                                ;;
+                        n|N)
+                                exit 0
+                                ;;
+                          *)
+                                break
+                esac
+
+        else
+                echo "[-] Error: Go away Moron no such file $1"
+                exit 1
+        fi
+fi

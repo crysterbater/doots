@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 22 22">
+    <g color="#000" font-weight="400" font-family="Sans">
+        <path style="line-height:normal;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M3 3v2h1.906C4.851 5 5 5.171 5 5.094v.937H4C2.284 6.031.962 7.141.937 8.5c-.012.68.32 1.353.875 1.812.556.46 1.31.72 2.188.72h3V5.093C7 3.923 6.103 3 4.906 3zm1 5.031h1v1H4c-.52 0-.78-.145-.906-.25-.127-.104-.158-.178-.157-.25.003-.144.093-.5 1.063-.5zM8 2v9.031h3c.938 0 1.782-.382 2.312-.969.53-.586.76-1.332.75-2.062a3.073 3.073 0 0 0-.812-2.031A3.04 3.04 0 0 0 11 5h-1V2zm2 5h1c.422 0 .62.135.781.313.162.177.278.442.281.718.004.276-.098.52-.25.688-.151.168-.353.312-.812.312h-1z" overflow="visible" fill="#f1f2f2"/>
+        <path style="line-height:normal;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M3 11.281l-.344.375-2 2a.5.5 0 1 0 .688.688L3 12.688l1.656 1.656.344.375.344-.375L7 12.688l1.656 1.656.344.375.344-.375L11 12.688l1.656 1.656.344.375.344-.375 2-2a.5.5 0 1 0-.688-.688L13 13.312l-1.656-1.656-.344-.375-.344.375L9 13.312l-1.656-1.656L7 11.281l-.344.375L5 13.312l-1.656-1.656z" overflow="visible" fill="#c00"/>
+    </g>
+</svg>

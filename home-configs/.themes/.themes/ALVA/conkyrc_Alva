@@ -1,0 +1,68 @@
+background no
+update_interval 1
+update_run_times 0
+total_run_times 0
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 1024
+imlib_cache_size 0
+
+own_window yes
+own_window_class Conky
+own_window_type desktop
+own_window_transparent yes
+own_window_argb_visual no
+own_window_argb_value 0
+own_window_colour 000000
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+out_to_console no
+stippled_borders 2
+border_margin 1
+border_width 2
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 120 500
+maximum_width 205
+
+alignment middle_right
+gap_x 20
+gap_y 0
+
+use_xft yes
+override_utf8_locale yes
+xftfont Decker:size=8
+xftalpha 1
+uppercase no
+use_spacer none
+
+default_color  FFFFF0
+
+show_units yes
+pad_percents 2
+temperature_unit celcius
+
+lua_load ~/.conky/ALVA/scripts/lua/rings_text-bg.lua
+lua_draw_hook_pre conky_main_rings
+lua_draw_hook_post draw_text
+
+TEXT
+${lua conky_draw_bg 5 2 2 116 135 0x333344 1} #Background Main 1
+${lua conky_draw_bg 5 2 145 116 160 0x333344 1} #Background Main 2
+${lua conky_draw_bg 5 6 275 45 25 0x558888 1} #Background Core-1
+${lua conky_draw_bg 5 69 275 45 25 0x998899 1} #Background Core-2
+${lua conky_draw_bg 5 2 312 116 180 0x333344 1} #Background Main 3
+${lua conky_draw_bg 5 6 430 109 25 0x558888 1} #Background Signal
+${lua conky_draw_bg 5 6 462 109 25 0x998899 1} #Background Speed Download
+${voffset -50}
+##====================== Regards, Etles_Team ===========================##

@@ -1,0 +1,8 @@
+#! /bin/dash
+
+# gphoto2 --get-all-files 2> /dev/null
+
+DEST="$HOME/art/raw/$(date +%Y%m%d)"
+[ -d "$DEST" ] || mkdir "$DEST"
+cp -v $(find /media -iregex '.*\.\(jpg\|raf\)') "$DEST"
+chmod 644 "$DEST"/*.*

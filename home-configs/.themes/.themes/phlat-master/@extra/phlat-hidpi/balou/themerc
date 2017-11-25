@@ -1,0 +1,10 @@
+[Info]
+Name=Phlat-HiDPI
+Description=Simple Balou splash theme.
+
+[Splash Screen]
+bgcolor=#555454
+fgcolor=#f2f1f1
+logo=logo
+
+

@@ -1,0 +1,14 @@
+called=$_
+[[ $called != $0 ]] && echo "Loaded:  $called"
+
+
+wikipedia_log_file=$LOG_PATH/$called.log
+touch $wikipedia_log_file
+
+Wikipedia_Search_handler() {
+	Q="$( cat $wikipedia_log_file | rofi -dmenu -p "$1: ")"
+	if [[ $Q ]]; then
+		google-chrome wikipedia.org/wiki/$(echo "$Q"| sed 's/ /%20/g');
+		echo $Q >> $wikipedia_log_file
+	fi
+}

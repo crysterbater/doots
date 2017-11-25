@@ -1,0 +1,3 @@
+#! /bin/sh
+
+xrandr --output "$(lsd | head -n 1)" --primary

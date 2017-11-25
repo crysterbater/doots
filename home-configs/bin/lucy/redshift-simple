@@ -1,0 +1,19 @@
+#!/bin/sh
+# redshift slider
+set -e
+
+f="${XDG_CONFIG_HOME:-$HOME/.config}/rs"
+n=3500
+
+if [ -f "$f" ]; then
+	n="$(cat "$f")"
+fi
+
+case "$1" in
+-) n="$((n-50))";;
++) n="$((n+50))";;
+esac
+
+echo "$n" > "$f"
+redshift -O "$n" >/dev/null
+printf '%s' "$n"

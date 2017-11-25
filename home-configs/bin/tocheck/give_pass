@@ -1,0 +1,46 @@
+#! /bin/sh
+
+FILE="${1:?Need File}"
+FILE_GPG="$PASSWD/$FILE.gpg"
+WORD=${2:?Need keyword}
+
+function check_dir_permission()
+{
+   local perm=$(stat -c %a $PASSWD)
+   if [[ ! -d $PASSWD ]]; then
+      echo "Directory pass not exist"
+      exit 1
+   fi
+   if [[ $perm > 700 ]]; then
+      echo "WARM file unsecure, permission must be set to 700"
+   fi
+}
+
+function if_file_exist() 
+{
+   local result=$FILE
+   if [[ ! -f "$PASSWD/$FILE.gpg" ]]; then
+      echo "file : < $result> not exist"
+      exit 1
+   fi
+}
+
+# Follow the exemple in password directory for it work
+# password must be at 3rd place :)
+function extract_pass()
+{
+   local snipe=$(gpg2 --no-tty -qd $FILE_GPG |\
+       awk "/$WORD/{getline;getline;print}" |\
+       awk '!($0 in a){a[$0];print}' |\
+       awk '{print $2}')
+   echo $snipe
+}
+
+function give_pass()
+{
+   check_dir_permission
+   if_file_exist
+   extract_pass
+}
+
+trap "give_pass" EXIT

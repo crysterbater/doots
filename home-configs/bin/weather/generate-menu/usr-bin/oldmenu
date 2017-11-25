@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# drop out on error
+set -e
+
+## Declaring some variables
+config="$HOME/.config/openbox"
+menubase="$config/menu-static.xml"
+
+
+## Revert to Backup menu
+
+if [ -f "$menubase" ]
+    then
+        cp $HOME/.config/openbox/menu-static.xml $HOME/.config/openbox/menu.xml
+        openbox --reconfigure
+        notify-send 'Success!' 'Reverted to menu before switching.'
+    else
+        notify-send 'Ooops!' 'It seems a backup was never made or is missing.'
+fi

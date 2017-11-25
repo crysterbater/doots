@@ -1,0 +1,9 @@
+style "xfcenotifyd"{
+XfceNotifyWindow::summary-bold=1
+XfceNotifyWindow::border-color=shade(0.4, @bg_color)
+XfceNotifyWindow::border-color-hover=shade(0.4, @bg_color)
+XfceNotifyWindow::border-radius=0.0
+XfceNotifyWindow::border-width=1
+XfceNotifyWindow::border-width-hover=1
+bg[NORMAL]=shade(0.6, @bg_color)}
+class "XfceNotifyWindow" style "xfcenotifyd"

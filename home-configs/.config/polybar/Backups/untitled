@@ -1,0 +1,167 @@
+[module/powermenu]
+type = custom/menu
+format-spacing = 1
+format-background = ${colors.b-alt}
+label-open = "   "
+label-open-foreground = ${colors.foreground}
+label-open-background = ${colors.b-alt}
+label-close = "    "
+label-close-foreground = ${colors.urgent}
+label-separator = "  "
+label-separator-foreground = ${colors.background}
+# Top level
+menu-0-0 = "  "
+menu-0-0-exec = menu-open-1
+menu-0-1 = "  "
+menu-0-1-exec = menu-open-2
+menu-0-2 = "  "
+menu-0-2-exec = menu-open-3
+# 1
+menu-1-0 = "  "
+menu-1-0-exec = exo-open --launch WebBrowser
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch TerminalEmulator
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch FileManager
+menu-1-3 = "  "
+menu-1-3-exec = geany &
+# 2
+menu-2-0 = "  "
+menu-2-0-exec = audacious &
+menu-2-1 = "  "
+menu-2-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-2-2 = "  "
+menu-2-2-exec = xfce4-settings-manager &
+menu-2-3 = "  "
+menu-2-3-exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+# 3
+menu-3-0 = "   "
+menu-3-0-exec = slimlock
+menu-3-1 = "   "
+menu-3-1-exec = openbox --exit
+menu-3-2 = "   "
+menu-3-2-exec = systemctl reboot
+menu-3-3 = "   "
+menu-3-3-exec = systemctl poweroff
+
+[module/powermenu]
+type = custom/menu
+
+; Available tags:
+;   <label-toggle> (default) - gets replaced with <label-(open|close)>
+;   <menu> (default)
+;format = <label-toggle> <menu>
+format-background = #F1F2F6
+format-padding = 3
+
+label-open = Tiling
+label-close =x
+label-open-font = 1
+label-separator = |
+
+
+
+; "menu-LEVEL-N" has the same properties as "label-NAME" with
+; the additional "exec" property
+;
+; Available exec commands:
+;   menu_open-LEVEL
+;   menu_close
+; Other commands will be executed using "/usr/bin/env sh -c $COMMAND"
+
+menu-0-0 = Reload
+menu-0-0-foreground = #fff
+menu-0-0-exec = /home/pringle/bin/reload
+menu-0-1 = Grid
+menu-0-1-foreground = #fff
+menu-0-1-exec = /home/pringle/bin/ob-tile.sh -G
+menu-0-2 = Horiz
+menu-0-2-foreground = #fff
+menu-0-2-exec = /home/pringle/bin/ob-tile.sh -H
+menu-0-3 = Vert
+menu-0-3-foreground = #fff
+menu-0-3-exec = /home/pringle/bin/ob-tile.sh -V
+
+menu-1-0 = Cancel
+menu-1-0-foreground = #fff
+menu-1-0-exec = menu_open-0
+menu-1-1 =  
+menu-1-1-foreground = #fff
+menu-1-1-exec = /home/pringle/bin/ob-tile.sh -H
+menu-1-2 = 
+menu-1-2-foreground = #fff
+menu-1-2-exec = /home/pringle/bin/ob-tile.sh -G
+menu-1-3 =  
+menu-1-3-foreground = #fff
+menu-1-3-exec = /home/pringle/bin/ob-tile.sh -V
+menu-1-4-foreground = #fff
+menu-1-4-exec = menu_open-0
+
+
+menu-2-0 =  
+menu-2-0-foreground = #fff
+menu-2-0-exec = /home/pringle/bin/ob-tile.sh -V
+menu-2-1 = Cancel
+menu-2-1-foreground = #fff
+menu-2-1-exec = menu_open-0
+
+
+
+[module/menu-apps]
+type = custom/menu
+
+label-open =  
+label-close = 
+label-separator = |
+label-seperator-color = #FF4081
+label-forground-color = #547FFF
+format-padding = 3
+
+menu-0-0 = Xterm
+menu-0-0-foreground = #38BF8F
+menu-0-0-exec = xterm
+menu-0-1 = UI
+menu-0-1-foreground = #387DBF
+menu-0-1-exec = menu-open-1
+menu-0-2 = Apps
+menu-0-2-foreground = #387DBF
+menu-0-2-exec = menu-open-2
+
+menu-1-0 = Cancel
+menu-1-0-foreground = #EC5F67
+menu-1-0-exec = menu-open-0
+menu-1-1 = Gcolor2
+menu-1-1-foreground = #35AAE9
+menu-1-1-exec = gcolor2
+menu-1-2 = LXappearance
+menu-1-2-foreground = #35AAE9
+menu-1-2-exec = lxappearance
+menu-1-3 = GTKetc
+menu-1-3-foreground = #35AAE9
+menu-1-3-exec = wpgtk
+
+menu-2-0 = Terminal
+menu-2-0-foreground = #35E9B6
+menu-2-0-exec = xfce4-terminal
+menu-2-1 = Browser
+menu-2=1-foreground = #35E9B6
+menu-2-1-exec = vivaldi-snapshot
+menu-2-2= Kodi
+menu-2-2-foreground = #35E9B6
+menu-2-2-exec = kodi
+menu-2-3 = Cancel
+menu-2-3-foreground = #EC5F67
+
+[modules/xmenu]
+type = custom/xmenu
+
+label-open =  ...
+label-close = x
+
+menu-0 = item 1;command
+menu-0-0 = sub-item 1.1;command
+menu-0-1 = sub-item 1.2;command
+menu-0-2 = sub-item 1.3;command
+menu-1 = item 2;command
+menu-1-0 = sub-item 2.1;command
+menu-1-1 = sub-item 2.2;command

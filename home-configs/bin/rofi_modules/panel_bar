@@ -1,0 +1,136 @@
+#!/bin/sh
+
+source $(dirname $0)/panel_colors
+source $(dirname $0)/panel_config
+
+num_mon=$(bspc query -M | wc -l)
+PAD=" "
+SEP=""
+APPS="%{A:rofi -modi \"Drun,window\" -show Drun:}${PAD}${ICON_APPS}${PAD}%{A}"
+POWER="%{A:~/bin/rofi/power_menu.sh:}${PAD}${ICON_POWER}${PAD}%{A}"
+
+while read -r line ; do
+    case $line in
+        LAUNCHER*)
+            # Rofi launcher output
+            launcher="%{A:rofi -modi \"Drun,window\" -show Drun:}${PAD}${line#????????}${PAD}%{A}"
+        ;;
+        W*)
+            # Bspwm's state
+            wm=""
+            IFS=':'
+            set -- ${line#?}
+            while [ $# -gt 0 ]; do
+                item=$1
+                name=${item#?}
+                case $item in
+                    [mM]*)
+                        [ $num_mon -lt 2 ] && shift && continue
+                        case $item in
+                            m*)
+                                # Monitor
+                                FG="#$COLOR_MONITOR_FG"
+                                BG="#$COLOR_MONITOR_BG"
+                            ;;
+                            M*)
+                                # Focused monitor
+                                FG="#$COLOR_FOCUSED_MONITOR_FG"
+                                BG="#$COLOR_FOCUSED_MONITOR_BG"
+                            ;;
+                        esac
+                        icon="${name/eDP1/$ICON_LAPTOP}"
+                        wm="${wm}%{F${FG}}%{B${BG}}%{A:bspc monitor -f ${name}:} ${icon} %{A}%{B-}%{F-}"
+                    ;;
+                    [fFoOuU]*)
+                        case $item in
+                            f*)
+                                # Free desktop
+                                FG="#$COLOR_FREE_FG"
+                                BG="#$COLOR_FREE_BG"
+                            ;;
+                            F*)
+                                # Focused free desktop
+                                FG="#$COLOR_FOCUSED_FREE_FG"
+                                BG="#$COLOR_FOCUSED_FREE_BG"
+                            ;;
+                            o*)
+                                # Occupied desktop
+                                FG="#$COLOR_OCCUPIED_FG"
+                                BG="#$COLOR_OCCUPIED_BG"
+                            ;;
+                            O*)
+                                # Focused occupied desktop
+                                FG="#$COLOR_FOCUSED_OCCUPIED_FG"
+                                BG="#$COLOR_FOCUSED_OCCUPIED_BG"
+                            ;;
+                            u*)
+                                # Urgent desktop
+                                FG="#$COLOR_URGENT_FG"
+                                BG="#$COLOR_URGENT_BG"
+                            ;;
+                            U*)
+                                # Focused urgent desktop
+                                FG="#$COLOR_FOCUSED_URGENT_FG"
+                                BG="#$COLOR_FOCUSED_URGENT_BG"
+                            ;;
+                        esac
+                        wm="${wm}%{F${FG}}%{B${BG}}%{A:bspc desktop -f ${name}:} ${name} %{A}%{B-}%{F-}"
+                    ;;
+                    G*) # Default [LTG]*
+                        # Layout, state and flags
+                        if [[ $name ]]; then
+                            wm="${wm}${SEP}$ICON_FLAG ${name}"
+                        fi
+                    ;;
+                esac
+                shift
+            done
+            wm="${PAD}${wm}${PAD}"
+        ;;
+        TITLE*)
+            # Xtitle output
+            if [[ ${line#?????} ]]; then
+                title="${PAD}%{A:bspc desktop -l next:}$ICON_MODE%{A} ${line#?????}${PAD}"
+            else
+                title=""
+            fi
+        ;;
+        POWER*)
+            # Power menu output
+            power="%{A:${HOME}/bin/rofi/power_menu.sh:}${PAD}${line#?????}${PAD}%{A}"
+        ;;
+        TIME*)
+            # Clock output
+            clock="${PAD}${line#????}${PAD}"
+        ;;
+        DATE*)
+            # Date output
+            date="${PAD}${line#????}${PAD}"
+        ;;
+        BAT*)
+            # Battery output
+            battery="${PAD}${line#???}${PAD}"
+        ;;
+        VOL*)
+            # Volume output
+            volume="${PAD}${line#???}${PAD}"
+        ;;
+        DISPLAY*)
+            # Display brightness output
+            display="%{A:pkill -USR1 redshift:}${PAD}${line#???????}${PAD}%{A}"
+        ;;
+        LINK*)
+            # Link output
+            link="%{A:nmcli_dmenu:}${PAD}${line#????}${PAD}%{A}"
+        ;;
+        UPDATES*)
+            # Updates count output
+            count=$(echo ${line#???????}|cut -d' ' -f2)
+            updates=""
+            if [[ $count != "0" ]]; then
+                updates="${PAD}${line#???????}${PAD}"
+            fi
+        ;;
+    esac
+    printf "%s\n" "%{l}${PAD}${launcher}${wm}${title}%{r}${updates}${SEP}${link}${SEP}${display}${SEP}${volume}${SEP}${battery}${SEP}${date}${SEP}${clock}${power}${PAD}"
+done

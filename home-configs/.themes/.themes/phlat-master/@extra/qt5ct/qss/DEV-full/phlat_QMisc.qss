@@ -1,0 +1,50 @@
+QDial{
+background:palette(highlight);}
+QStatusBar,
+QStatusBar::item,
+QSizeGrip,
+.QTabWidget::pane {
+border-color:transparent;
+background-color:transparent;}
+
+.QMdiSubWindow{
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+margin:4px;
+border:1px solid rgba(0,0,0,0.6);
+background:palette(window);}
+.QMdiSubWindow::title {}
+/*
+.*::right-arrow {
+width: 16px;
+height: 16px;
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-right_normal.svg");}
+.*::left-arrow {
+width: 16px;
+height: 16px;
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-left_normal.svg");}
+.*::up-arrow {
+width: 16px;
+height: 16px;
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-up_normal.svg");}
+.*::down-arrow {
+width: 16px;
+height: 16px;
+background-position: center; 
+background-repeat: no-repeat;
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-down_normal.svg");}
+.*::right-arrow {
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-right_insensitive.svg");}
+.*::left-arrow:disabled {
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-left_insensitive.svg");}
+.*::up-arrow:disabled {
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-up_insensitive.svg");}
+.*::down-arrow:disabled {
+background-image: url("/usr/share/themes/phlat/images/gtk-2.0/arrow-down_insensitive.svg");}
+*/

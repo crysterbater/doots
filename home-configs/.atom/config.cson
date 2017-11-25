@@ -1,0 +1,13 @@
+"*":
+  core:
+    telemetryConsent: "no"
+    themes: [
+      "one-dark-ui"
+      "red-panda-syntax"
+    ]
+  editor:
+    fontSize: 16
+  "exception-reporting":
+    userId: "ad0ae7ae-5628-4ed6-8f60-43564f0e65b1"
+  welcome:
+    showOnStartup: false

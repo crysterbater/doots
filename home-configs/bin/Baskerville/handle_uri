@@ -1,0 +1,32 @@
+#! /bin/dash
+
+if [ $# -gt 0 ] ; then
+    uri=$1
+    scheme=${1%%:*}
+else
+    uri=$DWB_URI
+    scheme=$DWB_SCHEME
+fi
+
+case $scheme in
+    mailto)
+        fork termite -e "mutt '$uri'"
+        ;;
+    ftp)
+        case "$uri" in
+            */)
+                fork termite -e "lftp '$uri'"
+                ;;
+            *)
+                fork termite -e "wget -P '$XDG_DOWNLOAD_DIR' '$uri'"
+                ;;
+        esac
+        ;;
+    magnet)
+        diana_add "$uri"
+        ;;
+    *)
+        echo "don't know how to handle '$uri'" >&2
+        exit 1
+        ;;
+esac

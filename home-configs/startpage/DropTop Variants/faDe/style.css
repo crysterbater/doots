@@ -1,0 +1,147 @@
+@font-face {
+    font-family: fonty;
+    src: url(GT-Pressura-Mono-Regular.ttf);
+}
+body{
+    font-family: fonty;
+	background: #1B2126;
+	margin: 0;
+}
+p{
+	line-height: 60px;
+	text-align: center;
+	color: #ffffff;
+	font-weight: 500;
+	font-size: 2.4vh;
+}
+a{
+	text-decoration: none;
+	color: #ffffff;
+	font-size: 1.8vh;
+}
+a:hover::before {
+    content: '< ';
+}
+
+a:hover::after {
+content: ' >';
+}
+.container{
+	position: absolute;
+	border: 0;
+	height: 65%;
+	width: 55%;
+	margin-left: 22.5%;
+	margin-right: 22.5%;
+	top: 18%;
+	display: flex;
+	background: url('fishy.gif');
+	background-size: cover;
+}
+.button-1, .button-2, .button-3, .button-4, .button-5{
+	width: 20%;
+	height: 18%;
+    transition-property: height;
+    transition-duration: .6s;
+    transition-delay: 0s;
+	transition-timing-function: ease-in-out;
+	overflow: hidden;
+}
+.button-1{
+	background: #838ED9;
+	opacity: .9;
+}
+.button-2{
+	background: #ED93CB  ;
+	opacity: .9;
+}
+.button-3{
+	background: #A6E4E7;
+	opacity: .9;
+}
+.button-4{
+	background: #FFECDA;
+	opacity: .9;
+}
+.button-5{
+	background: #FFA8B8;
+	opacity: .9;
+}
+
+.menu-1, .menu-2, .menu-3, .menu-4, .menu-5{
+	position: relative;
+	visibility: hidden;
+	opacity: 0;
+    transition: .3s;
+	text-align: center;
+}
+.button-1:hover, .button-2:hover, .button-3:hover, .button-4:hover, .button-5:hover{
+	height: 100%;
+}
+.button-1:hover p{
+	text-decoration: underline;
+}
+.button-2:hover p{
+	text-decoration: underline;
+}
+.button-3:hover p{
+	text-decoration: underline;
+}
+.button-4:hover p{
+	text-decoration: underline;
+}
+.button-5:hover p{
+	text-decoration: underline;
+}
+
+.button-1:hover .menu-1{
+	visibility: visible;
+	opacity: 1;
+}
+.button-2:hover .menu-2{
+	visibility: visible;
+	opacity: 1;
+}
+.button-3:hover .menu-3{
+	visibility: visible;
+	opacity: 1;
+}
+.button-4:hover .menu-4{
+	visibility: visible;
+	opacity: 1;
+}
+.button-5:hover .menu-5{
+	visibility: visible;
+	opacity: 1;
+}
+
+
+
+/*=====Search Bar=====*/
+.search{
+    position:absolute;
+	margin: 0;
+	width: 55%;
+	height: auto;
+    top:10%;
+	margin-left: 22.5%;
+	margin-right: 22.5%;
+}
+input {
+    width: 100%;
+	text-align: center;
+    font-size: 18px;
+	color: white;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+	background: #181C24;
+	transition: .2s;
+	border: none;
+    font-family: fonty;
+}
+input:focus{
+    outline-width: 0;
+	box-shadow: 0px 0px 1px #FFA8B8;
+    font-size: 20px;
+}

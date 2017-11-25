@@ -1,0 +1,15 @@
+source "${HOME}/.cache/wal/colors.sh"
+
+echo "
+rofi.color-enabled: true
+rofi.color-window: $color0, $color2, $color10
+rofi.color-normal: $color0, $color7, $color0, $color10, $color0
+rofi.color-active: $color0, $color7, $color0, $color10, $color0
+rofi.color-urgent: $color0, $color9, $color0, $color9, $color7
+rofi.font: SauceCodePro Nerd Font 12
+rofi.fullscreen: false
+rofi.sidebar-mode: false
+rofi.columns: 1
+rofi.bw: 3
+rofi.matching: normal
+rofi.width: 40 "

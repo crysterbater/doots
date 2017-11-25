@@ -1,0 +1,102 @@
+#!/bin/env bash
+
+source /home/pringle/bin/bars/bar
+FIFO=/tmp/panel-fifo
+
+
+#-- PANEL METHODS --#
+CLOCK() {
+	while :; do
+		TIME=$(date '+%a %d %b, %H:%M')
+		echo "C$TIME"
+		sleep 60
+	done
+}
+
+BATTERY() {
+	while :; do
+		PERCENTAGE=$(cat /sys/class/power_supply/BAT0/capacity)
+		STATUS=$(cat /sys/class/power_supply/BAT0/status)
+
+		if [[ $STATUS == "Charging" ]] || [[ $STATUS == "Unknown" ]] || [[ $STATUS = "Full" ]]; then ICON=''
+		elif [[ $PERCENTAGE -le 10 ]]; then ICON=''
+	        elif [[ $PERCENTAGE -le 25 ]]; then ICON=''
+	        elif [[ $PERCENTAGE -le 50 ]]; then ICON=''
+	        elif [[ $PERCENTAGE -le 75 ]]; then ICON=''
+	        elif [[ $PERCENTAGE -le 90 ]]; then ICON=''
+		else ICON=''
+		fi
+	GEOMETRY=$VGA1_LEMONBAR_GEOMETRY
+
+		echo "B$ICON $PERCENTAGE%"
+		sleep 60
+	done
+}
+
+VOLUME() {
+	while :; do
+		STATUS=$(amixer get Master | egrep 'Playback.*?\[o' | egrep -o '\[o.+\]' | uniq)
+		PERCENTAGE=$(amixer get Master | sed -n 's/^.*\[\([0-9]\+\)%.*$/\1/p' | uniq)
+
+		if [[ $STATUS == "[off]" ]]; then ICON=''
+		elif [[ $PERCENTAGE -eq 0 ]]; then ICON=''
+		elif [[ $STATUS == "[on]" ]]; then ICON=''
+		else ICON=''
+		fi
+
+		echo "V$ICON $PERCENTAGE"
+		sleep 1
+	done
+}
+
+NETWORK() {
+	while :; do
+		SSID=$(nmcli -t -f NAME connection show --active)
+		if [[ -z $SSID  ]]
+			then echo "N NO CONNECTION"
+		else
+			echo "N $SSID"
+		fi
+		sleep 30
+	done
+}
+
+MUSIC() {
+#	mpc current | sed -e 's/\<m4a\>//g' | sed -e 's/\.//g' | sed -e 's/\<mp3\>//g'
+	while :; do
+		if [[ $(playerctl status) == "Playing" ]]; then
+			SPOTIFY_ARTIST=$(playerctl metadata artist)
+			SPOTIFY_SONG=$(playerctl metadata title)
+
+			echo "M $SPOTIFY_ARTIST - $SPOTIFY_SONG"
+			sleep 1
+		else
+			echo ""
+			sleep 120
+		fi
+	done
+}
+
+#...
+rm "$FIFO"
+
+mkfifo "$FIFO"
+
+bspc subscribe > "$FIFO" &
+
+CLOCK > "$FIFO" &
+BATTERY > "$FIFO" &
+VOLUME > "$FIFO" &
+NETWORK > "$FIFO" &
+MUSIC > "$FIFO" &
+
+GREPVGA=$(xrandr | grep VGA | awk ' { print $2  } ')
+
+if [[ $GREPVGA == "connected" ]]
+then
+	GEOMETRY=$VGA1_LEMONBAR_GEOMETRY
+else
+	GEOMETRY=$LVDS1_LEMONBAR_GEOMETRY
+fi
+
+cat "$FIFO" | panel_bar | lemonbar -f $ICONFONT -f $PANELFONT -g $GEOMETRY -u 3 -F $FOREGROUND -B $BACKGROUND | bash

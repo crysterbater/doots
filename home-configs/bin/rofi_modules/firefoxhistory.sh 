@@ -1,0 +1,7 @@
+#!/bin/sh
+ 
+if [ -z $1 ]; then
+  sqlite3 ~/.mozilla/firefox/${profile}/places.sqlite 'SELECT url from moz_places order by frecency desc' | grep -vE "google.com/search|google.com/url|duckduckgo"
+else
+  i3-msg "exec firejail firefox --new-tab \"$*\"" > /dev/null
+fi

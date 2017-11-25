@@ -1,0 +1,66 @@
+UnityDecoration {
+-UnityDecoration-extents: 22px 0 0 0;
+-UnityDecoration-input-extents: 10px;
+-UnityDecoration-shadow-offset-x: 0px;
+-UnityDecoration-shadow-offset-y: 2px;
+-UnityDecoration-active-shadow-color: rgba (0, 0, 0, 0.68);
+-UnityDecoration-active-shadow-radius: 10px;
+-UnityDecoration-inactive-shadow-color: rgba (0, 0, 0, 0.34);
+-UnityDecoration-inactive-shadow-radius: 5px;
+-UnityDecoration-glow-size: 0px;
+-UnityDecoration-glow-color: transparent;
+-UnityDecoration-title-indent: 10px;
+-UnityDecoration-title-fade: 0px;
+-UnityDecoration-title-alignment: 0.5;}
+
+UnityDecoration .top,
+UnityDecoration .top:backdrop {
+border:1px solid @border_color;
+padding: 1px 6px 0 6px;
+background-color: @base_color;
+background-image:none;
+text-shadow:none;
+color: @fg_color;}
+
+UnityDecoration .top:backdrop{
+color: @inactive_fg_color;}
+
+UnityDecoration .left,
+UnityDecoration .right,
+UnityDecoration .left:backdrop,
+UnityDecoration .right:backdrop{
+border:1px solid @border_color;}
+
+UnityDecoration .bottom,
+UnityDecoration .bottom:backdrop {
+padding:5px;
+background-color: @base_color;
+border:1px solid @border_color;}
+
+.unity-panel.menubar,
+.unity-panel .menubar {
+padding-left:5px;
+padding-right:5px;}
+
+.unity-panel.menubar.menuitem:hover,
+.unity-panel.menubar .menuitem *:hover,
+.unity-panel.menubar:hover,
+.unity-panel .menubar:hover {
+color:@selected_bg_color;
+background-color:shade(@bg_color,0.5);}
+
+@keyframes playbackmenuitem_spinner {
+to {-gtk-icon-transform: rotate(1turn); }}
+.menu IdoPlaybackMenuItem.menuitem:active {
+-gtk-icon-source: -gtk-icontheme("process-working-symbolic");
+animation: playbackmenuitem_spinner 1s infinite linear;
+color: @selected_bg_color;}
+
+SheetStyleDialog.unity-force-quit, sheet-style-dialog.unity-force-quit {
+background-color: @bg_color;}
+
+.unity-csd,
+.unity-csd:backdrop {
+box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.6);
+border-top:none;
+border:1px solid @border_color;}

@@ -1,0 +1,16 @@
+called=$_
+[[ $called != $0 ]] && echo "Loaded:  $called"
+
+Google_Search_log=$LOG_PATH/$called.log
+touch $Google_Search_log
+
+Google_Search_handler() {
+	Q="$( cat $Google_Search_log | rofi -dmenu -p "$1: ")"
+	if [[ $Q ]]; then
+		QUERY=$(echo "$Q" | sed 's/ /%20/g
+		                         s/#/%23/g
+		                         s/&/%26/g')
+		google-chrome https://www.google.no/search?q="$QUERY"
+		echo $Q >> $Google_Search_log
+	fi
+}

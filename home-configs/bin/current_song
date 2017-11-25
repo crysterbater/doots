@@ -1,0 +1,10 @@
+#!/bin/bash
+
+title="`mpc --format \"[%title%]\" | head -n 1`"
+
+if [ 30 -lt ${#title} ];then
+      echo "$title"
+else
+      new="`head -c 20 $title`"
+      echo "$new"
+fi

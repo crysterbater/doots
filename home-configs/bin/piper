@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Simple script to redirect url's opened from termimal.
+# set this file as your terminal emulators URL handler/Browser
+#you tube and other video URL's will open in mpv, image links .png,jpg etc. will open in feh
+#everything else will open in firefox
+#author : Veekicks #archlinix-offtopic
+# A function containing a case list of options 
+open() {
+    case "$1" in
+        *youtube.com*|*dailymotion.com*|*vidto.me*|*nowvideo.eu*|*gorillavid.in*|*uktvplay.uktv.co.uk*|*youtu.be*|*vidzi.tv*|*vodlocker.com*|*.webm*|*.mp4*|*.avi|*.gif)  mpv "$1";;
+        *.png|*.jpeg|*.jpg) feh -. "$1";;  # feh -. = opens to fit window.
+        *) firefox "$1";  # For everything else.;
+    esac
+}
+
+# Now a for loop to iterate the list of options, 
+for url; do
+    open "$url" || notify-send -h string:bgcolor:#000000 -h string:fgcolor:#d8ff44 -i ~/.icons/archpacman.png " WTF!!   Muh broken links.."
+done

@@ -1,0 +1,340 @@
+#!/bin/bash
+#
+# Transcode video script for ChromeCast 2 compatibily
+# Output -> MKV, X264 high 4.2, AAC 320k
+#
+# Using only ffmpeg!
+#
+
+# Options
+# ----------------------------------------------------------------------------
+
+# x264 options
+X264_OPTIONS_HIGH="-profile:v high -level 4.2 -preset slow"
+X264_OPTIONS_MID="-profile:v high -level 4.2 -preset medium"
+X264_OPTIONS_LOW="-profile:v high -level 4.2 -preset faster"
+
+# Por defecto medio
+X264_OPTIONS="$X264_OPTIONS_MID"
+
+# AAC options
+AUDRATE=320k
+
+# Transcoded file suffix
+SUFIX="[gcast]"
+
+# COLORS
+# ----------------------------------------------------------------------------
+# Internal field separator -> "for" statement = new lines
+IFS=$'\n'
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+MAG='\033[0;35m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+HOWCALLED=`basename $0`
+
+# Usage
+# ----------------------------------------------------------------------------
+function usage() {
+	echo
+	echo -e "${CYAN}Transcode video for ChromeCast v2 compatibility${NC}"
+	echo "  - Container: MKV."
+	echo "  - Video: X264 4.2"
+	echo "  - Audio: AAC or MP3."
+	echo
+	echo "Single file (interactive):"
+	echo "  $HOWCALLED [-p] <input video> [output video] [title]"
+	echo "              -p high  -- high x264 profile"
+	echo "              -p mid   -- mid x264 profile (default)"
+	echo "              -p low   -- low x264 profile"
+	echo 
+	echo "Multiple files (automatic):"
+	echo "  $HOWCALLED -b <files>"
+	echo 
+}
+
+# Separator
+# ----------------------------------------------------------------------------
+function sep() {
+	echo -e "${BLUE}------------------------------------------------------------------------------${NC}"
+}
+
+# Comandline options for single file
+# ----------------------------------------------------------------------------
+function opts() {
+	if [ -z "$DEST" ]; then
+		DEST=$SOUR
+	fi
+	FILE=$(basename "$DEST")
+	FILE="${FILE%.*}"
+	DEST=""$FILE" "$SUFIX".mkv"
+	if [ -z "$TITLE" ]; then
+		TITLE="$FILE"
+	fi
+
+	sep
+	echo -e "${CYAN}Checking filename ...${NC}"
+	echo -e "* Input video: ${GREEN}$SOUR${NC}"
+	echo -e "* Output video: ${GREEN}$DEST${NC}"
+	echo -e "* Metadata title: ${GREEN}$TITLE${NC}"
+
+	return 0
+}
+
+# Checks necessary utilities and ffmpeg options
+# ----------------------------------------------------------------------------
+function chk_ffmpeg() {
+	sep
+	echo -e "${CYAN}Checking ffmpeg ...${NC}"
+
+	# test if `ffmpeg` is available
+	FFMPEG=`which avconv || which ffmpeg`
+	if [ -z $FFMPEG ]; then
+		echo -e '${RED}ERROR: ffmpeg is not available, please install it!${NC}'
+		unset IFS
+		exit 1
+	fi
+
+	echo "* `ffmpeg -hide_banner -version | grep "ffmpeg version"`"
+
+	# test ffmpeg options
+	echo -n "* Check MKV container format ... "
+	if [ `ffmpeg -hide_banner -formats | grep -c "E matroska"` -gt 0 ]; then
+		echo -e "${GREEN} OK${NC}"
+	else
+		echo -e "${RED}FAIL!${NC}"
+		echo '  ERROR: ffmpeg without matroska format!'
+		unset IFS
+		exit 1
+	fi
+
+	echo -n "* Check x264 the free H.264 Video Encoder ..."
+	if [ `ffmpeg -hide_banner -codecs | grep -c "libx264"` -gt 0 ]; then
+		echo -e "${GREEN} OK${NC}"
+	else
+		echo -e "${RED}FAIL!${NC}"
+		echo '  ERROR: ffmpeg without H264 codec!'
+		unset IFS
+		exit 1
+	fi
+
+	echo -n "* Check AAC Audio Encoder ..."
+	if [ `ffmpeg -hide_banner -codecs | grep -c "libfdk_aac"` -gt 0 ]; then
+		A_CODEC="libfdk_aac"
+		echo -e "${GREEN} OK${NC}"
+	else
+		echo -e "${RED}FAIL!${NC}"
+		echo -e "${YELLOW}  WARNING: ffmpeg without libfdk. Using AAC native enconder!${NC}"
+		A_CODEC="aac"
+	fi
+
+	echo -e "* ffmpeg is ${GREEN}OK${NC}"
+}
+
+# Get video info 
+# arg1 > 0 -> print infortmation
+# ----------------------------------------------------------------------------
+function get_info() {
+	[ -n "$1" ] && sep
+	[ -n "$1" ] && echo -e "${CYAN}Source processing. Parsing source streams ...${NC}"
+
+	# Put streams in array off lines (trim leading spaces)
+	V_INFO=""
+	for STR in $(ffmpeg -hide_banner -i "$SOUR" 2>&1 | sed 's/^ *//g')
+	do
+		STREAM=$(echo "$STR" | grep Stream)
+		if [[ -n "$STREAM" ]] && [[ -n "$1" ]]; then 
+			echo "* $STREAM" 
+		fi
+		V_INFO="${V_INFO}\n${STR}"
+	done
+
+	# Error in file
+	if [ $(echo -e ${V_INFO} | grep -c "Invalid data found") -gt 0 ]; then
+		echo -e "${RED}ERROR: File $SOUR is NOT A VALID VIDEO FILE!${NC}"
+		return 1
+	fi
+	if [ $(echo -e ${V_INFO} | grep -c "No such file") -gt 0 ]; then
+		echo -e "${RED}ERROR: File $SOUR is NOT A VALID FILE!${NC}"
+		return 1
+	fi
+
+	# Video
+	if [ $(echo -e ${V_INFO} | grep Video: | grep -c h264) -gt 0 ]; then
+		VIDEO="-c:v copy"
+		[ -n "$1" ] && (echo -e "${GREEN}VIDEO:${NC} Already in H264. No transcoding needed.")
+	else
+		VIDEO="-c:v libx264 $X264_OPTIONS"
+		[ -n "$1" ] && (echo -e "${GREEN}VIDEO:${NC} Transcoding activated to x264.")
+	fi
+
+	# Audio
+	N_AUD_STR=`echo -e ${V_INFO} | grep -c Audio:`
+	N_AUD_OK=`echo -e ${V_INFO} | grep Audio: | grep -c -E "aac|mp3"`
+	AUDIO=""
+	if [ $N_AUD_STR -eq $N_AUD_OK ] ; then
+		AUDIO="-c:a copy"
+		[ -n "$1" ] && (echo -e "${GREEN}AUDIO:${NC} Already in compatible format. No transcoding.")
+	elif [[ $N_AUD_STR -eq 1 ]] || [[ -z "$1" ]] ; then
+		[ -n "$1" ] && (echo -e "${GREEN}AUDIO:${NC} Transcoding activated to AAC.")
+		AUDIO="-c:a $A_CODEC -b:a $AUDRATE"
+	else
+		echo -e "${GREEN}AUDIO:${NC} Multiple streams detected. Please choose what to do ... "
+		echo -e "  ${YELLOW}Options: [t] transcode (default), [c] copy, [i] ignore.${NC} "
+		i=0
+		for AUD_OPT in $(echo -e ${V_INFO} | grep Audio:)
+		do
+			echo "  $AUD_OPT"
+			echo -ne "${YELLOW}  -> Choose [t,c,i] : ${NC}"
+			read -s -n 1 OPT
+			case $OPT in
+				c) echo -ne "${GREEN}Copying ...${NC}"; AUDIO="$AUDIO -c:a:$i copy";;
+				i) echo -ne "${GREEN}Ignoring (not in output file) ..."${NC}; AUDIO="$AUDIO -map -0:a:$i";;
+				*) echo -ne "${GREEN}Transcoding to aac ..."${NC}; AUDIO="$AUDIO -c:a:$i $A_CODEC -b:a:$i $AUDRATE";;
+			esac
+			let i=i+1
+			echo 
+		done
+		AUDIO=$(echo "$AUDIO" | sed 's/^ *//g')
+	fi
+
+	# Subtitles
+	if [ $(echo -e ${V_INFO} | grep -c Subtitle:) -gt 0 ]; then
+		SUBTITLE="-c:s copy"
+		[ -n "$1" ] && (echo -e "${GREEN}SUBTITLE:${NC} Found, adding all!")
+	else
+		SUBTITLE="-sn"
+		[ -n "$1" ] && (echo -e "${GREEN}SUBTITLE:${NC} No subtitles found. :(")
+	fi
+
+	return 0
+}
+
+# And finaly, do job
+# arg1 > 0 -> print information
+# ----------------------------------------------------------------------------
+function transcode() {
+	[ -n "$1" ] && sep
+
+	# Sure?
+	if [[ "$VIDEO" == "-c:v copy" ]] && [[ "$AUDIO" == "-c:a copy" ]]; then
+		echo -e "${YELLOW}Source codecs are in supported formats. Nothing to do!${NC}"
+		return 1
+	fi
+
+	[ -n "$1" ] && (echo -e "${CYAN}Starting transcoding ...${NC}")
+
+	CMDLINE="ffmpeg -loglevel error -stats -hide_banner -i \"$SOUR\" -map 0 $VIDEO $AUDIO $SUBTITLE -metadata title=\"$TITLE\" \"$DEST\""
+
+	[ -n "$1" ] && (echo -e "* ${GREEN}CMD:${NC} $CMDLINE")
+	[ -n "$1" ] && (echo -e "* ${GREEN}$(echo -e ${V_INFO} | grep Duration:)${NC}")
+	[ -n "$1" ] && (echo -e "${YELLOW}Options: [q] quit, [+] more info, [-] less info, [?] help.${NC}")
+
+	eval $CMDLINE
+}
+
+# And the reward is?
+# ----------------------------------------------------------------------------
+function reward() {
+	sep
+
+	if [ $? -eq 0 ] ; then
+		echo -e "${CYAN}Transcoding process succesfull!${NC}"
+		echo -e "${GREEN}Output streams :${NC}"
+		for STR in $(ffmpeg -hide_banner -i "$DEST" 2>&1 | sed 's/^ *//g')
+		do
+			STREAM=$(echo "$STR" | grep Stream)
+			if [ -n "$STREAM" ]; then 
+				echo "* $STREAM" 
+			fi
+		done
+	else
+		echo -e "${RED}Transcofing process FAILED! :(${NC}"
+		return 1
+	fi
+
+	return 0
+}
+
+
+# MAIN
+# ----------------------------------------------------------------------------
+
+# check number of arguments
+if [[ $# -lt 1 ]]; then
+	usage
+	unset IFS
+	exit 1
+fi
+
+echo -e "${MAG}Transcoding video for ChromeCast v2 compatibility...${NC}"
+
+# check ffmpeg
+chk_ffmpeg
+
+# Multiple archives
+if [ "$1" == "-b" ]; then
+	sep
+	let N_FILE=$#-1
+	i=0
+	ok=0
+	echo -e "${CYAN}Transcoding ${N_FILE} files...${NC}"
+	for file in "$@" ; do
+		if [ "$file" == "-b" ]; then 
+			continue
+		fi
+		let i=i+1
+		SOUR=$file
+		DEST=$SOUR
+		FILE=$(basename "$DEST")
+		FILE="${FILE%.*}"
+		DEST=""$FILE" "$SUFIX".mkv"
+		TITLE="$FILE"
+		get_info
+		[ $? -eq 1 ] && continue
+		echo -e "* ${YELLOW}File $i of ${N_FILE} - \"$SOUR\"${NC}"
+		echo -e "* ${GREEN}$(echo -e ${V_INFO} | grep Duration:)${NC}"
+		transcode
+		[ $? -eq 1 ] && continue
+		let ok=ok+1
+	done
+	sep
+	echo -e "${CYAN}Bach transcode completed. $ok of $i files processed sucessfull!.${NC}"
+# Single archive
+else
+	if [ "$1" == "-p" ]; then
+		 if [[ $# -lt 3 ]]; then
+			usage
+			unset IFS
+			exit 1
+		fi
+		[ "$2" == "high" ] && X264_OPTIONS="$X264_OPTIONS_HIGH"
+		[ "$2" == "mid" ] && X264_OPTIONS="$X264_OPTIONS_MID"
+		[ "$2" == "low" ] && X264_OPTIONS="$X264_OPTIONS_LOW"
+		SOUR=$3
+		DEST=$4
+		TITLE=$5
+	else
+		SOUR=$1
+		DEST=$2
+		TITLE=$3
+	fi
+
+	# Parse options
+	opts
+	# Get file info
+	get_info 1
+	# Transcode
+	[ $? -eq 0 ] && transcode 1
+	# Result
+	[ $? -eq 0 ] && reward
+fi
+
+exit $?
+unset IFS

@@ -1,0 +1,76 @@
+#!/usr/bin/python 
+#Filename: change_tint2_color.py
+
+import Image
+import colorsys
+import re
+import os
+
+def read_config_file():
+
+	'''Read the nitrogen's config file(bg-saved.cfg)'''
+
+	f = file(r'bg-saved.cfg','rb')
+	content = f.read()
+	f.close()
+	return content
+
+def get_filename():
+
+	'''get the image's name'''
+
+	content = read_config_file()
+	#filename = re.findall('/home/kaleo/images/wallpapers/shared/[A-Za-z0-9]+.jpg',content)
+	filename = re.findall('[A-Za-z0-9]+.jpg',content)
+	return filename
+
+
+def get_image(image):
+	'''get the thumbnail of this image'''
+
+	image.thumbnail((200,200))
+	box = (150,0,200,15)
+	image_temp = image.crop(box)
+	return image_temp
+
+def get_dominant_color(image_temp):
+
+	'''get the dominant color of the image'''
+
+	image_temp = image_temp.convert('RGBA')
+	max_score = None
+	dominant_color = None
+	for count,(r,g,b,a)in image_temp.getcolors(image_temp.size[0]*image_temp.size[1]):
+		if a == 0:
+			continue
+		saturation = colorsys.rgb_to_hsv(r / 255.0,g / 255.0, b / 255.0)[1]
+		y = min(abs(r * 2104 + g * 4130 + b * 802 + 4096 + 131072) >> 13, 235)
+		y = (y - 16.0) / (235 - 16)
+		if y > 0.9:
+			continue
+		score = (saturation + 0.1) * count
+		if score > max_score:
+			max_score = score
+	dominant_color = (r,g,b)
+	return dominant_color
+
+def write_cfg(cfg):
+
+	'''write config file into the tint2rc'''
+
+	os.chdir('/home/kaleo/.config/tint2/')
+	data = open('tint2rc' + cfg)
+	output = open('tint2rc','w')
+	output.writelines(data)
+	output.close()
+	
+
+os.chdir('/home/kaleo/.config/nitrogen/')
+filename = get_filename()
+os.chdir('/home/kaleo/images/wallpapers/shared/')
+color =  get_dominant_color(get_image(Image.open(filename[0])))
+if color[0] > 85 and color[1] > 85 and color[2] > 85:
+	print 'light'
+	write_cfg('light')
+else :
+write_cfg('dark')

@@ -1,0 +1,4 @@
+#!/bin/bash
+ 
+# My default archlinux packages
+pacman -S autoconf arandr automake bison cava-gui compton conky ecryptfs-utils engrampa epdfview exfat-utils extra-cmake-modules fatsort feh ffmpegthumbnailer filemanager-actions firefox-beta-bin firewalld flex galculator-gtk gcolor2 gettext inkscape gsimplecal htop hydra inetutils iputils john leafclip libunrar licenses lightdm-gtk-greeter-settings linux-lts logrotate lxappearance-obconf  lxtask macchanger man-db man-pages masscan metasploit mirage mpd nano network-manager-applet ncmpcpp nmap numlockx obmenu3 pacmatic pacli pcmciautils pkg-config polybar proxychains-ng reaver retroarch rfkill rofi rsync simplescreenrecorder sqlmap sublime-text-dev thunar-extended thunar-dropbox tor transmission-gtk ttf-symbola tuxguitar usbutils vlc wget which whois winff wipe xf86-input-synaptics xf86-video-intel xfce4-terminal xorg-server 

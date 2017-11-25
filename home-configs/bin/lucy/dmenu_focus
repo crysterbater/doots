@@ -1,0 +1,4 @@
+#!/bin/sh
+id="$(wmctrl -l | sed -e 's/^\(\w\+\)\s\+\w\+\s\+\w\+\s\+\(.*\)$/\1 \2/' |
+	dmenu "$@" | sed -e 's/^\(\w\+\)\s.*/\1/')"
+if [ -n "$id" ]; then exec wmctrl -i -a "$id"; fi

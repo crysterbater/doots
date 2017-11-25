@@ -1,0 +1,19 @@
+cabal: Entering directory '/tmp/cabal-tmp-20591/hashable-1.2.6.1'
+Configuring hashable-1.2.6.1...
+Building hashable-1.2.6.1...
+Preprocessing library hashable-1.2.6.1...
+[1 of 4] Compiling Data.Hashable.Class ( Data/Hashable/Class.hs, dist/dist-sandbox-94c3599e/build/Data/Hashable/Class.o )
+[2 of 4] Compiling Data.Hashable.Generic ( Data/Hashable/Generic.hs, dist/dist-sandbox-94c3599e/build/Data/Hashable/Generic.o )
+
+Data/Hashable/Generic.hs:21:1: warning: [-Wunused-imports]
+    The import of ‘Data.Bits’ is redundant
+      except perhaps to import instances from ‘Data.Bits’
+    To import instances alone, use: import Data.Bits()
+[3 of 4] Compiling Data.Hashable.Lifted ( Data/Hashable/Lifted.hs, dist/dist-sandbox-94c3599e/build/Data/Hashable/Lifted.o )
+[4 of 4] Compiling Data.Hashable    ( Data/Hashable.hs, dist/dist-sandbox-94c3599e/build/Data/Hashable.o )
+Creating package registration file:
+/tmp/pkgConf-hashable-1.2.611006613131433925857.1
+Installing library in
+/home/metamist/dev/haskell/workspacer/.cabal-sandbox/lib/x86_64-linux-ghc-8.0.1/hashable-1.2.6.1-BHgMzNLtZEwLfpgEKJWmwh
+Registering hashable-1.2.6.1...
+cabal: Leaving directory '/tmp/cabal-tmp-20591/hashable-1.2.6.1'

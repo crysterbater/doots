@@ -1,0 +1,1 @@
+for f in *.flac , *.m4a , *.ogg ; do ffmpeg -i "$f" -ab 320k "${f%}.mp3"; done

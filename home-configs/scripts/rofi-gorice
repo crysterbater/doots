@@ -1,0 +1,2 @@
+#!/bin/bash
+rofi -no-config -modi run,drun,window -show drun -eh 1 -width 50 -padding 30  -color-enabled -color-window "#1b2126, #f3f4ab, #1b2126" -color-normal "#2b303b, #8fa1b3, #2b303b, #8fa1b3, #2b303b" -sidebar-mode -font "Ubuntu Light 11"

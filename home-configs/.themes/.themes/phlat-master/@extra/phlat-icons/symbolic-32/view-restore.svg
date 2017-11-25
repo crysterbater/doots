@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32">
+    <g color="#000">
+        <path style="line-height:normal;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M10.829.024a1 1 0 0 0-.781 1v4a1 1 0 0 0 1 1h4a1 1 0 1 0 0-2h-3v-3a1 1 0 0 0-1.219-1z" font-weight="400" font-family="Sans" overflow="visible" fill="#f1f2f2"/>
+        <path style="line-height:normal;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M14.923.024a1 1 0 0 0-.594.282l-4 4a1.016 1.016 0 1 0 1.438 1.437l4-4a1 1 0 0 0-.844-1.719z" font-weight="400" font-family="Sans" overflow="visible" fill="#f1f2f2"/>
+        <path d="M10.048 5.024h1v1h-1z" style="marker:none" overflow="visible" fill="#bdbdbd"/>
+        <path style="line-height:normal;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M.954 6.024a1 1 0 0 0-.906 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-8a1 1 0 0 0-.094 0zm1.094 2h6v6h-6z" font-weight="400" font-family="Sans" overflow="visible" fill="#f1f2f2"/>
+        <path style="line-height:normal;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" d="M.954 8.024a1.001 1.001 0 1 0 .094 2h8a1 1 0 1 0 0-2h-8a1 1 0 0 0-.094 0z" font-weight="400" font-family="Sans" overflow="visible" fill="#f1f2f2" fill-rule="evenodd"/>
+        <path d="M15.048 5.024h1v1h-1zm-5-5h1v1h-1zm-1 15h1v1h-1zm-9 0h1v1h-1z" style="marker:none" overflow="visible" fill="#f1f2f2"/>
+    </g>
+</svg>

@@ -1,0 +1,2 @@
+#!/bin/bash
+nitrogen /home/kaleo/images/wallpapers/ && python change_tint2_color.py && tint2restart &

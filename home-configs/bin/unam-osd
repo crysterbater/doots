@@ -1,0 +1,10 @@
+#!/bin/bash
+
+pid="$(cat $HOME/.config/unam/osd/running)"
+
+if [[ $pid == "" ]]; then
+ tint2 -c $HOME/.config/tint2/OSD.tint2rc & echo $! > $HOME/.config/unam/osd/running
+else
+ kill $pid
+ truncate -s 0 $HOME/.config/unam/osd/running
+fi

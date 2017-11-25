@@ -1,0 +1,6 @@
+#! /bin/dash
+
+tmp_dir="$(mktemp -d)"
+munpack -C "$tmp_dir"
+find "$tmp_dir" -iname "*.pps" -exec ppsei {} +
+sxiv -bftdr "$tmp_dir"

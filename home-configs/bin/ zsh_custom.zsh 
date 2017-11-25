@@ -1,0 +1,22 @@
+# Color Diff
+if [[ -x `which colordiff` ]]; then
+  alias diff='colordiff -u'
+else
+  alias diff='diff -u'
+fi
+export LESS='-R'
+
+# Memo
+memo() {
+    vim $(date +%y%m%d)_$1.md
+}
+
+ndir() { mkdir $1; cd $1 }
+
+# Abbreviation
+alias c='cd ..'
+alias g11='g++ --std=c++11'
+
+# Special commands for Windows
+alias ipython='winpty ipython'
+alias tmux='tmux 2> /dev/null & tmux -S /tmp/tmux-197610/default'

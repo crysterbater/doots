@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+ 
+ 
+AUTOSTART="$HOME/.config/openbox/autostart"
+CONF_PATH="$HOME/.config"
+ 
+DIALOG="zenity --info"
+QUESTION="zenity --question"
+WINICON="--window-icon=/usr/share/icons/hicolor/256x256/apps/al-hello-logo.png"
+OK="--ok-label=Ok"
+CANCEL="--cancel-label=Cancel"
+TITLE="ArchLabs Package Installer"
+ 
+packageList=(atom geany mousepad gimp inkscape krita thunar pcmanfm ranger
+             firefox terminator xfce4-terminal rxvt-unicode termite)
+packageDefault=(FALSE TRUE FALSE FALSE FALSE FALSE TRUE
+                FALSE FALSE FALSE FALSE FALSE FALSE TRUE)
+# ensure the array is cleared
+unset LISTPKG
+for ((p=0; p<${#packageList[@]}; p++)); do
+  LISTPKG="$LISTPKG ${packageDefault[p]} ${packageList[p]}"   # Create proper array structure for zenity
+done
+ 
+while ! [[ $DONE ]]; do
+  # Run the selection list
+  echo $LISTPKG
+  DONE=$(zenity $WINICON --list --title="$TITLE" \
+      --text="<big>Choose Packages to be Installed</big>" \
+      --checklist --width=550 --height=600 --multiple \
+      --column="Select" --column="Available" $LISTPKG \
+      --separator=" " \
+      $OK $CANCEL \
+      )
+ 
+  if [[ $? == 1 ]]; then # cancel button
+    exit 0
+  fi
+ 
+  echo $LISTPKG
+  if ! [[ $DONE ]];then  # No packages chosen
+    MSG="No Packages Chosen. \n\nFinish up and exit?"
+    $QUESTION --title="Package Installer" --width=250 --height=100 --text="$MSG" $OK $CANCEL
+    if [[ $? = 1 ]];then
+      continue
+    else
+      exit 0
+    fi
+  else
+    # loop through returned choices, add to array
+    i=0
+    OIFS=$IFS   # save Internal Field Separator
+    IFS=":"     # separator is ":" in returned choices
+    for pkg in $DONE; do
+      retPackage[$i]="$pkg"
+      i=$(($i+1))
+    done
+    IFS=$OIFS   # reset IFS back to default
+ 
+    for pkg in ${retPackage[*]};do   # loop through checkmarked packages
+      gksu "sudo pacman -S $pkg --noconfirm" | zenity --progress --pulsate --width=250 --height=100
+    done
+  fi
+done
+ 
+ 
+exit 0

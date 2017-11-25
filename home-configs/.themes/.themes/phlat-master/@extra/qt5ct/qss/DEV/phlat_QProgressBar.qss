@@ -1,0 +1,9 @@
+QProgressBar {
+color:transparent;
+border: 1px solid rgba(0,0,0,0.6);
+background:palette(base);}
+QProgressBar::chunk {
+color:transparent;
+margin:-1px;
+background:palette(highlight);
+border: 1px solid rgba(0,0,0,0.8);}

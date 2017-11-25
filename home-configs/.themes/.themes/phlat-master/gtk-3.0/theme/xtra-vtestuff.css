@@ -1,0 +1,4 @@
+vte-terminal,
+vte-terminal:backdrop{
+background:@base_color;
+color:@text_color;}

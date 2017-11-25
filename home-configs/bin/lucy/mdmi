@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+from bs4 import BeautifulSoup
+from configparser import ConfigParser
+from urllib.parse import urljoin
+from urllib.parse import urlparse
+from urllib.parse import ParseResult
+import appdirs
+import argparse
+import requests
+
+def config():
+    f = appdirs.user_config_dir("mdmi", "luz", "config")
+    p = ConfigParser()
+    p.read(f)
+    return p
+
+def args(d):
+    username = d['login']['username'];
+    password = d['login']['password'];
+    p = argparse.ArgumentParser(prog='mdmi',
+        description='print aria2c download list for sitename url')
+    p.add_argument('-u', '--username', required=not bool(username), help='username')
+    p.add_argument('-p', '--password', required=not bool(password), help='password')
+    p.add_argument('-r', '--recurse', action='store_true', help='recurse subdirs')
+    p.add_argument('uri', help='uri')
+    p.set_defaults(recurse=False)
+    if password: p.set_defaults(password=password)
+    if username: p.set_defaults(username=username)
+    return p.parse_args()
+
+def get(auth, uri):
+    r = requests.get(uri, auth=auth)
+    s = BeautifulSoup(r.text, "lxml")
+    return s.find('table', class_='mobile-files-table').find_all('tr')
+
+def getroot(uri):
+    p = urlparse(uri)
+    return ParseResult(scheme=p.scheme, netloc=p.netloc,
+        path='', params='', query='', fragment='').geturl()
+
+defaults = config()
+arg = args(defaults)
+auth = requests.auth.HTTPBasicAuth(arg.username, arg.password)
+rows = get(auth, arg.uri)
+root = getroot(arg.uri)
+i = 0
+urls = []
+while i < len(rows):
+    row = rows[i]
+    i += 1
+    uri = urljoin(root, row.find('a').get('href'))
+    if not row.find('a', text='Read'):
+        path = row.find('a').string
+        if path.endswith("/") and arg.recurse:
+            rows.extend(get(auth, uri))
+        continue
+    urls.append(urljoin(root, row.find('a').get('href')))
+for url in list(set(urls)):
+    print(url)
+    print("\thttp-user={}".format(arg.username))
+    print("\thttp-passwd={}".format(arg.password))

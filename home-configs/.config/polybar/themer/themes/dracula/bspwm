@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+source bootstrap.sh
+
+include utils/_.sh
+include utils/json.sh
+include utils/polybar.sh
+include utils/x11.sh
+
+bootstrap::finish
+
+size_border=4
+size_gap=10
+
+padding_top=0
+padding_bottom=0
+padding_left=0
+padding_right=0
+
+color_focused_border="#6162ae"
+color_normal_border="#282a37"
+color_active_border="#282a37"
+color_presel_feedback="#9966cc"
+
+polybar_config="${CURRENT_THEME}/polybar.plain"
+polybar_bars=(top)
+
+if x11::monitor_connected "HDMI-1"; then
+  polybar_bars+=(bottom)
+fi
+
+function theme::post_bspwmrc
+{
+  # main background
+  polybar::drawline "$polybar_config" "$monitor" "$bar" '#dd45485f' -21 21
+
+  # bevel effect lines
+  polybar::drawline "$polybar_config" "$monitor" "$bar" '#dd45485f' 23
+  polybar::drawline "$polybar_config" "$monitor" "$bar" '#22ffffff' 24
+
+  theme::draw_separators "$monitor" "$bar"
+}
+
+# shellcheck disable=2155
+function theme::draw_separators {
+  local monitor="$1"; shift
+  local bar="$1"; shift
+  local x_offset="${2:-0}"
+  local x_pos=0
+  local sep=0
+  local step=37
+  local lname="$(polybar::wm_name "$polybar_config" "$bar")"
+  local align="$(polybar::alignment "$polybar_config" "$bar")"
+
+  while (( sep++ < 10 )); do
+    x_pos=$(( sep * step ))
+
+    [[ $sep -ge 10 ]] && {
+      x_pos=$(( x_pos + 7 ))
+    }
+
+    pgrep -f "xdrawrect\-ws\-separator\-${bar}\-${sep}" 2>/dev/null | xargs kill 2>/dev/null
+
+    xdrawrect "$monitor" "$align" 1 20 $((x_offset+x_pos-1)) 8 "#33000000" "xdrawrect-ws-separator-${bar}-${sep}a" "$lname" &
+    xdrawrect "$monitor" "$align" 1 20 $((x_offset+x_pos)) 8 "#11ffffff" "xdrawrect-ws-separator-${bar}-${sep}b" "$lname" &
+  done
+}

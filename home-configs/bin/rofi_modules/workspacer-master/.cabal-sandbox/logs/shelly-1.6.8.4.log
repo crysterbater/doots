@@ -1,0 +1,115 @@
+cabal: Entering directory '/tmp/cabal-tmp-20591/shelly-1.6.8.4'
+Configuring shelly-1.6.8.4...
+Building shelly-1.6.8.4...
+Preprocessing library shelly-1.6.8.4...
+[1 of 6] Compiling Shelly.Base      ( src/Shelly/Base.hs, dist/dist-sandbox-94c3599e/build/Shelly/Base.o )
+
+src/Shelly/Base.hs:39:1: warning: [-Wunused-imports]
+    The import of ‘ProcessHandle’
+    from module ‘System.Process’ is redundant
+
+src/Shelly/Base.hs:42:1: warning: [-Wunused-imports]
+    The import of ‘liftM’ from module ‘Control.Monad’ is redundant
+[2 of 6] Compiling Shelly.Find      ( src/Shelly/Find.hs, dist/dist-sandbox-94c3599e/build/Shelly/Find.o )
+
+src/Shelly/Find.hs:67:5: warning: [-Wname-shadowing]
+    This binding for ‘traverse’ shadows the existing binding
+      imported from ‘Prelude’ at src/Shelly/Find.hs:11:1-32
+      (and originally defined in ‘Data.Traversable’)
+[3 of 6] Compiling Shelly           ( src/Shelly.hs, dist/dist-sandbox-94c3599e/build/Shelly.o )
+
+src/Shelly.hs:130:1: warning: [-Wunused-imports]
+    The import of ‘Monoid’ from module ‘Data.Monoid’ is redundant
+
+src/Shelly.hs:196:10: warning: [-Wredundant-constraints]
+    • Redundant constraint: Show s
+    • In the instance declaration for ‘ShellCmd (Sh s)’
+
+src/Shelly.hs:322:13: warning: [-Wunused-matches]
+    Defined but not used: ‘fp’
+
+src/Shelly.hs:377:5: warning: [-Wincomplete-patterns]
+    Pattern match(es) are non-exhaustive
+    In an equation for ‘toHandle’:
+        Patterns not matched: (Just NoStream)
+[4 of 6] Compiling Shelly.Lifted    ( src/Shelly/Lifted.hs, dist/dist-sandbox-94c3599e/build/Shelly/Lifted.o )
+
+src/Shelly/Lifted.hs:105:1: warning: [-Wunused-imports]
+    The import of ‘Data.Monoid’ is redundant
+      except perhaps to import instances from ‘Data.Monoid’
+    To import instances alone, use: import Data.Monoid()
+
+src/Shelly/Lifted.hs:118:1: warning: [-Wdeprecations]
+    Module ‘Control.Monad.Trans.Error’ is deprecated:
+      Use Control.Monad.Trans.Except instead
+
+src/Shelly/Lifted.hs:143:11: warning: [-Wdeprecations]
+    In the use of type constructor or class ‘Error’
+    (imported from Control.Monad.Trans.Error):
+    Deprecated: "Use Control.Monad.Trans.Except instead"
+
+src/Shelly/Lifted.hs:143:43: warning: [-Wdeprecations]
+    In the use of type constructor or class ‘ErrorT’
+    (imported from Control.Monad.Trans.Error):
+    Deprecated: "Use Control.Monad.Trans.Except instead"
+
+src/Shelly/Lifted.hs:144:16: warning: [-Wdeprecations]
+    In the use of data constructor ‘ErrorT’
+    (imported from Control.Monad.Trans.Error):
+    Deprecated: "Use Control.Monad.Trans.Except instead"
+
+src/Shelly/Lifted.hs:177:10: warning: [-Wredundant-constraints]
+    • Redundant constraint: Show s
+    • In the instance declaration for ‘S.ShellCmd (m s)’
+
+src/Shelly/Lifted.hs:243:29: warning: [-Wdeprecations]
+    In the use of type constructor or class ‘Error’
+    (imported from Control.Monad.Trans.Error):
+    Deprecated: "Use Control.Monad.Trans.Except instead"
+
+src/Shelly/Lifted.hs:244:29: warning: [-Wdeprecations]
+    In the use of type constructor or class ‘ErrorT’
+    (imported from Control.Monad.Trans.Error):
+    Deprecated: "Use Control.Monad.Trans.Except instead"
+
+src/Shelly/Lifted.hs:245:18: warning: [-Wdeprecations]
+    In the use of type constructor or class ‘ErrorT’
+    (imported from Control.Monad.Trans.Error):
+    Deprecated: "Use Control.Monad.Trans.Except instead"
+
+src/Shelly/Lifted.hs:247:9: warning: [-Wdeprecations]
+    In the use of data constructor ‘ErrorT’
+    (imported from Control.Monad.Trans.Error):
+    Deprecated: "Use Control.Monad.Trans.Except instead"
+
+src/Shelly/Lifted.hs:248:41: warning: [-Wdeprecations]
+    In the use of ‘runErrorT’
+    (imported from Control.Monad.Trans.Error):
+    Deprecated: "Use Control.Monad.Trans.Except instead"
+
+src/Shelly/Lifted.hs:249:31: warning: [-Wdeprecations]
+    In the use of data constructor ‘ErrorT’
+    (imported from Control.Monad.Trans.Error):
+    Deprecated: "Use Control.Monad.Trans.Except instead"
+
+src/Shelly/Lifted.hs:304:1: warning: [-Wredundant-constraints]
+    • Redundant constraint: MonadSh m
+    • In the type signature for:
+           tag :: (MonadShControl m, MonadSh m) => m a -> Text -> m a
+
+src/Shelly/Lifted.hs:352:1: warning: [-Wredundant-constraints]
+    • Redundant constraint: MonadSh m
+    • In the type signature for:
+           (-|-) :: (MonadShControl m, MonadSh m) => m Text -> m b -> m b
+[5 of 6] Compiling Shelly.Pipe      ( src/Shelly/Pipe.hs, dist/dist-sandbox-94c3599e/build/Shelly/Pipe.o )
+
+src/Shelly/Pipe.hs:631:10: warning: [-Wredundant-constraints]
+    • Redundant constraint: Show s
+    • In the instance declaration for ‘ShellCommand (Sh s)’
+[6 of 6] Compiling Shelly.Unix      ( src/Shelly/Unix.hs, dist/dist-sandbox-94c3599e/build/Shelly/Unix.o )
+Creating package registration file:
+/tmp/pkgConf-shelly-1.6.820406514341975960378.4
+Installing library in
+/home/metamist/dev/haskell/workspacer/.cabal-sandbox/lib/x86_64-linux-ghc-8.0.1/shelly-1.6.8.4-2Ps63tjtzOzpcMVyQP70m
+Registering shelly-1.6.8.4...
+cabal: Leaving directory '/tmp/cabal-tmp-20591/shelly-1.6.8.4'

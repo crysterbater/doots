@@ -1,0 +1,48 @@
+::-webkit-scrollbar {
+width:19px;
+height:19px;}
+
+::-webkit-scrollbar-corner,
+::-webkit-resizer{
+background-image:none;
+background-color:#272727;}
+::-webkit-scrollbar-track:vertical {
+border-left:1px solid rgba(0,0,0,0.8);
+background-image:none;
+background-color:#272727;}
+::-webkit-scrollbar-track:horizontal {
+border-top:1px solid rgba(0,0,0,0.8);
+background-image:none;
+background-color:#272727;}
+
+::-webkit-scrollbar-thumb {
+background:#a070be;
+border:1px solid rgba(0,0,0,0.8);}
+
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decremen,
+::-webkit-scrollbar-button:horizontal:start:increment,
+::-webkit-scrollbar-button:horizontal:end:decrement{
+display:none!important}
+::-webkit-scrollbar-button:vertical:start:decrement {
+height:18px!important;
+border-left:1px solid rgba(0,0,0,0.8);
+background-color:#272727;
+background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16"><path style="color:#000000" stroke-width=".5" fill="#f1f2f2" d="m11.495 9.1813a0.49887 0.49746 0 0 0 -0.14 -0.2953l-2.993-2.9844a0.49887 0.49746 0 0 0 -0.71706 0l-2.9929 2.9844a0.49887 0.49746 0 0 0 0 0.71503l0.49882 0.49741a0.49887 0.49746 0 0 0 0.71706 0l2.1355-2.1291 2.1356 2.1291a0.49887 0.49746 0 0 0 0.71706 0l0.49882-0.49741a0.49887 0.49746 0 0 0 0.14029 -0.41969z"/></svg>');}
+::-webkit-scrollbar-button:vertical:end:increment {
+height: 18px !important;
+border-left:1px solid rgba(0,0,0,0.8);
+background-color:#272727;
+background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16"><path style="color:#000000" stroke-width=".5" fill="#f1f2f2" d="m11.495 6.8187a0.49887 0.49746 0 0 1 -0.14029 0.29534l-2.993 2.984a0.49887 0.49746 0 0 1 -0.71706 0l-2.9929-2.984a0.49887 0.49746 0 0 1 0 -0.71503l0.49882-0.49741a0.49887 0.49746 0 0 1 0.71706 0l2.1356 2.1295 2.1356-2.1295a0.49887 0.49746 0 0 1 0.71706 0l0.49882 0.49741a0.49887 0.49746 0 0 1 0.14029 0.41969z"/></svg>');}
+
+::-webkit-scrollbar-button:horizontal:start:decrement {
+width:18px!important;
+border-top:1px solid rgba(0,0,0,0.8);
+background-color:#272727;
+background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16"><path style="color:#000000" stroke-width=".5" fill="#f1f2f2" d="m8.9313 10.995a0.49746 0.49887 0 0 1 -0.2953 -0.14l-2.9844-2.993a0.49746 0.49887 0 0 1 0 -0.71706l2.9844-2.9929a0.49746 0.49887 0 0 1 0.71503 0l0.49741 0.49882a0.49746 0.49887 0 0 1 0 0.71706l-2.1295 2.1355 2.1295 2.1356a0.49746 0.49887 0 0 1 0 0.71705l-0.49741 0.49882a0.49746 0.49887 0 0 1 -0.41969 0.14029z"/></svg>');}
+::-webkit-scrollbar-button:horizontal:end:increment {
+width: 18px !important;
+border-top:1px solid rgba(0,0,0,0.8);
+background-color:#272727;
+background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16"><path style="color:#000000" stroke-width=".5" fill="#f1f2f2" d="m6.5687 10.995a0.49746 0.49887 0 0 0 0.29534 -0.14029l2.9844-2.993a0.49746 0.49887 0 0 0 0 -0.71706l-2.9844-2.9929a0.49746 0.49887 0 0 0 -0.71503 0l-0.49741 0.49882a0.49746 0.49887 0 0 0 0 0.71706l2.1295 2.1355-2.1295 2.1356a0.49746 0.49887 0 0 0 0 0.71705l0.49741 0.49882a0.49746 0.49887 0 0 0 0.41969 0.14029z"/></svg>');}
+

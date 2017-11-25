@@ -1,0 +1,14 @@
+called=$_
+[[ $called != $0 ]] && echo "Loaded:  $called"
+
+
+youtube_log_file=$LOG_PATH/$called.log
+touch $youtube_log_file
+
+YouTube_Search_handler() {
+	Q="$( cat $youtube_log_file | rofi -dmenu -p "$1: " )"
+	if [[ $Q ]]; then
+		google-chrome https://www.youtube.com/results?search_query=$(echo "$Q" | sed 's/ /%20/g');
+		echo $Q >> $youtube_log_file
+	fi
+}

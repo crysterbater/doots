@@ -1,0 +1,642 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;         Fonts you may want                       ;;;;;;;;
+;;;;;;;;      --- ttf-font-awesome                        ;;;;;;;;
+;;;;;;;;      --- ttf-material-icons                      ;;;;;;;;
+;;;;;;;;      --- nerd-fonts-complete                     ;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;             Colours
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+[colors]
+background = #16161A
+foreground = #EFF0F1
+urgent     = #B52A6E
+blue       = #505494
+b-alt      = #0F1524
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;              Bars
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[settings]
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+compositing-background = over
+compositing-foreground = source
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+
+[bar/bar1]
+; Use  xrandr -q | grep " connected" | cut -d ' ' -f1
+; for a list of connected monitors
+monitor = eDP1
+monitor-strict = false
+override-redirect = false
+width = 100%
+height = 28
+offset-x = 0
+offset-y = 0
+fixed-center = true
+border-bottom-size = 0
+border-bottom-color = ${colors.background}
+border-top-size = 0
+border-top-color = ${colors.background}
+background = ${colors.background}
+foreground = ${colors.foreground}
+font-0 = Ubuntu Nerd Font:size=10:antialias=false;2
+font-1 = FontAwesome:pixelsize=12:antialias=false;2
+font-2 = MaterialIcons:size=10:antialias=false;2
+font-3 = Futura:size=10:weight=Light;2
+font-5 = Futura:size=10:weight=Light;2
+font-4 = Futura:size=10:weight=Light;2
+
+modules-left = workspaces rofi menu window_count spotify
+modules-center = mpd weather seperator3 xbacklight
+modules-right = network  pkg padding volume wireless-network padding2 time
+
+module-margin = 1
+padding-right = 0
+padding-left = 0
+bottom = false
+underline-size = 2
+tray-position = false
+tray-padding = 10
+tray-background = ${colors.background}
+tray-offset-x = 10%
+tray-offset-y = 0
+
+
+[bar/bar2]
+; Use  xrandr -q | grep " connected" | cut -d ' ' -f1
+; for a list of connected monitors
+;monitor =
+monitor-strict = false
+override-redirect = false
+width = 100%
+height = 24
+offset-x = 0
+offset-y = 0
+fixed-center = true
+border-bottom-size = 0
+border-bottom-color = ${colors.background}
+border-top-size = 0
+border-top-color = ${colors.background}
+background = ${colors.background}
+foreground = ${colors.foreground}
+font-0 = Ubuntu Nerd Font:size=13:antialias=false;2
+font-1 = FontAwesome:pixelsize=12:antialias=false;2
+font-2 = MaterialIcons:size=12:antialias=false;2
+font-3 = Fira Sans:size=12:weight=regular;2
+
+modules-left = workspaces rofi powermenu arrow 3 memory cpu
+modules-center = mpd weather
+modules-right = network window_count pkg padding2 wireless-network arrow2 date
+
+module-margin = 1
+padding-right = 0
+padding-left = 0
+bottom = false
+underline-size = 2
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;              Modules
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/mpd]
+type = internal/mpd
+format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time>  <label-song>
+
+label-offline =  mpd is offline
+
+host = 127.0.0.1
+port = 6600
+
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-random = 
+icon-repeat = 
+
+toggle-on-foreground =
+toggle-off-foreground = #55
+
+bar-progress-width = 45
+bar-progress-format = %{A4:mpdseek+2: A5:mpdseek-2:}%fill%%indicator%%empty%%{A A}
+bar-progress-indicator = |
+bar-progress-indicator-foreground = #ff
+bar-progress-indicator-font = 2
+bar-progress-fill = ─
+bar-progress-fill-foreground = #bb
+bar-progress-fill-font = 2
+bar-progress-empty = ─
+bar-progress-empty-font = 2
+bar-progress-empty-foreground = #44
+
+[module/rofi]
+type = custom/script
+exec = echo "  "
+click-left = rofi-apps
+label-foreground = ${colors.foreground}
+label-background = ${colors.b-alt}
+label-prefix = 
+
+[module/spotify]
+type = custom/script
+format-label = 
+exec = sh ~/.config/polybar/spotify
+interval = 1
+
+[module/temp]
+type = internal/temperature
+interval = 3
+thermal-zone = 0
+warn-temp = 70
+format = <label>
+format-padding = 0
+label-foreground = ${colors.foreground}
+label-background = ${colors.b-alt}
+label-warn-foreground = ${colors.urgent}
+label = "  %temperature% "
+label-warn = "  %temperature% "
+
+
+[module/memory]
+type = internal/memory
+format = <label> <bar-used>
+label = RAM
+
+bar-used-width = 30
+bar-used-foreground-0 = #937FB0
+bar-used-foreground-1 = #9C97D1
+bar-used-foreground-2 = #6C2AB5
+bar-used-foreground-3 = #50307D
+bar-used-indicator = |
+bar-used-indicator-font = 6
+bar-used-indicator-foreground = #ff
+bar-used-fill = ─
+bar-used-fill-font = 6
+bar-used-empty = ─
+bar-used-empty-font = 6
+bar-used-empty-foreground = #444444
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+format = <label> <ramp-coreload>
+label = CPU
+
+ramp-coreload-0 = ▁
+ramp-coreload-0-font = 2
+ramp-coreload-0-foreground = #9C97D1
+ramp-coreload-1 = ▂
+ramp-coreload-1-font = 2
+ramp-coreload-1-foreground = #9C97D1
+ramp-coreload-2 = ▃
+ramp-coreload-2-font = 2
+ramp-coreload-2-foreground = #9882D1
+ramp-coreload-3 = ▄
+ramp-coreload-3-font = 2
+ramp-coreload-3-foreground = #9882D1
+ramp-coreload-4 = ▅
+ramp-coreload-4-font = 2
+ramp-coreload-4-foreground = #6C2AB5
+ramp-coreload-5 = ▆
+ramp-coreload-5-font = 2
+ramp-coreload-5-foreground = #6C2AB5
+ramp-coreload-6 = ▇
+ramp-coreload-6-font = 2
+ramp-coreload-6-foreground = #B52A6E
+ramp-coreload-7 = █
+ramp-coreload-7-font = 2
+ramp-coreload-7-foreground = #B52A6E
+
+
+[module/time]
+type = internal/date
+interval = 5
+label-foreground = ${colors.foreground}
+format-underline = #876BD1
+date-alt = " %Y-%m-%d"
+time = "%I:%M "
+time-alt = "%H:%M:%S "
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
+label = %date% %time%
+
+
+[module/pkg]
+type = custom/script
+label-foreground = ${colors.foreground}
+label-background = ${colors.b-alt}
+exec = $HOME/.config/polybar/scripts/pkg.sh
+exec-if = "ping -c 1 8.8.8.8 > /dev/null"
+click-left = $HOME/.config/polybar/scripts/update.sh
+click-right = $HOME/.config/polybar/scripts/aur-update.sh
+label-padding = 0
+interval = 1500
+tail = true
+format-underline = #95B0C7
+
+
+
+[module/compton]
+type = custom/script
+label-background = ${colors.b-alt}
+exec = $HOME/.config/polybar/scripts/compton.sh
+click-left = $HOME/.config/polybar/scripts/compton-toggle.sh
+click-right = $HOME/.config/polybar/scripts/compton-toggle.sh
+interval = 2
+label-padding = 1
+
+
+[module/window_count]
+type = custom/script
+interval = 1
+label = %{A1:skippy-xd --toggle-window-picker:}   %output%  %{A}
+exec = echo "$(($(wmctrl -l -i | wc -l)-1))"
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
+format-padding = 3
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+label-mounted =  %mountpoint%:%percentage_used%%
+label-mounted-foreground = ${colors.foreground}
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.blue}
+
+
+
+[module/volume]
+type = internal/volume
+master-mixer = Master
+format-volume = <label-volume><bar-volume>
+label-volume = "  "
+label-volume-foreground = ${colors.foreground}
+label-volume-background = ${colors.b-alt}
+format-muted-prefix = "  "
+format-muted-foreground = ${colors.foreground}
+format-muted-background = ${colors.b-alt}
+label-muted = sound muted
+bar-volume-width = 15
+bar-volume-foreground-0 = ${colors.foreground}
+bar-volume-gradient = true
+bar-volume-indicator = "➤"
+bar-volume-indicator-foreground = ${colors.blue}
+bar-volume-indicator-backround = ${colors.b-alt}
+bar-volume-fill-background = ${colors.b-alt}
+bar-volume-fill-foreground = ${colors.blue}
+bar-volume-fill = "─"
+bar-volume-empty = "─"
+bar-volume-empty-foreground = ${colors.foreground}
+bar-volume-empty-background = ${colors.b-alt}
+
+
+
+[module/trash]
+interval = 1
+type = custom/script
+exec = $HOME/.config/polybar/scripts/trash
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground}
+format-background = ${colors.b-alt}
+click-right = rm -rf $HOME/.local/share/Trash/files/*
+click-left = exo-open --launch FileManager $HOME/.local/share/Trash/files
+
+
+
+[module/menu]
+type = custom/menu
+format-spacing = 1
+format-background = ${colors.b-alt}
+label-open = "   "
+label-open-foreground = ${colors.foreground}
+label-open-background = #16161A
+label-close = "    "
+label-close-foreground = #B52A6E
+label-separator = " || "
+label-separator-foreground = #7DCBBE
+menu-0-0 = "  "
+menu-0-0-exec = menu-open-1
+menu-0-1 = "  "
+menu-0-1-exec = menu-open-2
+menu-0-2 = "  "
+menu-0-2-exec = menu-open-3
+# 1
+menu-1-0 = "  "
+menu-1-0-exec = exo-open --launch WebBrowser
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch TerminalEmulator
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch FileManager
+menu-1-3 = "  "
+menu-1-3-exec = geany &
+# 2
+menu-2-0 = "  "
+menu-2-0-exec = audacious &
+menu-2-1 = "  "
+menu-2-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-2-2 = "  "
+menu-2-2-exec = lxappearance &
+menu-2-3 = "  "
+menu-2-3-exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+# 3
+menu-3-0 = "   "
+menu-3-0-exec = slimlock
+menu-3-1 = "   "
+menu-3-1-exec = openbox --exit
+menu-3-2 = "   "
+menu-3-2-exec = systemctl reboot
+menu-3-3 = "   "
+menu-3-3-exec = systemctl poweroff
+
+
+[module/workspaces]
+type = internal/xworkspaces
+enable-click = true
+enable-scroll = true
+format-padding = 1
+Additional formatting
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+;icon-default = 
+
+format = <label-state>
+label-monitor =  %name%
+
+label-active = " %icon% %name% "
+label-active-foreground = ${colors.blue}
+label-active-background = ${colors.background}
+label-active-underline = ${colors.blue}
+
+label-occupied = " %icon% %name% "
+label-occupied-underline = #AE6CEB
+label-occupied-background = ${colors.background}
+label-occupied-foreground = #81789C
+
+label-urgent = " %icon% %name% "
+label-urgent-foreground = ${colors.urgent}
+label-urgent-background = ${colors.background}
+label-urgent-underline = ${colors.urgent}
+
+label-empty = " %icon% %name% "
+label-empty-foreground = ${colors.foreground}
+
+
+
+
+[module/xbacklight]
+type = internal/xbacklight
+output = eDP-1
+format = <ramp> <bar>
+
+ramp-0 = 
+ramp-0-foreground = #666
+ramp-1 = 
+ramp-1-foreground = #999
+ramp-2 = 
+ramp-2-foreground = #fff
+
+bar-width = 8
+bar-indicator = 
+bar-indicator-font = 2
+bar-indicator-foreground = #C3437F
+bar-fill = 
+bar-fill-font = 2
+bar-fill-foreground = #938BA0
+bar-empty = 
+bar-empty-font = 2
+bar-empty-foreground = #262B36
+
+
+
+
+[module/wireless-network]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+ping-interval = 10
+
+format-connected = <ramp-signal> <label-connected>
+label-connected = %essid%
+label-disconnected =    not connected
+label-connected-foreground = #e8e8e8
+label-disconnected-foreground = #66
+format-underline = #9167C3
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = #e8e8e8
+
+animation-packetloss-0 = 
+animation-packetloss-0-foreground = #e8e8e8a64c
+animation-packetloss-1 = 
+animation-packetloss-1-foreground = ${bar/top.foreground}
+animation-packetloss-framerate = 500
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;    Extra Modules  (not used)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/arrow]
+; background to trans
+type = custom/text
+content = " "
+content-font = 2
+content-foreground = #96949C
+content-background = #16161A
+
+[module/arrow2]
+; background to trans
+type = custom/text
+content = " "
+content-font = 2
+content-foreground = #96949C
+content-background = #16161A
+
+[module/arrow3]
+; background to trans
+type = custom/text
+content = " "
+content-font = 2
+content-foreground = #96949C
+content-background = #16161A
+
+[module/padding]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/padding2]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/padding3]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/padding4]
+type = custom/text
+content = │
+content-foreground = #999999
+content-background = #181B21
+
+[module/seperator]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator2]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+[module/seperator3]
+type = custom/text
+content =||
+content-foreground = #7F919D
+
+
+
+[module/title]
+type = custom/script
+interval = 1
+label = %output%
+label-maxlen = 65
+exec = echo "$(xtitle)"
+format = <label>
+format-background = ${colors.b-alt}
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground}
+format-padding = 3
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = "  "
+format-prefix-foreground = #7A7A7A
+label-foreground = #ffffff
+exec = ~/.config/polybar/weather
+
+[module/eth]
+type = internal/network
+interface = eno1
+interval = 1
+label-connected = "  "
+label-connected-foreground = ${colors.foreground}
+label-connected-background = ${colors.b-alt}
+label-disconnected = "  "
+label-disconnected-foreground = ${colors.foreground}
+label-disconnected-background = ${colors.b-alt}
+
+[module/network]
+type = custom/script
+label-background = ${colors.background}
+exec = $HOME/.config/polybar/scripts/network.sh
+click-left = networkmanager_dmenu
+click-right = networkmanager_dmenu
+label-padding = 1
+interval = 1
+tail = true
+
+[module/coreuse]
+type = internal/cpu
+interval = 1
+format = <label>
+format-background = ${colors.b-alt}
+format-prefix = ""
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.foreground}
+label = %percentage%%
+ramp-coreload-0 = %{F#81817F}▂%{F-}
+ramp-coreload-1 = %{F#81817F}▃%{F-}
+ramp-coreload-2 = %{F#D1D1D0}▄%{F-}
+ramp-coreload-3 = %{F#D1D1D0}▅%{F-}
+ramp-coreload-4 = %{F#D1D1D0}▆%{F-}
+ramp-coreload-5 = %{F#FFFFFF}▇%{F-}
+ramp-coreload-6 = %{F#FFFFFF}█%{F-}
+
+[module/powermenu]
+type = custom/menu
+format-spacing = 1
+format-background = ${colors.background}
+label-open = "   "
+label-open-foreground = ${colors.foreground}
+label-open-background = ${colors.background}
+label-close = "    "
+label-close-foreground = #CC3E79
+label-separator = " | "
+label-separator-foreground = #95AEC7
+# Top level
+menu-0-0 = "  Favorites "
+menu-0-0-exec = menu-open-1
+menu-0-1 = "  Utility"
+menu-0-1-exec = menu-open-2
+menu-0-2 = "  System "
+menu-0-2-exec = menu-open-3
+# 1
+menu-1-0 = "  "
+menu-1-0-exec = vivaldi-snapshot
+menu-1-1 = "  "
+menu-1-1-exec = exo-open --launch xfce4-terminal
+menu-1-2 = "  "
+menu-1-2-exec = exo-open --launch FileManager
+menu-1-3 = "  "
+menu-1-3-exec = gcolor2 &
+# 2
+menu-2-0 = "  "
+menu-2-0-exec = audacious &
+menu-2-1 = "  "
+menu-2-1-exec = termite --geometry=600x500 --exec=pacli &
+menu-2-2 = "  "
+menu-2-2-exec = lxappearance &
+menu-2-3 = "  "
+menu-2-3-exec = scrot 'ArchLabs_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; gpicview $$(xdg-user-dir PICTURES)/$f' &
+# 3
+menu-3-0 = "   "
+menu-3-0-exec = slimlock
+menu-3-1 = "   "
+menu-3-1-exec = openbox --exit
+menu-3-2 = "  "
+menu-3-2-exec = systemctl reboot
+menu-3-3 = "  "
+menu-3-3-exec = systemctl poweroff
+
+;
+;
+;
+;      
+;

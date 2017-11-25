@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Gnome-Xpro
+Comment=A light theme for Linux (like Mac) based on Arc-Theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Gnome-Xpro
+MetacityTheme=Gnome-Xpro
+IconTheme=gnome
+CursorTheme=DMZ-Black
+CursorSize=default
+ButtonLayOut=close,maximize,minimize:

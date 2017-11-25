@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Description: a simple script to generate .gitignore file.
+
+GIT_DIR=".git"
+IGNOREFILE=".gitignore"
+
+content(){
+cat << EOF > .gitignore
+.gitignore
+.ropeproject
+*.pyc
+EOF
+}
+
+if [[ -d $GIT_DIR ]];then
+        echo "[+]Found a Git Directory"
+        if [[ -s $IGNOREFILE ]];then
+                echo "[-]Error: .gitignore file exists"
+                exit 1
+        else
+                echo "[+]Generating .gitignore file."
+                content
+                echo "[+]Done generating .gitignore file."
+                exit 0
+        fi
+else
+        echo "[-]Error: Not a git directory"
+        exit 1
+fi

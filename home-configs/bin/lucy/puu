@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+
+usage() {
+	cat 2>&1 <<-EOF
+	Usage: puu [file ...]
+	  -h  show help
+	Set PUUSH_API_KEY to your api key.
+	The key is found at <http://puush.me/account/settings>.
+	EOF
+}
+
+while :; do
+	case "$1" in
+	-h) usage; exit ;;
+	*) break ;;
+	esac
+done
+
+if [ -z "$PUUSH_API_KEY" ]; then
+	printf 'puu: please provide your api key in PUUSH_API_KEY\n' 1>&2
+	exit 1
+fi
+
+for file in "$@"; do
+	curl --progress-bar "https://puush.me/api/up" \
+		-F k="$PUUSH_API_KEY" -F z="poop" -F f="@$file" | # z=poop is required
+	sed -e 's/0,\|,.*//g'
+	printf '\n'
+done

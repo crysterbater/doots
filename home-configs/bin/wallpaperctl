@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+set -eu
+
+readonly interval=300
+wallpaper_list=()
+
+function list_add() {
+    wallpaper_list+=($(realpath "$@"))
+}
+
+function update_wallpaper() {
+    if bspc query --desktop --nodes &> /dev/null; then
+        feh --no-fehbg --bg-fill "/tmp/wallpaperctl/blur.jpg"
+    else
+        feh --no-fehbg --bg-fill "/tmp/wallpaperctl/normal.jpg"
+    fi
+}
+
+# parse arguments
+case "$@" in
+    -h | --help)
+        echo "Arguments"
+        echo "    wallpaperctl -h|--help"
+        echo "    wallpaperctl <file(s) and/or folder(s)>"
+        echo
+        echo "Dependencies"
+        echo "    bash (tested on 4.4.7)"
+        echo "    bspwm (tested on 0.9.2)"
+        echo "    feh (tested on 2.18)"
+        echo "    convert from imagemagick (tested on 6.9.7)"
+        exit 0
+        ;;
+    '')
+        echo "No arguments."
+        exit 1
+        ;;
+esac
+while (( $# > 0 )); do
+    if [[ -d "$1" ]]; then
+        while read -r file; do
+            list_add "${file}"
+        done <<< $(find "$1" -type f | sort)
+    elif [[ -f "$1" ]]; then
+        list_add "$1"
+    else
+        echo "$1 is a unknown argument."
+        exit 1
+    fi
+    shift
+done
+
+# close all previous instances
+while read -r pid; do
+    if [[ -n ${pid} ]] && (( ${pid} != $$ )); then
+        kill ${pid} &> /dev/null || true
+    fi
+done <<< $(ps -o pid,command -u "${USER}" | awk '/[0-9]+ bash .+wallpaperctl$/{print $1}')
+
+# update wallpaper in intervals
+if [[ -d "/home/pringle/Pictures/Abstract/colorfulAF/2017 - 8.png" ]]; then
+    rm -r "/home/pringle/Pictures/Abstract/colorfulAF/2017 - 8.png"
+fi
+mkdir -p "/tmp/wallpaperctl/blur"
+for ((i = 0; i >= 0; i++ )); do
+    if (( i >= ${#wallpaper_list[@]} )); then
+        i=0
+    fi
+    if [[ ! -f "/tmp/wallpaperctl/blur/${i}.jpg" ]]; then
+        convert "${wallpaper_list[i]}" -blur 32,16 "/home/pringle/Pictures/Abstract/colorfulAF/2017 - 8${i}.png"
+    fi
+    ln -sf "${wallpaper_list[i]}" "/tmp/wallpaperctl/normal.jpg"
+    ln -sf "/tmp/wallpaperctl/blur/${i}.jpg" "/home/pringle/Pictures/Abstract/colorfulAF/2017 - 8.png"
+    update_wallpaper
+    sleep ${interval}
+done &
+
+# update wallpaper on desktop change, window open or window close
+bspc subscribe desktop_focus node_manage node_unmanage | while read -r; do
+    update_wallpaper
+done &

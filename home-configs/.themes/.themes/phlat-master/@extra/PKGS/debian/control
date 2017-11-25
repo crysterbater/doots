@@ -1,0 +1,17 @@
+Source: phlat
+Section: xfce
+Priority: optional
+Maintainer: SSF <https://github.com/sixsixfive>
+Build-Depends: libfile-fcntllock-perl, debhelper (>= 7) 
+Standards-Version: 3.9.6
+
+Package: phlat
+Architecture: all
+Conflicts: libgtk-3-0 (<<3.20), kde-config-gtk-style, kde-config-gtk-style-preview
+Replaces: phlat, xfce-theme-phlat
+Pre-Depends: curl, unzip, findutils, sed
+Depends: yad, dmz-cursor-theme, coreutils, libgtk-3-0 (>=3.20), gtk2-engines, gtk2-engines-murrine, gtk2-engines-pixbuf
+Recommends: hicolor-icon-theme, gtk2-engines:i386, gtk2-engines-murrine:i386, gtk2-engines-pixbuf:i386, gtk3-nocsd, libgtk3-nocsd0:i386, qt5-style-plugins, qt5ct
+Suggests: xfwm4 | marco | muffin | openbox | icewm | icewm-lite, xfce4-notifyd | mate-notification-daemon, xfdashboard, xfce4-windowck-plugin, parole, plank, lightdm-gtk-greeter-settings, onboard, google-chrome-stable | google-chrome-beta | google-chrome-unstable | chromium, unp | engrampa, mate-polkit-bin | lxpolkit, atril | mupdf, ceni | connman-ui, audacious
+Provides:adwaita-icon-theme, mate-icon-theme, gnome-icon-theme, gnome-icon-theme-symbolic, gnome-themes-standard, gnome-themes-standard-data, mate-themes, xfwm4-themes, gtk3-engines-xfce, gtk2-engines-xfce, murrine-themes
+Description: Plain, simple and daily usable dark theme without any specials...

@@ -1,0 +1,5 @@
+if [[ -n ${LAUNCHER} ]]; then
+    PS1="⟩ "
+    bind 'RETURN: "\e[4~ & \n exit \n"'
+    return
+fi

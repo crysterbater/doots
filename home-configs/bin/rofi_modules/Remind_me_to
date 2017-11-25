@@ -1,0 +1,35 @@
+called=$_
+[[ $called != $0 ]] && echo "Loaded:  $called"
+
+
+PADDING=0000
+remind_log_file="$LOG_PATH/$called.log"
+touch $remind_log_file
+
+Remind_me_to_handler() {
+    times=('5m' '10m' '15m' '30m' '1h' '1h 30m' '2h' '1d' '10:00' '16:00' '20:00')
+
+    remind_text=$( cat $remind_log_file | rofi -dmenu -p "$1 ")
+
+    if [[ $remind_text ]]; then
+        echo $remind_text >> $remind_log_file
+
+        duration=$(printf "%s\n" "${times[@]}" | rofi -dmenu -p "Remind me [in/at] ")
+        if [[ $duration =~ ^([0-9][0-9])(:?[0-9][0-9])?$ ]]; then
+            notify-send -t 3000 --urgency=low "Info" "I'll remind you to $remind_text at $duration"
+            NEW_TIME=$(echo "$duration" | sed 's/://g')
+            OUT_TIME=$NEW_TIME${PADDING:${#NEW_TIME}}
+            echo 'export DISPLAY=:0; /usr/bin/notify-send -t 0 "Reminder at '$duration'" "Remember to '$remind_text'"' | at $OUT_TIME
+
+        elif [[ "$duration" =~ ^([0-9]+[ ]?(mins|min|m|hours|hour|h)+[ ]?)+$ ]]; then
+            notify-send -t 3000 --urgency=low "Info" "I'll remind you to $remind_text in $duration"
+            (sleep $duration
+                notify-send -t 0 "Reminder after $duration" "Remember to $remind_text"
+                paplay ~/Dropbox/Ubuntu/GitProjects/two_tone.wav) &
+        elif [[ $duration -eq "" ]]; then
+                exit 0
+        else
+            notify-send -t 3000 --urgency=critical "[Error] Reminder" "Invalid time"
+        fi
+    fi
+}

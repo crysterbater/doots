@@ -1,0 +1,42 @@
+cabal: Entering directory '/tmp/cabal-tmp-20592/system-filepath-0.4.13.4'
+[1 of 1] Compiling Main             ( /tmp/cabal-tmp-20592/system-filepath-0.4.13.4/dist/dist-sandbox-94c3599e/setup/setup.hs, /tmp/cabal-tmp-20592/system-filepath-0.4.13.4/dist/dist-sandbox-94c3599e/setup/Main.o )
+Linking /tmp/cabal-tmp-20592/system-filepath-0.4.13.4/dist/dist-sandbox-94c3599e/setup/setup ...
+Configuring system-filepath-0.4.13.4...
+Building system-filepath-0.4.13.4...
+Preprocessing library system-filepath-0.4.13.4...
+[1 of 4] Compiling Filesystem.Path.Internal ( lib/Filesystem/Path/Internal.hs, dist/dist-sandbox-94c3599e/build/Filesystem/Path/Internal.o )
+
+lib/Filesystem/Path/Internal.hs:17:1: warning: [-Wunused-imports]
+    The qualified import of ‘Control.Exception’ is redundant
+      except perhaps to import instances from ‘Control.Exception’
+    To import instances alone, use: import Control.Exception()
+
+lib/Filesystem/Path/Internal.hs:26:1: warning: [-Wunused-imports]
+    The import of ‘Data.Text.Encoding.Error’ is redundant
+      except perhaps to import instances from ‘Data.Text.Encoding.Error’
+    To import instances alone, use: import Data.Text.Encoding.Error()
+
+lib/Filesystem/Path/Internal.hs:39:1: warning: [-Wtabs]
+    Tab character found here, and in 170 further locations.
+    Please use spaces instead.
+[2 of 4] Compiling Filesystem.Path  ( lib/Filesystem/Path.hs, dist/dist-sandbox-94c3599e/build/Filesystem/Path.o )
+
+lib/Filesystem/Path.hs:17:1: warning: [-Wtabs]
+    Tab character found here, and in 264 further locations.
+    Please use spaces instead.
+[3 of 4] Compiling Filesystem.Path.Rules ( lib/Filesystem/Path/Rules.hs, dist/dist-sandbox-94c3599e/build/Filesystem/Path/Rules.o )
+
+lib/Filesystem/Path/Rules.hs:10:1: warning: [-Wtabs]
+    Tab character found here, and in 291 further locations.
+    Please use spaces instead.
+[4 of 4] Compiling Filesystem.Path.CurrentOS ( lib/Filesystem/Path/CurrentOS.hs, dist/dist-sandbox-94c3599e/build/Filesystem/Path/CurrentOS.o )
+
+lib/Filesystem/Path/CurrentOS.hs:18:1: warning: [-Wtabs]
+    Tab character found here, and in 23 further locations.
+    Please use spaces instead.
+Creating package registration file:
+/tmp/pkgConf-system-filepath-0.4.131477171087356426808.4
+Installing library in
+/home/metamist/dev/haskell/workspacer/.cabal-sandbox/lib/x86_64-linux-ghc-8.0.1/system-filepath-0.4.13.4-1GWBMPZdf8E7lK6vJ6fBI6
+Registering system-filepath-0.4.13.4...
+cabal: Leaving directory '/tmp/cabal-tmp-20592/system-filepath-0.4.13.4'

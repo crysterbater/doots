@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Ashes
+Comment=A Material Design-like theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Ashes
+MetacityTheme=Ashes

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+ 
+ 
+AUTOSTART="$HOME/.config/openbox/autostart"
+CONF_PATH="$HOME/.config"
+ 
+DIALOG="zenity --info --window-icon=/usr/share/icons/hicolor/256x256/apps/al-hello-logo.png"
+QUESTION="zenity --question --window-icon=/usr/share/icons/hicolor/256x256/apps/al-hello-logo.png"
+ 
+# remove itself from autostart
+sed -i '/panel-switch/d' $AUTOSTART
+ 
+ 
+## Panel Switch
+$QUESTION --ok-label="Yes Please!" --cancel-label="No Thanks" --width=300 --height=150 \
+--text="<big>Would You Like to Use Tint2\nInstead of Polybar?</big>\n
+\nYou can switch between the two in the menu"
+if (( $? == 1 ));then
+  echo "  Staying with polybar: exiting..."
+else
+  echo "  Enabling tray apps and starting tint2"
+  echo "${CONF_PATH}/tint2/default.tint2rc" > $CONF_PATH/tint2/tint2-sessionfile
+  volumeicon &
+  nm-applet &
+  al-tint2-session > /dev/null 2>&1
+fi
+ 
+rm -f $CONF_PATH/panel-switch
+ 
+exit 0

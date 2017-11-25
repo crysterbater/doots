@@ -1,0 +1,22 @@
+gtk-color-scheme = "base_color: #2C303B"
+gtk-color-scheme = "text_color: #b3b8c3"
+gtk-color-scheme = "bg_color: #2F3640"
+gtk-color-scheme = "fg_color: #b3b8c3"
+gtk-color-scheme = "sec_fg_color: #232526"
+gtk-color-scheme = "tooltip_bg_color: #2C303B"
+gtk-color-scheme = "tooltip_fg_color: #b3b8c3"
+gtk-color-scheme = "selected_bg_color: #37BF8D"
+gtk-color-scheme = "selected_fg_color: #2C303B"
+gtk-color-scheme = "insensitive_bg_color: #2C303B"
+gtk-color-scheme = "insensitive_fg_color: #b3b8c3"
+gtk-color-scheme = "notebook_bg: #2C303B"
+gtk-color-scheme = "dark_sidebar_bg: #2C303B"
+gtk-color-scheme = "link_color: #37BF8D"
+gtk-color-scheme = "menu_bg: #2C303B"
+
+gtk-icon-sizes = "gtk-button=16,16" # This makes button icons smaller.
+gtk-auto-mnemonics = 1
+gtk-primary-button-warps-slider = 1
+
+include "main.rc"
+include "menubar-toolbar.rc"

@@ -1,0 +1,18 @@
+ executable file 18 lines (13 sloc) 273 Bytes
+#!/bin/bash
+
+# fuzzy find todo task to mark complete
+
+if [ -n "$DISPLAY" ]; then
+  PIPE="rofi -dmenu -i -p complete:"
+else
+  PIPE="peco --prompt complete:"
+fi
+
+INDEX=`todo | $PIPE | gawk '{ print $1 }'`
+
+if [ -n "$INDEX" ]; then
+  todo done $INDEX
+else
+  echo "aborted"
+fi

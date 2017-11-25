@@ -1,0 +1,17 @@
+style "progressbar" {
+	xthickness	= 0
+	ythickness	= 0
+
+	bg[SELECTED]		=  shade (1.00, @selected_fg_color)
+	fg[PRELIGHT]     	=  @selected_bg_color	#active text-color 
+
+	engine "murrine" {
+		gradient_shades		= {1.00, 1.00, 1.00, 1.00}
+		contrast 			= 0.0		
+		roundness			= 0
+	}
+}
+
+widget_class "*ProgressBar*" style "progressbar"
+class "GtkProgressBar" style "progressbar"
+class "GtkBar" style "progressbar"

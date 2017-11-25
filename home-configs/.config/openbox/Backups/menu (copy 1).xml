@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/                 file:///usr/share/openbox/menu.xsd">
+  <menu id="root-menu" label="Openbox 3">
+    <separator label="..."/>
+    <item label="Run Program">
+      <action name="Execute">
+        <command>rofi -modi run,drun,window,keys,windowcd -show drun -sidebar-mode -font "NeuzeitGro-Reg 13"</command>
+      </action>
+    </item>
+    <separator/>
+    <menu id="accessories" label="Most Used">
+      <item label="Terminal">
+        <action name="Execute">
+          <command>xfce4-terminal</command>
+        </action>
+      </item>
+      <item label="File Manager">
+        <action name="Execute">
+          <command>thunar</command>
+        </action>
+      </item>
+      <item label="Vlc">
+        <action name="Execute">
+          <command>vlc</command>
+        </action>
+      </item>
+      <item label="vivaldi">
+        <action name="Execute">
+          <command>vivaldi-snapshot</command>
+        </action>
+      </item>
+    </menu>
+    <separator/>
+  </menu>
+</openbox_menu>

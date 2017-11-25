@@ -1,0 +1,36 @@
+#!/bin/bash
+# My song renaming script
+# export LC_ALL=C
+export HOME=/home/hrfee
+# file=$1
+# head -n1  $file |
+# tr "\t" "\n" |
+# awk '{print $1 " " NR-1}'
+# exec cat $(file) (was using this to test some stuff earlier)
+export input="$1"
+echo "What do you want the File to be called? include the Extension. (Note: There cannot be spaces.)"
+read -e -p "Name:" filename
+echo "What is the song name? Press enter if it's the same as the file name."
+read -e -p "Title:" -i "$filename" songname
+echo "Who made the song?"
+read -e -p "Artist:" songartist
+echo "Whats the album name?"
+read -e -p "Album:" album
+# export album=$(echo "$albumtemp" | sed 's/ /\ /g')
+echo "What year was it made? Default=2015"
+read -e -p "Year:" -i "2015" songyear
+echo "What is the track number?"
+read -e -p "Track:" tracknum
+# These actually rename the things
+mkdir $HOME/MusicNamer 2>/dev/null
+mv "$input" "$HOME/MusicNamer/$filename"
+echo "p0tat035" | sudo chmod 666 "$HOME/MusicNamer/$filename"
+id3v2 -a "$songartist" $HOME/MusicNamer/"$filename"
+id3v2 -t "$songname" $HOME/MusicNamer/"$filename"
+id3v2 -A "$album" $HOME/MusicNamer/"$filename"
+id3v2 -y "$songyear" $HOME/MusicNamer/"$filename"
+id3v2 -T "$tracknum" $HOME/MusicNamer/"$filename"
+mkdir "$HOME/Music/$songartist" 2>/dev/null
+mkdir "$HOME/Music/$songartist/$album" 2>/dev/null
+mv "$HOME/MusicNamer/$filename" "$HOME/Music/$songartist/$album/" 2>/dev/null
+echo "Done! The file is in the appropriate directory in your Music folder."

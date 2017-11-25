@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# spring theme
+# based off of my submission to the fist #rice contest 2015.
+
+# theme
+VIM_COLORS=chameleon
+BG_COMMAND="feh --bg-fill $HOME/.wm/walls/fill/spring.jpg"
+
+# bspwm
+b_border_width=7
+b_window_gap=16
+
+# panel
+p_height=24
+p_gap=0
+p_line="5"
+p_padding=2
+p_font_main="Droid Sans-10:style=Bold"
+p_window_class="noshadow"
+p_delimiter="   "
+p_line=5
+p_desktop_occupied_label="        "
+p_desktop_empty_label="        "
+
+maxWinNameLen=50
+
+# colors
+p_bg_inactive="#bb$(colort -t $p_bg_normal)"
+p_bg_normal="#00$(colort -t $p_bg_normal)"
+
+d_font="Droid Sans 10"
+
+# other
+GTK_FONT="Droid Sans 10"
+
+# Make the workspaces be in the middle.
+p_format="dropdown:title|desktop|mpd:clock"
+
+p_desktop_theme=$(cat<<EOF
+bg="#00000000"
+activeBG="#00000000"
+overline=true
+activeoverline=true
+line=$p_bg_inactive
+activeline=$p_bg_active
+EOF
+)

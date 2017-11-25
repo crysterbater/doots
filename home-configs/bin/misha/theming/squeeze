@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# squeeze lemons
+
+# information from ripening
+lemon_target="$1"
+step="$(eval "echo \${${1}}")"
+lemon_target_align="$(eval "echo \${${1}_align}")"
+lemon_target_end="$(eval "echo \${${1}_end}")"
+
+# declare, reload.
+echo "[$lemon_target]"
+[ ! -z "$lemon_reload" ] && echo "reload = \"$lemon_reload\""
+
+# emit a setting, or fallback on default (vanilla)
+process_target() {
+    type -t $1 > /dev/null && \
+      input="$(eval $1)" || \
+      input="$(vanilla $1)"
+
+    if [ ! -z "$input" ]; then
+       [ ${#input} -eq 6 ] && input="#ff${input}"
+       echo "$1 = \"${input}\""
+    fi
+}
+
+# targets will be exported functions by themes in bash.
+# they use resources from the theming scripts dir.
+targets="bg fg line prefix suffix activebg activefg activeline"
+
+for target in $targets; do
+    case $target in
+        suffix) $lemon_target_end && [ "$lemon_target_align" = "right" ] && continue;;
+        prefix) $lemon_target_end && [ "$lemon_target_align" = "left" ] && continue;;
+    esac
+
+    process_target $target &
+done
+
+
+# things that aren't colors may be provided by p_{lemon_target}_{option}
+options="reload mouse_left mouse_right mouse_middle scroll_up scroll_down overline underline activeoverline activeunderline"
+
+IFS=' '
+for option in $options; do
+    value="$(eval echo "\$p_${lemon_target}_${option}")"
+    [ ! -z "$value" ] && \
+        echo $(tr '_' '-' <<< $option) = \"$value\" &
+done
+IFS=
+
+wait
+
+# after that, add any overrides from theme.
+eval echo "\$p_${lemon_target}_theme"
+
+# debug reference
+echo \; step=$step
+echo \; align=$lemon_target_align
+
+echo ""

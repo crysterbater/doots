@@ -1,0 +1,14 @@
+/******************
+ * selection mode *
+ ******************/
+.selection-mode.header-bar,
+.selection-mode.toolbar {
+    border-style: none;
+    background-color: shade (@wm_bg, 0.75);
+    background-image: none;
+    color: @theme_base_color;
+}
+
+.selection-mode.toolbar {
+    padding: 4px;
+}
